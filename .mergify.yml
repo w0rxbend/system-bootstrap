@@ -8,11 +8,14 @@ pull_request_rules:
     actions:
       merge:
         method: squash
-
   - name: Delete the merge-when-green label after merge
     conditions:
       - merged
       - label=block-merge
     actions:
       label:
-        remove: [block-merge]
+        remove:
+          - block-merge
+queue_rules: []
+merge_queue:
+  max_parallel_checks: 2
