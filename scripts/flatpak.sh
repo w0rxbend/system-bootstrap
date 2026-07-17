@@ -70,7 +70,6 @@ flatpak install flathub io.github.nozwock.Packet -y
 flatpak install flathub org.localsend.localsend_app -y
 
 # ===================== DevTools =====================
-flatpak install flathub rest.insomnia.Insomnia -y
 flatpak install flathub com.vscodium.codium -y
 
 # ===================== News & Feeds =====================
