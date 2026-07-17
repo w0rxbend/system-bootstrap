@@ -362,6 +362,7 @@ unset __mamba_setup
 # <<< mamba initialize <<<
 
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+[ -s "/usr/bin/zoxide" ] && eval "$(zoxide init zsh)"
 
 [ -f ~/.cache/mill/download/mill-completion.sh ] && source ~/.cache/mill/download/mill-completion.sh # MILL_SOURCE_COMPLETION_LINE
 
