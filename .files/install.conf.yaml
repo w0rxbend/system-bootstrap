@@ -41,4 +41,5 @@
     ~/.config/yazi/yazi.toml: .config/yazi/yazi.toml
     ~/.config/yazi/theme.toml: .config/yazi/theme.toml
     ~/.config/yazi/keymap.toml: .config/yazi/keymap.toml
-    ~/.config/nerd-config-installer/config.yaml: .config/nerd-config-installer/config.yaml
+    ~/.config/nerd-fonts-installer/config.yaml: .config/nerd-fonts-installer/config.yaml
+    ~/.config/binstaller/config.yaml: .config/binstaller/config.yaml

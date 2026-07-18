@@ -40,7 +40,7 @@ configuration, desktop environments, wallpapers, and maintenance workflows.
 | ------------ | ------------------------------------------------------------------- |
 | 🐧 Distros   | Fedora, Arch Linux, and openSUSE bootstrap scripts                  |
 | 🧰 Dev tools | Zsh, tmux, Neovim, Go, Rust, Java, Node, Python, Kubernetes tools   |
-| 🖥 Desktop    | GNOME, Hyprland, Sway, Waybar, Rofi/Fuzzel, SDDM tweaks             |
+| 🖥 Desktop    | GNOME, COSMIC, Sway, Waybar, Fuzzel, GDM/SDDM tweaks                |
 | 🎨 Terminal  | Alacritty, Kitty, WezTerm, Ghostty, Starship, Zellij                |
 | 🔤 Fonts     | Nerd Font installer config stored in the repo and linked via Dotbot |
 | 🧹 Quality   | `just format`, `just lint`, and GitHub Actions auto-format + lint   |
@@ -91,7 +91,7 @@ just apply-dotfiles
 | `just configure-system`  | Configure Git, tmux plugin manager, and time settings             |
 | `just install-cli-tools` | Install language/toolchain managers and CLI installers            |
 | `just install-binaries`  | Install portable binary tools into `~/.apps`                      |
-| `just install-fonts`     | Install configured Nerd Fonts with `worxbend/nerd-font-installer` |
+| `just install-fonts`     | Install configured Nerd Fonts with `worxbend/nerd-fonts-installer` |
 | `just apply-dotfiles`    | Force-link dotfiles from `.files`                                 |
 | `just format`            | Format supported repo files                                       |
 | `just lint`              | Syntax-check and lint supported repo files                        |
@@ -103,7 +103,7 @@ just apply-dotfiles
 .system-bootstrap/
 ├── .files/                    # Dotfiles managed by Dotbot
 │   ├── .config/               # Shared XDG configs
-│   ├── arch+hypr/             # Arch + Hyprland profile
+│   ├── arch/                  # Arch profile (GNOME + COSMIC)
 │   ├── fedora/                # Fedora profile
 │   ├── nvim/                  # Neovim Lua config
 │   ├── opensuse/              # openSUSE + Sway profile
@@ -134,23 +134,23 @@ Managed highlights:
 - 🧱 tmux, Zellij, Starship
 - 🖥 Alacritty, Kitty, WezTerm, Ghostty
 - 📁 Yazi, Lazygit, LSD, Btop
-- 🪟 Hyprland, Sway, Waybar, Rofi, Fuzzel
+- 🪟 GNOME, COSMIC, Sway, Waybar, Fuzzel
 
 ## 🔤 Nerd Fonts
 
 Nerd Fonts are installed through
-[worxbend/nerd-font-installer](https://github.com/worxbend/nerd-font-installer).
+[worxbend/nerd-fonts-installer](https://github.com/worxbend/nerd-fonts-installer).
 
 The config is stored in the repo at:
 
 ```text
-.files/.config/nerd-config-installer/config.yaml
+.files/.config/nerd-fonts-installer/config.yaml
 ```
 
 Dotbot links it to:
 
 ```text
-~/.config/nerd-config-installer/config.yaml
+~/.config/nerd-fonts-installer/config.yaml
 ```
 
 Install the configured font set:
@@ -181,7 +181,7 @@ GitHub Actions runs the same flow:
 | Distro     | Profile                                   | Desktop Focus              |
 | ---------- | ----------------------------------------- | -------------------------- |
 | Fedora     | `scripts/fedora/*`, `.files/fedora/*`     | GNOME-oriented workstation |
-| Arch Linux | `scripts/arch/*`, `.files/arch+hypr/*`    | Hyprland rice              |
+| Arch Linux | `scripts/arch/*`, `.files/arch/*`         | GNOME + COSMIC             |
 | openSUSE   | `scripts/opensuse/*`, `.files/opensuse/*` | Sway + SDDM Wayland        |
 
 Some scripts install system packages, enable services, write system config, or require `sudo`.
@@ -197,7 +197,6 @@ Read a script before running it on a machine you care about.
 ## 📚 Docs
 
 - [Font fallback and emoji rendering](docs/fonts.md)
-- [Arch Hyprland keyring notes](docs/arch/hypr/ssh-keyring.md)
 - [Fedora GNOME keyring notes](docs/fedora/gnome/ssh-keyring.md)
 - [Fedora Sway keyring notes](docs/fedora/sway/ssh-keyring.md)
 - [openSUSE Sway keyring notes](docs/suse/sway/ssh-keyring.md)

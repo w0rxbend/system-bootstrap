@@ -77,36 +77,36 @@ zstyle ':omz:update' frequency 1
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	dnf
-	git 
-	vscode 
-	yarn 
-	tmux 
-	systemd 
-	sudo 
-	sdk 
-	scala 
-	sbt 
-	rust 
-	python 
-	pip 
+	git
+	vscode
+	yarn
+	tmux
+	systemd
+	sudo
+	sdk
+	scala
+	sbt
+	rust
+	python
+	pip
 	pyenv
   conda
-	nvm 
-	npm 
-	node 
-	man 
-	kubectx 
-	kubectl 
-	httpie 
-	history 
-	helm 
-	emoji 
-	dotenv 
-	docker 
-	docker-compose 
-	cp 
+	nvm
+	npm
+	node
+	man
+	kubectx
+	kubectl
+	httpie
+	history
+	helm
+	emoji
+	dotenv
+	docker
+	docker-compose
+	cp
 	aliases
-	zsh-syntax-highlighting 
+	zsh-syntax-highlighting
 	zsh-autosuggestions
 	zsh-history-substring-search
 )
@@ -209,7 +209,7 @@ export PATH="$PATH:$HOME/.apps/jujutsu/bin"
 # >>> zig install directory >>>
 export PATH="$PATH:$HOME/.apps/zig/bin"
 # <<< zig install directory <<<
- 
+
 # >>> coursier install directory >>>
 export PATH="$PATH:$HOME/.local/share/coursier/bin"
 # <<< coursier install directory <<<
@@ -261,7 +261,7 @@ gm=1;38;5;221:
 gd=1;38;5;203:
 gu=38;5;245
 "
-### 
+###
 
 
 # Not all systems have this file
@@ -271,7 +271,7 @@ gu=38;5;245
 eval "$(starship init zsh)"
 
 # User configuration
-if [[ $WITH_TMUX = true ]]; then 
+if [[ $WITH_TMUX = true ]]; then
     if [[ $DISPLAY ]]; then
         [[ $- != *i* ]] && return
         if [[ -z "$TMUX" ]] ;then
@@ -279,13 +279,13 @@ if [[ $WITH_TMUX = true ]]; then
             if [[ -z "$ID" ]] ;then
                 tmux new-session
             else
-                tmux attach-session -t "$ID" 
+                tmux attach-session -t "$ID"
             fi
-        fi  
+        fi
     fi
 fi
 
-if [[ -n "$KITTY_WINDOW_ID" ]]; then 
+if [[ -n "$KITTY_WINDOW_ID" ]]; then
 	if [[ $WITH_ZELLIJ == true ]]; then
 		export ZELLIJ_AUTO_ATTACH=true
 		export ZELLIJ_AUTO_EXIT=true
@@ -306,7 +306,7 @@ export NVM_DIR="$HOME/.nvm"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
-#ALL CUSTOMIZATIONS THAT IS NOT A PART OF SHARED ZSH CONFIG SHOULD DEFINED HERE 
+#ALL CUSTOMIZATIONS THAT IS NOT A PART OF SHARED ZSH CONFIG SHOULD DEFINED HERE
 [ -f ~/.custom.zsh ] && source ~/.custom.zsh
 
 # Generated for envman. Do not edit.
@@ -327,6 +327,8 @@ esac
 
 path=('/home/worxbend/.juliaup/bin' $path)
 export PATH
+# Tab completion for juliaup and julia channel selection
+[ -f "/home/worxbend/.julia/juliaup/completions/zsh.zsh" ] && source "/home/worxbend/.julia/juliaup/completions/zsh.zsh"
 
 # <<< juliaup initialize <<<
 

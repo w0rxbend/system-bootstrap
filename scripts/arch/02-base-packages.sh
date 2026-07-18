@@ -10,7 +10,7 @@ sudo pacman -S --noconfirm alacritty bat kitty hyperfine asciinema wl-clipboard 
 sudo pacman -S --noconfirm vlc ffmpeg ffmpegthumbs mpv \
     gstreamer gst-plugins-base gst-plugins-good gst-plugin-pipewire \
     gst-plugins-bad gst-plugins-ugly gst-libav \
-    libva-utils libva gstreamer-vaapi \
+    libva-utils libva \
     libvdpau-va-gl v4l2loopback-dkms
 
 # GPU-specific tools
@@ -27,8 +27,6 @@ fi
 # UI tools
 sudo pacman -S --noconfirm gnome-tweaks
 
-sudo pacman -S --noconfirm python-pipx
-
 # Developer tools
 sudo pacman -S --noconfirm llvm clang cmake make gcc \
     clang-tools-extra lldb lld ninja meson \
@@ -37,40 +35,37 @@ sudo pacman -S --noconfirm llvm clang cmake make gcc \
 
 # GTK and GUI dev
 sudo pacman -S --noconfirm gtk3 gtk4 \
-    gobject-introspection webkit2gtk libxrandr libxi libxinerama libxcursor libxxf86vm \
+    gobject-introspection libxrandr libxi libxinerama libxcursor libxxf86vm \
     libx11 libxext libxft libxrender libxfixes mesa mesa-utils \
     mesa-vdpau mesa-libgl
 # Fonts
-sudo pacman -S --noconfirm ttf-fira-code ttf-font-awesome noto-fonts
+sudo pacman -S --noconfirm ttf-fira-code ttf-font-awesome noto-fonts noto-fonts-emoji
 
 # PDF + document tools
 sudo pacman -S --noconfirm zathura zathura-pdf-mupdf mupdf
 
-# OBS and streaming
-sudo pacman -S --noconfirm obs-studio
-
 # LaTeX
 sudo pacman -S --noconfirm texlive-core texlive-bin texlive-xetex
 
-# Crystal language (AUR)
-paru -S --noconfirm crystal
+# Crystal language (AUR) — disabled: no AUR helper on CachyOS by default
+# paru -S --noconfirm crystal
 
 # Done
 echo "✅ All packages installed and configured."
 
-sudo pacman -S --noconfirm qemu virt-manager libvirt dnsmasq vde2 bridge-utils openbsd-netcat
+sudo pacman -S --noconfirm qemu-full virt-manager libvirt dnsmasq vde2 openbsd-netcat
 sudo systemctl enable --now libvirtd
 sudo usermod -aG libvirt $(whoami)
 
-# --- Install Visual Studio Code ---
+# --- Install Visual Studio Code (AUR) — disabled: no AUR helper on CachyOS by default ---
 # VS Code is in AUR as 'visual-studio-code-bin' (official binary with MS telemetry)
-paru -S --noconfirm visual-studio-code-bin
+# paru -S --noconfirm visual-studio-code-bin
 
-# --- Install Podman and Docker compatibility layer ---
-sudo pacman -S --noconfirm podman podman-docker
-
-# Optional: Start and enable Podman socket (if needed for Docker compatibility)
-# sudo systemctl enable --now podman.socket
+# --- Install Docker ---
+# Real Docker is preferred over podman-docker (whose /usr/bin/docker shim conflicts).
+sudo pacman -S --needed --noconfirm docker docker-compose docker-buildx
+sudo systemctl enable --now docker.service
+sudo usermod -aG docker "$(whoami)"
 
 # --- Time Sync ---
 sudo timedatectl set-local-rtc 0

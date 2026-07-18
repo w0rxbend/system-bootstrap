@@ -16,7 +16,7 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 
 curl -fsSL https://install.julialang.org | sh
 
-curl -sfS https://dotenvx.sh\?directory\=/home/worxbend/.local/bin | sh
+curl -sfS "https://dotenvx.sh?directory=${HOME}/.local/bin" | sh
 
 curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
 bash Miniforge3-$(uname)-$(uname -m).sh

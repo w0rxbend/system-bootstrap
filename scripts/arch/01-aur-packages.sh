@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-paru -S --noconfirm google-chrome ttf-nerd-fonts-symbols nerd-fonts
-paru -S --noconfirm sddm qt6-virtualkeyboard qt6-multimedia-ffmpeg
-# Probably not needed, as it's not that stable compared to GNOME
-paru -S --noconfirm sddm-silent-theme-git easyeffects
-paru -s --noconfirm wttrbar
-paru -S calf qjackctl lv2
+# Official-repo packages are installed with pacman. AUR packages are installed only
+# when an AUR helper (paru) is already present — this script does not install paru.
+#
+# Nerd Fonts are handled separately by `just install-fonts` (scripts/nerd-fonts.p0.sh),
+# so they are not installed here.
 
-# Install GNOME whole set of packages (just for the sake of login manager)
-sudo pacman -Syu gdm
+# ── Audio production (official repo) ────────────────────────────────────────────────
+sudo pacman -S --needed --noconfirm easyeffects
 
-sudo pacman -S lsp-plugins
-sudo pacman -S jack2 gst-plugins-base
+# ── Browser (AUR) — disabled ────────────────────────────────────────────────────────
+# CachyOS has no AUR helper by default. Install manually if desired, e.g.:
+# paru -S --needed --noconfirm google-chrome

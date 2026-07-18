@@ -10,15 +10,12 @@
       recursive: true
 - link:
     ~/system-update.sh: ./arch-system-update.sh
-    ~/.local/backgrounds: ../../assets/arch+hypr+backgrounds
-    ~/.config/hypr: .config/hypr
-    ~/.config/waybar: .config/waybar
-    ~/.config/rofi: .config/rofi
-    ~/.config/vicinae: .config/vicinae
-    ~/.config/dunst: .config/dunst
-    ~/.config/swayosd: .config/swayosd
-    ~/.config/fuzzel: .config/fuzzel
+    ~/.local/backgrounds: ../../assets/arch-backgrounds
+
 - shell:
-    - systemctl --user daemon-reload
-    - systemctl --user enable waybar.service
-    - systemctl --user start waybar.service
+    - for i in {1..9}; do; gsettings set org.gnome.shell.keybindings switch-to-application-$i "[]"; done
+    - for i in {1..9}; do; gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']"; done
+    - for i in {1..9}; do; gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i "['<Super><Shift>$i']"; done
+    - gsettings set org.gnome.mutter dynamic-workspaces false
+    - gsettings set org.gnome.desktop.wm.preferences num-workspaces 9
+    - gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Super>Print', 'Print']"

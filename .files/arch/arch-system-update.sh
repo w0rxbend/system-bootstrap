@@ -9,13 +9,10 @@ echo "-  Updating system...  -"
 echo "------------------------"
 echo "System info: $(uname -a)"
 echo "\n"
-echo "Updating system via 'dnf'..."
-# Paru handles both official repos and AUR
-# -Syu: Sync, Refresh, Upgrade
-# --noconfirm: Equivalent to -y
+# -Syu: Sync, Refresh, Upgrade  |  --noconfirm: Equivalent to -y
 echo ""
-echo "Updating system via 'paru'..."
-paru -Syu --noconfirm
+echo "Updating system via 'pacman'..."
+sudo pacman -Syu --noconfirm
 
 echo ""
 echo "Flatpak update..."

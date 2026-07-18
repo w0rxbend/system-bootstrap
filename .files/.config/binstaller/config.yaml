@@ -1,0 +1,278 @@
+apiVersion: binstaller.io/v1alpha1
+kind: BinaryDistributionProfile
+metadata:
+  name: developer-binaries
+  labels:
+    platform: linux-amd64
+    source: system-bootstrap
+spec:
+  policy:
+    mode: developer
+    appsDir: ${HOME}/.apps
+    requireConfirmation: false
+    continueOnError: true
+    allowSudoSymlinks: true
+
+  # Pinned tools use static versions; the rest resolve dynamically at apply time.
+  versions:
+    yazi: v26.5.6
+    zig: "0.15.2"
+    kind: v0.31.0
+    zellij: v0.44.1
+    jujutsu: v0.40.0
+    dotbot: v1.24.0
+    lazygit: "0.61.0"
+    kubectl:
+      resolver:
+        type: http-text
+        url: https://dl.k8s.io/release/stable.txt
+    minikube:
+      dynamic:
+        type: latest-url
+    xplr:
+      dynamic:
+        type: latest-url
+    neovim:
+      dynamic:
+        type: latest-url
+    neovide:
+      dynamic:
+        type: latest-url
+
+  plan:
+    - name: yazi
+      kind: binary-tool
+      description: Blazing fast terminal file manager
+      spec:
+        versionRef: yazi
+        installDir: ${appsDir}/yazi
+        download:
+          url: https://github.com/sxyazi/yazi/releases/download/${version}/yazi-x86_64-unknown-linux-gnu.zip
+          filename: yazi.zip
+          archive:
+            type: zip
+            extract:
+              directories:
+                - from: yazi-x86_64-unknown-linux-gnu
+                  to: bin
+        executables:
+          - path: bin/yazi
+            mode: "0755"
+          - path: bin/ya
+            mode: "0755"
+
+    - name: zig
+      kind: binary-tool
+      description: Zig compiler toolchain
+      spec:
+        versionRef: zig
+        installDir: ${appsDir}/zig
+        download:
+          url: https://ziglang.org/download/${version}/zig-x86_64-linux-${version}.tar.xz
+          filename: zig.tar.xz
+          archive:
+            type: tar.xz
+            extract:
+              directories:
+                - from: zig-x86_64-linux-${version}
+                  to: .
+        executables:
+          - path: zig
+            mode: "0755"
+        symlinks:
+          - path: bin/zig
+            target: ${installDir}/zig
+
+    - name: minikube
+      kind: binary-tool
+      description: Local Kubernetes cluster
+      spec:
+        versionRef: minikube
+        installDir: ${appsDir}/minikube/bin
+        download:
+          url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          filename: minikube
+        executables:
+          - path: minikube
+            mode: "0755"
+
+    - name: xplr
+      kind: binary-tool
+      description: Hackable terminal file explorer
+      spec:
+        versionRef: xplr
+        installDir: ${appsDir}/xplr
+        download:
+          url: https://github.com/sayanarijit/xplr/releases/latest/download/xplr-linux.tar.gz
+          filename: xplr.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: xplr
+                  to: bin/xplr
+        executables:
+          - path: bin/xplr
+            mode: "0755"
+
+    - name: kind
+      kind: binary-tool
+      description: Kubernetes in Docker
+      spec:
+        versionRef: kind
+        installDir: ${appsDir}/kind/bin
+        download:
+          url: https://kind.sigs.k8s.io/dl/${version}/kind-linux-amd64
+          filename: kind
+        executables:
+          - path: kind
+            mode: "0755"
+
+    - name: zellij
+      kind: binary-tool
+      description: Terminal workspace multiplexer
+      spec:
+        versionRef: zellij
+        installDir: ${appsDir}/zellij
+        download:
+          url: https://github.com/zellij-org/zellij/releases/download/${version}/zellij-x86_64-unknown-linux-musl.tar.gz
+          filename: zellij.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: zellij
+                  to: bin/zellij
+        executables:
+          - path: bin/zellij
+            mode: "0755"
+
+    - name: kubectl
+      kind: binary-tool
+      description: Kubernetes command-line tool
+      spec:
+        versionRef: kubectl
+        installDir: ${appsDir}/kubectl/bin
+        download:
+          url: https://dl.k8s.io/release/${version}/bin/linux/amd64/kubectl
+          filename: kubectl
+        executables:
+          - path: kubectl
+            mode: "0755"
+
+    - name: neovide
+      kind: binary-tool
+      description: No-nonsense Neovim GUI
+      spec:
+        versionRef: neovide
+        installDir: ${appsDir}/neovide/bin
+        download:
+          url: https://github.com/neovide/neovide/releases/latest/download/neovide.AppImage
+          filename: neovide
+        executables:
+          - path: neovide
+            mode: "0755"
+
+    - name: neovim
+      kind: binary-tool
+      description: Hyperextensible Vim-based text editor
+      spec:
+        versionRef: neovim
+        installDir: ${appsDir}/neovim
+        download:
+          url: https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+          filename: neovim.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              directories:
+                - from: nvim-linux-x86_64
+                  to: .
+        executables:
+          - path: bin/nvim
+            mode: "0755"
+        symlinks:
+          - path: bin/neovim
+            target: ${installDir}/bin/nvim
+          - path: bin/vim
+            target: ${installDir}/bin/nvim
+          - path: /usr/local/bin/nvim
+            target: ${installDir}/bin/nvim
+            sudo: true
+          - path: /usr/local/bin/neovim
+            target: ${installDir}/bin/nvim
+            sudo: true
+          - path: /usr/local/bin/vim
+            target: ${installDir}/bin/nvim
+            sudo: true
+          - path: /usr/bin/nvim
+            target: ${installDir}/bin/nvim
+            sudo: true
+          - path: /usr/bin/neovim
+            target: ${installDir}/bin/nvim
+            sudo: true
+
+    - name: lazygit
+      kind: binary-tool
+      description: Terminal UI for git
+      spec:
+        versionRef: lazygit
+        installDir: ${appsDir}/lazygit
+        download:
+          url: https://github.com/jesseduffield/lazygit/releases/download/v${version}/lazygit_${version}_Linux_x86_64.tar.gz
+          filename: lazygit.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: lazygit
+                  to: bin/lazygit
+        executables:
+          - path: bin/lazygit
+            mode: "0755"
+        symlinks:
+          - path: bin/lzg
+            target: ${installDir}/bin/lazygit
+
+    - name: jujutsu
+      kind: binary-tool
+      description: Git-compatible VCS
+      spec:
+        versionRef: jujutsu
+        installDir: ${appsDir}/jujutsu
+        download:
+          url: https://github.com/jj-vcs/jj/releases/download/${version}/jj-${version}-x86_64-unknown-linux-musl.tar.gz
+          filename: jj.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: jj
+                  to: bin/jj
+        executables:
+          - path: bin/jj
+            mode: "0755"
+        symlinks:
+          - path: bin/jj-scm
+            target: ${installDir}/bin/jj
+          - path: bin/jujutsu
+            target: ${installDir}/bin/jj
+
+    - name: dotbot
+      kind: binary-tool
+      description: Dotfiles bootstrapper
+      spec:
+        versionRef: dotbot
+        installDir: ${appsDir}/dotbot
+        download:
+          url: https://github.com/anishathalye/dotbot/releases/download/${version}/dotbot-linux-x64.tar.gz
+          filename: dotbot.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: dotbot
+                  to: bin/dotbot
+        executables:
+          - path: bin/dotbot
+            mode: "0755"

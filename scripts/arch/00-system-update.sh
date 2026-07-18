@@ -3,27 +3,6 @@
 # Update system
 sudo pacman -Syu --noconfirm
 
-sudo pacman -S \
-    plasma-integration \
-    kde-gtk-config \
-    breeze \
-    breeze-gtk \
-    qt5ct \
-    qt6
-
-sudo pacman -Syu --noconfirm tmux zip systemsettings kde-cli-tools kcmutils plasma-desktop
-sudo pacman -Syu curl libarchive coreutils gawk sudo
-
-paru -S --needed wireplumber libgtop bluez bluez-utils btop networkmanager \
-    dart-sass wl-clipboard brightnessctl swww python upower pacman-contrib \
-    power-profiles-daemon gvfs gtksourceview3 libsoup3 grimblast-git wf-recorder-git \
-    hyprpicker matugen-bin python-gpustat hyprsunset-git \
-    vicinae-bin neovim 1password
-
-sudo pacman -S --noconfirm gnome-keyring seahorse pam pambase ghostty \
-    xdg-desktop-portal xdg-desktop-portal-wlr wl-clipboard hyprpaper \
-    polkit-kde-agent polkit-gnome flatpak
-
 # Install base packages from official repos
 sudo pacman -S --noconfirm \
     ca-certificates \
@@ -36,6 +15,13 @@ sudo pacman -S --noconfirm \
     zsh \
     fzf \
     pipewire-alsa
+
+# Networking, Bluetooth, audio session, power, and flatpak
+sudo pacman -S --needed --noconfirm \
+    pipewire pipewire-pulse wireplumber \
+    power-profiles-daemon upower flatpak
+
+sudo systemctl enable NetworkManager.service
 
 # Change default shell to zsh
 chsh -s $(which zsh)

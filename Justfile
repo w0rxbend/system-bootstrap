@@ -17,7 +17,7 @@ lint:
 # Run all repository quality checks
 check: lint
 
-# Run basic system configurations (git, docker, time)
+# Run basic system configurations (git, tmux/tpm, time)
 configure-system:
     ./scripts/configurations.sh
 
@@ -37,9 +37,9 @@ install-zsh-plugins:
 install-flatpaks:
     ./scripts/flatpak.sh
 
-# Install Gnome Extensions
-install-gnome-extensions:
-    ./scripts/gnome-extensions.sh
+# Install OBS Studio and Flatpak plugins
+install-obs:
+    ./scripts/flatpak-obs-plugins.sh
 
 # Install Nerd Fonts
 install-fonts:
@@ -74,7 +74,7 @@ arch-install:
     ./scripts/arch/00-system-update.sh
     ./scripts/arch/01-aur-packages.sh
     ./scripts/arch/02-base-packages.sh
-    ./scripts/arch/03-hyprland.sh
+    ./scripts/arch/03-desktop.sh
 
 # Install OpenSUSE packages
 opensuse-install:

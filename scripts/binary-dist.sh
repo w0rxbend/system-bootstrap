@@ -1,135 +1,40 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+set -euo pipefail
 
-LAZYGIT_VERSION=0.61.0
-KIND_VERSION=0.31.0
-NEOVIDE_VERSION=0.16.1
-ZELLIJ_VERSION=0.44.1
-JJ_VERSION=0.40.0
-DOTBOT_VERSION=1.24.0
-ZIG_VERSION=0.15.2
-YAZI_VERSION=v26.5.6
+# Install portable binary tools into ~/.apps via worxbend/binstaller.
+# https://github.com/worxbend/binstaller
+#
+# The tool set is declared in a BinaryDistributionProfile (see config below) rather
+# than hand-rolled curl/tar steps. binstaller resolves versions, downloads, extracts,
+# installs into ${HOME}/.apps/<tool>/bin, and creates the (sudo) symlinks.
 
-APPS_DIR=${HOME}/.apps
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+INSTALL_DIR="${BINSTALLER_INSTALL_DIR:-${HOME}/.local/bin}"
+BINSTALLER="${INSTALL_DIR}/binstaller"
 
-mkdir -p $APPS_DIR
+# Prefer the installed/linked config; fall back to the in-repo copy when dotfiles
+# have not been applied yet (this script runs before `just apply-dotfiles`).
+CONFIG_PATH="${BINSTALLER_CONFIG:-${HOME}/.config/binstaller/config.yaml}"
+if [ ! -f "${CONFIG_PATH}" ]; then
+    CONFIG_PATH="${REPO_ROOT}/.files/.config/binstaller/config.yaml"
+fi
 
-# ---
-echo "Installing Yazi"
-rm -rf $APPS_DIR/yazi/
-mkdir -p $APPS_DIR/yazi/bin
-curl -L -o ${APPS_DIR}/yazi/yazi.tar.gz https://github.com/sxyazi/yazi/releases/download/${YAZI_VERSION}/yazi-x86_64-unknown-linux-gnu.zip
-# /home/worxbend/.apps/yazi/bin/yazi-x86_64-unknown-linux-gnu
-unzip ${APPS_DIR}/yazi/yazi.tar.gz -d ${APPS_DIR}/yazi 1>/dev/null
-mv --force ${APPS_DIR}/yazi/yazi-x86_64-unknown-linux-gnu/* ${APPS_DIR}/yazi/bin/
-chmod +x ${APPS_DIR}/yazi/bin/yazi
-chmod +x ${APPS_DIR}/yazi/bin/ya
-rm -rf ${APPS_DIR}/yazi/yazi.tar.gz
+if [ ! -f "${CONFIG_PATH}" ]; then
+    echo "binstaller config not found: ${CONFIG_PATH}" >&2
+    exit 1
+fi
 
-# ---
-echo "Installing zig"
-rm -rf $APPS_DIR/zig/
-mkdir -p $APPS_DIR/zig/bin
-curl -L -o ${APPS_DIR}/zig/zig.tar.xz https://ziglang.org/download/${ZIG_VERSION}/zig-x86_64-linux-${ZIG_VERSION}.tar.xz
-tar -xvf ${APPS_DIR}/zig/zig.tar.xz -C ${APPS_DIR}/zig/bin/ 1>/dev/null
-ln -s ${APPS_DIR}/zig/bin/zig-x86_64-*/zig ${APPS_DIR}/zig/bin/zig
-chmod +x ${APPS_DIR}/zig/bin/zig
-rm -rf ${APPS_DIR}/zig/zig.tar.xz
+# Install binstaller (latest release) if it is not already available.
+if ! command -v binstaller >/dev/null 2>&1 && [ ! -x "${BINSTALLER}" ]; then
+    echo "Installing binstaller (latest release)..."
+    curl --proto '=https' --tlsv1.2 -sSfL \
+        https://github.com/worxbend/binstaller/releases/latest/download/install.sh | sh
+fi
 
-# ---
-echo "Installing minikube"
-rm -rf $APPS_DIR/minikube
-mkdir -p $APPS_DIR/minikube/bin
-curl -L -o $APPS_DIR/minikube/bin/minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-chmod +x $APPS_DIR/minikube/bin/minikube
+# ~/.local/bin may not be on PATH in this shell yet; fall back to the absolute path.
+binstaller_cmd="binstaller"
+command -v binstaller >/dev/null 2>&1 || binstaller_cmd="${BINSTALLER}"
 
-# ---
-echo "Installing xplr"
-rm -rf $APPS_DIR/xplr/
-mkdir -p $APPS_DIR/xplr/bin
-curl -L -o ${APPS_DIR}/xplr/xplr-linux.tar.gz https://github.com/sayanarijit/xplr/releases/latest/download/xplr-linux.tar.gz
-tar -zvxf ${APPS_DIR}/xplr/xplr-linux.tar.gz -C ${APPS_DIR}/xplr/bin/ 1>/dev/null
-chmod +x ${APPS_DIR}/xplr/bin/xplr
-rm -rf ${APPS_DIR}/xplr/xplr-linux.tar.gz
-
-# ---
-echo "Installing kind"
-rm -rf $APPS_DIR/kind/
-mkdir -p $APPS_DIR/kind/bin
-curl -Lo $APPS_DIR/kind/bin/kind https://kind.sigs.k8s.io/dl/v${KIND_VERSION}/kind-linux-amd64
-chmod +x $APPS_DIR/kind/bin/kind
-
-# ---
-echo "Installing zellij"
-rm -rf $APPS_DIR/zellij/
-mkdir -p $APPS_DIR/zellij/bin
-curl -Lo $APPS_DIR/zellij/zellij.tar.gz https://github.com/zellij-org/zellij/releases/download/v${ZELLIJ_VERSION}/zellij-x86_64-unknown-linux-musl.tar.gz
-tar -zvxf $APPS_DIR/zellij/zellij.tar.gz -C ${APPS_DIR}/zellij/bin/ 1>/dev/null
-chmod +x $APPS_DIR/zellij/bin/zellij
-
-# ---
-echo "Installing kubectl"
-rm -rf $APPS_DIR/kubectl/
-mkdir -p $APPS_DIR/kubectl/bin
-curl -L -o ${APPS_DIR}/kubectl/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-chmod +x ${APPS_DIR}/kubectl/bin/kubectl
-
-# ---
-echo "Installing neovide"
-rm -rf $APPS_DIR/neovide/
-mkdir -p $APPS_DIR/neovide/bin
-curl -L -o ${APPS_DIR}/neovide/bin/neovide https://github.com/neovide/neovide/releases/latest/download/neovide.AppImage
-
-chmod +x ${APPS_DIR}/neovide/bin/neovide
-
-# ---
-echo "Installing neovim"
-rm -rf $APPS_DIR/neovim/
-mkdir -p $APPS_DIR/neovim/bin
-curl -L -o ${APPS_DIR}/neovim/neovim.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-tar -zvxf ${APPS_DIR}/neovim/neovim.tar.gz -C ${APPS_DIR}/neovim/ 1>/dev/null
-mv --force ${APPS_DIR}/neovim/nvim-linux-x86_64/* ${APPS_DIR}/neovim
-chmod +x ${APPS_DIR}/neovim/bin/nvim
-ln -sf ${APPS_DIR}/neovim/bin/nvim ${APPS_DIR}/neovim/bin/neovim
-ln -sf ${APPS_DIR}/neovim/bin/nvim ${APPS_DIR}/neovim/bin/vim
-
-sudo ln -sf ${APPS_DIR}/neovim/bin/nvim /usr/local/bin/neovim
-sudo ln -sf ${APPS_DIR}/neovim/bin/nvim /usr/local/bin/vim
-sudo ln -sf ${APPS_DIR}/neovim/bin/nvim /usr/local/bin/nvim
-sudo ln -sf ${APPS_DIR}/neovim/bin/nvim /usr/bin/nvim
-sudo ln -sf ${APPS_DIR}/neovim/bin/nvim /usr/bin/neovim
-
-rm -rf ${APPS_DIR}/neovim/neovim.tar.gz
-rm -rf ${APPS_DIR}/neovim/nvim-linux-x86_64/
-
-# ---
-echo "Installing lazygit"
-mkdir -p $APPS_DIR/lazygit/bin
-curl -L -o ${APPS_DIR}/lazygit/lazygit.tar.gz https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz
-
-tar -zvxf ${APPS_DIR}/lazygit/lazygit.tar.gz -C ${APPS_DIR}/lazygit/bin/ 1>/dev/null
-chmod +x ${APPS_DIR}/lazygit/bin/lazygit
-ln -sf ${APPS_DIR}/lazygit/bin/lazygit ${APPS_DIR}/lazygit/bin/lzg
-
-rm -rf ${APPS_DIR}/lazygit/lazygit.tar.gz
-
-# ---
-
-echo "Installing jujutsu"
-mkdir -p $APPS_DIR/jujutsu/bin
-curl -L -o ${APPS_DIR}/jujutsu/jj.tar.gz https://github.com/jj-vcs/jj/releases/download/v${JJ_VERSION}/jj-v${JJ_VERSION}-x86_64-unknown-linux-musl.tar.gz
-tar -zvxf ${APPS_DIR}/jujutsu/jj.tar.gz -C ${APPS_DIR}/jujutsu/bin/ 1>/dev/null
-chmod +x ${APPS_DIR}/jujutsu/bin/jj
-
-ln -sf ${APPS_DIR}/jujutsu/bin/jj ${APPS_DIR}/jujutsu/bin/jj-scm
-ln -sf ${APPS_DIR}/jujutsu/bin/jj ${APPS_DIR}/jujutsu/bin/jujutsu
-
-# ---
-
-echo "Installing dotbot"
-rm -rf $APPS_DIR/dotbot/
-mkdir -p $APPS_DIR/dotbot/bin
-curl -L -o ${APPS_DIR}/dotbot/dotbot.tar.gz https://github.com/anishathalye/dotbot/releases/download/v${DOTBOT_VERSION}/dotbot-linux-x64.tar.gz
-tar -zvxf ${APPS_DIR}/dotbot/dotbot.tar.gz -C ${APPS_DIR}/dotbot/bin/ 1>/dev/null
-chmod +x ${APPS_DIR}/dotbot/bin/dotbot
-
-rm -rf ${APPS_DIR}/dotbot/dotbot.tar.gz
+echo "Applying binary distribution profile: ${CONFIG_PATH}"
+"${binstaller_cmd}" plan --config "${CONFIG_PATH}"
+"${binstaller_cmd}" apply --config "${CONFIG_PATH}"

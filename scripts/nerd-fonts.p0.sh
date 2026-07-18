@@ -2,10 +2,15 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CONFIG_PATH="${NERDFONT_CONFIG:-${REPO_ROOT}/.files/.config/nerd-config-installer/config.yaml}"
 INSTALL_DIR="${NERDFONT_INSTALLER_BIN_DIR:-${HOME}/.local/bin}"
-INSTALLER="${INSTALL_DIR}/nerdfont-install"
-INSTALLER_REPO="${NERDFONT_INSTALLER_REPO:-worxbend/nerd-font-installer}"
+INSTALLER="${INSTALL_DIR}/nerd-fonts-installer"
+INSTALLER_REPO="${NERDFONT_INSTALLER_REPO:-worxbend/nerd-fonts-installer}"
+
+# Prefer the installed/linked config; fall back to the in-repo copy if not applied yet.
+CONFIG_PATH="${NERDFONT_CONFIG:-${HOME}/.config/nerd-fonts-installer/config.yaml}"
+if [ ! -f "${CONFIG_PATH}" ]; then
+    CONFIG_PATH="${REPO_ROOT}/.files/.config/nerd-fonts-installer/config.yaml"
+fi
 
 detect_os() {
     case "$(uname -s)" in
@@ -29,12 +34,12 @@ detect_arch() {
     esac
 }
 
-install_nerdfont_installer() {
+install_nerd_fonts_installer() {
     local os arch archive workdir base_url
 
     os="$(detect_os)"
     arch="$(detect_arch)"
-    archive="nerdfont-install_latest_${os}_${arch}.tar.gz"
+    archive="nerd-fonts-installer_latest_${os}_${arch}.tar.gz"
     base_url="https://github.com/${INSTALLER_REPO}/releases/download/latest"
     workdir="$(mktemp -d)"
 
@@ -50,26 +55,26 @@ install_nerdfont_installer() {
             sha256sum --check --ignore-missing checksums.txt
         fi
         tar -xzf "${archive}"
-        find . -type f -name nerdfont-install -exec chmod +x {} \; -exec mv {} "${INSTALLER}" \;
+        find . -type f -name nerd-fonts-installer -exec chmod +x {} \; -exec mv {} "${INSTALLER}" \;
     )
 
     if [ ! -x "${INSTALLER}" ]; then
-        echo "Downloaded archive did not contain nerdfont-install" >&2
+        echo "Downloaded archive did not contain nerd-fonts-installer" >&2
         exit 1
     fi
 }
 
 if [ ! -f "${CONFIG_PATH}" ]; then
-    echo "Nerd Font installer config not found: ${CONFIG_PATH}" >&2
+    echo "Nerd Fonts installer config not found: ${CONFIG_PATH}" >&2
     exit 1
 fi
 
-if ! command -v nerdfont-install >/dev/null 2>&1 && [ ! -x "${INSTALLER}" ]; then
-    install_nerdfont_installer
+if ! command -v nerd-fonts-installer >/dev/null 2>&1 && [ ! -x "${INSTALLER}" ]; then
+    install_nerd_fonts_installer
 fi
 
-if command -v nerdfont-install >/dev/null 2>&1; then
-    exec nerdfont-install --config "${CONFIG_PATH}"
+if command -v nerd-fonts-installer >/dev/null 2>&1; then
+    exec nerd-fonts-installer --config "${CONFIG_PATH}"
 fi
 
 exec "${INSTALLER}" --config "${CONFIG_PATH}"

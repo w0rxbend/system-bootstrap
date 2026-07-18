@@ -77,6 +77,6 @@ In our specific project history, we encountered this with **Waybar**. Initial se
 We explicitly added the emoji font packages to our installation scripts to ensure consistency across environments:
 
 - **openSUSE**: Added `google-noto-coloremoji-fonts` and `fontawesome-fonts` in `scripts/opensuse/02-extras.sh`.
-- **Arch**: Added `noto-fonts-emoji` in `scripts/arch/03-hyprland.sh`.
+- **Arch**: Added `noto-fonts-emoji` in `scripts/arch/02-base-packages.sh`.
 
 This resolved the rendering issues across the UI without requiring complex manual `fonts.conf` editing.
