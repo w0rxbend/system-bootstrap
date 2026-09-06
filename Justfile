@@ -82,9 +82,7 @@ fedora-full-install: fedora-step-0 fedora-step-1 fedora-step-2 shared-setup
 # Install Arch packages
 arch-install:
     ./scripts/arch/00-system-update.sh
-    ./scripts/arch/01-aur-packages.sh
     ./scripts/arch/02-base-packages.sh
-    ./scripts/arch/03-desktop.sh
 
 # Full Arch bootstrap (packages + shared setup)
 arch-full-install: arch-install shared-setup

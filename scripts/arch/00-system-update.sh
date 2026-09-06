@@ -33,3 +33,5 @@ if [ ! -d "${ZSH:-$HOME/.oh-my-zsh}" ]; then
 else
     echo "Oh My Zsh already installed."
 fi
+
+sudo pacman -S --needed --noconfirm easyeffects

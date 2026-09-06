@@ -60,27 +60,27 @@ spec:
           - path: bin/ya
             mode: "0755"
 
-    - name: zig
-      kind: binary-tool
-      description: Zig compiler toolchain
-      spec:
-        versionRef: zig
-        installDir: ${appsDir}/zig
-        download:
-          url: https://ziglang.org/download/${version}/zig-x86_64-linux-${version}.tar.xz
-          filename: zig.tar.xz
-          archive:
-            type: tar.xz
-            extract:
-              directories:
-                - from: zig-x86_64-linux-${version}
-                  to: .
-        executables:
-          - path: zig
-            mode: "0755"
-        symlinks:
-          - path: bin/zig
-            target: ${installDir}/zig
+    # - name: zig
+    #   kind: binary-tool
+    #   description: Zig compiler toolchain
+    #   spec:
+    #     versionRef: zig
+    #     installDir: ${appsDir}/zig
+    #     download:
+    #       url: https://ziglang.org/download/${version}/zig-x86_64-linux-${version}.tar.xz
+    #       filename: zig.tar.xz
+    #       archive:
+    #         type: tar.xz
+    #         extract:
+    #           directories:
+    #             - from: zig-x86_64-linux-${version}
+    #               to: .
+    #     executables:
+    #       - path: zig
+    #         mode: "0755"
+    #     symlinks:
+    #       - path: bin/zig
+    #         target: ${installDir}/zig
 
     - name: minikube
       kind: binary-tool
