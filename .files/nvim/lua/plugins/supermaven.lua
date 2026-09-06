@@ -1,33 +1,33 @@
 return {
-  "supermaven-inc/supermaven-nvim",
-  event = "VeryLazy",
-  opts = {
-    keymaps = {
-      accept_suggestion = "<C-l>",
-      clear_suggestion = "<C-h>",
-      accept_word = "<C-j>",
-    },
-    log_level = "warn",
-    disable_inline_completion = false, -- disables inline completion for use with cmp
-    disable_keymaps = false, -- disables built in keymaps for more manual control
-  },
-  specs = {
-    {
-      "AstroNvim/astrocore",
-      opts = {
-        options = {
-          g = {
-            -- set the ai_accept function
-            ai_accept = function()
-              local suggestion = require "supermaven-nvim.completion_preview"
-              if suggestion.has_suggestion() then
-                vim.schedule(function() suggestion.on_accept_suggestion() end)
-                return true
-              end
-            end,
-          },
+    "supermaven-inc/supermaven-nvim",
+    event = "VeryLazy",
+    opts = {
+        keymaps = {
+            accept_suggestion = "<C-l>",
+            clear_suggestion = "<C-h>",
+            accept_word = "<C-j>",
         },
-      },
+        log_level = "warn",
+        disable_inline_completion = false, -- disables inline completion for use with cmp
+        disable_keymaps = false,       -- disables built in keymaps for more manual control
     },
-  },
+    specs = {
+        {
+            "AstroNvim/astrocore",
+            opts = {
+                options = {
+                    g = {
+                        -- set the ai_accept function
+                        ai_accept = function()
+                            local suggestion = require "supermaven-nvim.completion_preview"
+                            if suggestion.has_suggestion() then
+                                vim.schedule(function() suggestion.on_accept_suggestion() end)
+                                return true
+                            end
+                        end,
+                    },
+                },
+            },
+        },
+    },
 }
