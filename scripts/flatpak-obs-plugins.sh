@@ -9,10 +9,7 @@ flatpak install flathub com.obsproject.Studio.Plugin.Gstreamer -y
 flatpak install flathub com.obsproject.Studio.Plugin.GStreamerVaapi -y
 flatpak install flathub com.obsproject.Studio.Plugin.OBSPWVideo -y
 flatpak install flathub com.obsproject.Studio.Plugin.AitumMultistream -y
-flatpak install flathub com.obsproject.Studio.Plugin.SceneSwitcher -y
-flatpak install flathub com.obsproject.Studio.Plugin.WaylandHotkeys -y
 flatpak install flathub com.obsproject.Studio.Plugin.CompositeBlur -y
 flatpak install flathub com.obsproject.Studio.Plugin.AdvancedMasks -y
 flatpak install flathub com.obsproject.Studio.Plugin._3DEffect -y
 flatpak install flathub com.obsproject.Studio.Plugin.Shaderfilter -y
-flatpak install flathub com.obsproject.Studio.Plugin.TransitionTable -y
