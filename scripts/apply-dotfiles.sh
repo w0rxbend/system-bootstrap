@@ -10,8 +10,12 @@ set -euo pipefail
 #
 # Configs are applied in two passes because their relative paths resolve against
 # different base directories:
-#   1. `.files/install.conf.yaml`            — shared, base dir `.files`
+#   1. `.files/*.conf.yaml`                  — shared, base dir `.files`
 #   2. `.files/<profile>/install.conf.yaml`  — distro overlay, base dir `.files/<profile>`
+#
+# The shared pass hands dotbot every config in SHARED_CONFIGS at once (`-c` is
+# repeatable), so topic-specific link sets live in their own file next to
+# `install.conf.yaml` rather than being appended to it.
 #
 # Environment overrides:
 #   DOTBOT_VERSION    release tag to fetch (default: latest)
@@ -22,6 +26,12 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DOTFILES_DIR="${REPO_ROOT}/.files"
 DOTBOT_REPO="worxbend/dotbot-go"
 DOTBOT_VERSION="${DOTBOT_VERSION:-latest}"
+
+# Shared configs, applied together with base dir `.files`.
+SHARED_CONFIGS=(
+    install.conf.yaml
+    niri.conf.yaml
+)
 
 read -r -a dotbot_args <<<"${DOTBOT_ARGS:-}"
 
@@ -134,10 +144,14 @@ install_dotbot() {
     echo "${WORKDIR}/dotbot"
 }
 
-if [ ! -f "${DOTFILES_DIR}/install.conf.yaml" ]; then
-    echo "Dotbot config not found: ${DOTFILES_DIR}/install.conf.yaml" >&2
-    exit 1
-fi
+shared_args=()
+for config in "${SHARED_CONFIGS[@]}"; do
+    if [ ! -f "${DOTFILES_DIR}/${config}" ]; then
+        echo "Dotbot config not found: ${DOTFILES_DIR}/${config}" >&2
+        exit 1
+    fi
+    shared_args+=(-c "${DOTFILES_DIR}/${config}")
+done
 
 WORKDIR="$(mktemp -d)"
 trap 'rm -rf "${WORKDIR}"' EXIT
@@ -145,8 +159,8 @@ trap 'rm -rf "${WORKDIR}"' EXIT
 DOTBOT="$(install_dotbot)"
 "${DOTBOT}" --version
 
-info "Applying shared dotfiles: ${DOTFILES_DIR}/install.conf.yaml"
-"${DOTBOT}" -d "${DOTFILES_DIR}" -c "${DOTFILES_DIR}/install.conf.yaml" "${dotbot_args[@]}"
+info "Applying shared dotfiles: ${SHARED_CONFIGS[*]}"
+"${DOTBOT}" -d "${DOTFILES_DIR}" "${shared_args[@]}" "${dotbot_args[@]}"
 
 profile="${DOTFILES_PROFILE:-$(detect_profile)}"
 if [ -z "${profile}" ]; then
