@@ -186,10 +186,10 @@ GitHub Actions runs the same flow:
 
 ## 🧭 Distro Notes
 
-| Distro     | Profile                                   | Desktop Focus              |
-| ---------- | ----------------------------------------- | -------------------------- |
-| Fedora     | `scripts/fedora/*`, `.files/fedora/*`     | GNOME-oriented workstation |
-| Arch Linux | `scripts/arch/*`, `.files/arch/*`         | GNOME + COSMIC             |
+| Distro     | Profile                               | Desktop Focus              |
+| ---------- | ------------------------------------- | -------------------------- |
+| Fedora     | `scripts/fedora/*`, `.files/fedora/*` | GNOME-oriented workstation |
+| Arch Linux | `scripts/arch/*`, `.files/arch/*`     | GNOME + COSMIC             |
 
 Some scripts install system packages, enable services, write system config, or require `sudo`.
 Read a script before running it on a machine you care about.
