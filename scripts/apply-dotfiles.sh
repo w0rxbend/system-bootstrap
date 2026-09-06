@@ -30,7 +30,6 @@ DOTBOT_VERSION="${DOTBOT_VERSION:-latest}"
 # Shared configs, applied together with base dir `.files`.
 SHARED_CONFIGS=(
     install.conf.yaml
-    niri.conf.yaml
 )
 
 read -r -a dotbot_args <<<"${DOTBOT_ARGS:-}"
