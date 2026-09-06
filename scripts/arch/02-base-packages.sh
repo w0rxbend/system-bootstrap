@@ -4,7 +4,7 @@
 sudo pacman -Syu --noconfirm
 
 # Terminal and utilities
-sudo pacman -S --noconfirm alacritty bat kitty hyperfine asciinema wl-clipboard yq jq stacer net-tools xsensors stress
+sudo pacman -S --noconfirm alacritty bat kitty tmux hyperfine asciinema wl-clipboard yq jq stacer net-tools xsensors stress
 
 # Media tools
 sudo pacman -S --noconfirm vlc ffmpeg ffmpegthumbs mpv \
@@ -30,7 +30,7 @@ sudo pacman -S --noconfirm gnome-tweaks
 # Developer tools
 sudo pacman -S --noconfirm llvm clang cmake make gcc \
     clang-tools-extra lldb lld ninja meson \
-    flex bison gperf ccache openssl libffi dfu-util unzip \
+    flex bison gperf ccache openssl libffi dfu-util zip unzip \
     readline base-devel
 
 # GTK and GUI dev

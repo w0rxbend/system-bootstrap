@@ -17,19 +17,17 @@
   </a>
   <img alt="Fedora" src="https://img.shields.io/badge/Fedora-ready-51A2DA?logo=fedora&logoColor=white">
   <img alt="Arch Linux" src="https://img.shields.io/badge/Arch-ready-1793D1?logo=archlinux&logoColor=white">
-  <img alt="openSUSE" src="https://img.shields.io/badge/openSUSE-ready-73BA25?logo=opensuse&logoColor=white">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-green">
 </p>
 
 <p align="center">
   <img src="assets/fedora-black-4k.png" width="49%" alt="Fedora desktop wallpaper">
-  <img src="assets/opensuse-black-4k.png" width="49%" alt="openSUSE desktop wallpaper">
 </p>
 
 ## ✨ What This Is
 
 `system-bootstrap` is a personal workstation automation repo for setting up a polished development environment across
-Fedora, Arch Linux, and openSUSE.
+Fedora and Arch Linux.
 
 It brings together package installation, binary tool installs, Dotbot-managed dotfiles, Nerd Fonts, terminal/editor
 configuration, desktop environments, wallpapers, and maintenance workflows.
@@ -38,7 +36,7 @@ configuration, desktop environments, wallpapers, and maintenance workflows.
 
 | Area         | What You Get                                                        |
 | ------------ | ------------------------------------------------------------------- |
-| 🐧 Distros   | Fedora, Arch Linux, and openSUSE bootstrap scripts                  |
+| 🐧 Distros   | Fedora and Arch Linux bootstrap scripts                             |
 | 🧰 Dev tools | Zsh, tmux, Neovim, Go, Rust, Java, Node, Python, Kubernetes tools   |
 | 🖥 Desktop    | GNOME, COSMIC, Sway, Waybar, Fuzzel, GDM/SDDM tweaks                |
 | 🎨 Terminal  | Alacritty, Kitty, WezTerm, Ghostty, Starship, Zellij                |
@@ -54,7 +52,17 @@ cd ~/.system-bootstrap
 just
 ```
 
-Then run the path for your machine:
+Then run the full bootstrap for your machine — distro packages followed by the shared setup:
+
+```bash
+# Fedora
+just fedora-full-install
+
+# Arch + Hyprland
+just arch-full-install
+```
+
+Or drive the steps yourself if you want to stop and inspect between them:
 
 ```bash
 # Fedora
@@ -65,37 +73,26 @@ just fedora-step-2
 # Arch + Hyprland
 just arch-install
 
-# openSUSE + Sway
-just opensuse-install
-just opensuse-sddm
-```
-
-Finish with the shared setup:
-
-```bash
-just configure-system
-just install-cli-tools
-just install-binaries
-just install-zsh-plugins
-just install-fonts
-just install-flatpaks
-just install-dev-tools
-just apply-dotfiles
+# Shared setup (what `*-full-install` runs after the packages)
+just shared-setup
 ```
 
 ## 🕹 Commands
 
-| Command                  | Purpose                                                            |
-| ------------------------ | ------------------------------------------------------------------ |
-| `just`                   | Show all available recipes                                         |
-| `just configure-system`  | Configure Git, tmux plugin manager, and time settings              |
-| `just install-cli-tools` | Install language/toolchain managers and CLI installers             |
-| `just install-binaries`  | Install portable binary tools into `~/.apps`                       |
-| `just install-fonts`     | Install configured Nerd Fonts with `worxbend/nerd-fonts-installer` |
-| `just apply-dotfiles`    | Force-link dotfiles from `.files`                                  |
-| `just format`            | Format supported repo files                                        |
-| `just lint`              | Syntax-check and lint supported repo files                         |
-| `just check`             | Run the repo quality gate                                          |
+| Command                    | Purpose                                                            |
+| -------------------------- | ------------------------------------------------------------------ |
+| `just`                     | Show all available recipes                                         |
+| `just fedora-full-install` | Fedora packages plus the full shared setup                         |
+| `just arch-full-install`   | Arch packages plus the full shared setup                           |
+| `just shared-setup`        | Run every shared step: config, tools, fonts, flatpaks, dotfiles    |
+| `just configure-system`    | Configure Git, tmux plugin manager, and time settings              |
+| `just install-cli-tools`   | Install language/toolchain managers and CLI installers             |
+| `just install-binaries`    | Install portable binary tools into `~/.apps`                       |
+| `just install-fonts`       | Install configured Nerd Fonts with `worxbend/nerd-fonts-installer` |
+| `just apply-dotfiles`      | Force-link dotfiles from `.files`                                  |
+| `just format`              | Format supported repo files                                        |
+| `just lint`                | Syntax-check and lint supported repo files                         |
+| `just check`               | Run the repo quality gate                                          |
 
 ## 🗂 Layout
 
@@ -106,7 +103,6 @@ just apply-dotfiles
 │   ├── arch/                  # Arch profile (GNOME + COSMIC)
 │   ├── fedora/                # Fedora profile
 │   ├── nvim/                  # Neovim Lua config
-│   ├── opensuse/              # openSUSE + Sway profile
 │   └── install.conf.yaml      # Shared Dotbot manifest
 ├── .github/workflows/         # Auto-format and lint workflow
 ├── assets/                    # Wallpapers, icons, and visual resources
@@ -120,11 +116,23 @@ just apply-dotfiles
 
 Dotfiles live under `.files` and are linked with Dotbot.
 
+Dotbot is not vendored in this repo. `scripts/apply-dotfiles.sh` downloads the
+[dotbot-go](https://github.com/worxbend/dotbot-go) release binary into a temporary directory on demand, verifies its
+published SHA-256, applies the configs, and discards it. It runs two passes: the shared `.files/install.conf.yaml`,
+then the distro overlay (`.files/arch/`, `.files/fedora/`) matching `ID`/`ID_LIKE` in `/etc/os-release`.
+
 The repo is intentionally opinionated: link defaults use `force: true`, so repo-managed files replace local targets.
 Run this only when you want this repository to own those config paths.
 
 ```bash
 just apply-dotfiles
+
+# Preview without touching anything
+DOTBOT_ARGS=-n just apply-dotfiles
+
+# Force a specific overlay, or pin the dotbot release
+DOTFILES_PROFILE=arch just apply-dotfiles
+DOTBOT_VERSION=v0.4.2 just apply-dotfiles
 ```
 
 Managed highlights:
@@ -182,7 +190,6 @@ GitHub Actions runs the same flow:
 | ---------- | ----------------------------------------- | -------------------------- |
 | Fedora     | `scripts/fedora/*`, `.files/fedora/*`     | GNOME-oriented workstation |
 | Arch Linux | `scripts/arch/*`, `.files/arch/*`         | GNOME + COSMIC             |
-| openSUSE   | `scripts/opensuse/*`, `.files/opensuse/*` | Sway + SDDM Wayland        |
 
 Some scripts install system packages, enable services, write system config, or require `sudo`.
 Read a script before running it on a machine you care about.
@@ -199,8 +206,6 @@ Read a script before running it on a machine you care about.
 - [Font fallback and emoji rendering](docs/fonts.md)
 - [Fedora GNOME keyring notes](docs/fedora/gnome/ssh-keyring.md)
 - [Fedora Sway keyring notes](docs/fedora/sway/ssh-keyring.md)
-- [openSUSE Sway keyring notes](docs/suse/sway/ssh-keyring.md)
-- [openSUSE SDDM Wayland notes](docs/suse/sway/sddm-wayland.md)
 
 ## 📄 License
 

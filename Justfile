@@ -17,7 +17,7 @@ lint:
 # Run all repository quality checks
 check: lint
 
-# Run basic system configurations (git, tmux/tpm, time)
+# Run basic system configurations (git, time)
 configure-system:
     ./scripts/configurations.sh
 
@@ -32,6 +32,10 @@ install-binaries:
 # Install Oh-My-Zsh Plugins
 install-zsh-plugins:
     ./scripts/oh-my-zsh-plugins.sh
+
+# Install TPM (Tmux Plugin Manager) and tmux plugins
+install-tmux-plugins:
+    ./scripts/oh-tmux-plugin-manager.sh
 
 # Install Flatpaks
 install-flatpaks:
@@ -53,7 +57,10 @@ install-dev-tools:
 
 # Apply Dotfiles (using Dotbot)
 apply-dotfiles:
-    cd .files && ./install
+    ./scripts/apply-dotfiles.sh
+
+# Run the shared setup that follows any distro package step
+shared-setup: configure-system install-cli-tools install-binaries install-zsh-plugins install-fonts install-flatpaks install-dev-tools apply-dotfiles install-tmux-plugins
 
 # --- Distro Specific ---
 
@@ -69,6 +76,9 @@ fedora-step-1:
 fedora-step-2:
     ./scripts/fedora/02-extras.sh
 
+# Full Fedora bootstrap (packages + shared setup)
+fedora-full-install: fedora-step-0 fedora-step-1 fedora-step-2 shared-setup
+
 # Install Arch packages
 arch-install:
     ./scripts/arch/00-system-update.sh
@@ -76,12 +86,5 @@ arch-install:
     ./scripts/arch/02-base-packages.sh
     ./scripts/arch/03-desktop.sh
 
-# Install OpenSUSE packages
-opensuse-install:
-    ./scripts/opensuse/00-system-update.sh
-    ./scripts/opensuse/01-packages.sh
-    ./scripts/opensuse/02-extras.sh
-
-# Configure SDDM greeter for Wayland + Sway (system-level, requires sudo)
-opensuse-sddm:
-    ./scripts/opensuse/03-sddm.sh
+# Full Arch bootstrap (packages + shared setup)
+arch-full-install: arch-install shared-setup

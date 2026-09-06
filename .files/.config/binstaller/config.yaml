@@ -9,7 +9,6 @@ spec:
   policy:
     mode: developer
     appsDir: ${HOME}/.apps
-    requireConfirmation: false
     continueOnError: true
     allowSudoSymlinks: true
 
@@ -20,7 +19,7 @@ spec:
     kind: v0.31.0
     zellij: v0.44.1
     jujutsu: v0.40.0
-    dotbot: v1.24.0
+    dotbot: v0.4.2
     lazygit: "0.61.0"
     kubectl:
       resolver:
@@ -260,12 +259,12 @@ spec:
 
     - name: dotbot
       kind: binary-tool
-      description: Dotfiles bootstrapper
+      description: Dotfiles bootstrapper (dotbot-go)
       spec:
         versionRef: dotbot
         installDir: ${appsDir}/dotbot
         download:
-          url: https://github.com/anishathalye/dotbot/releases/download/${version}/dotbot-linux-x64.tar.gz
+          url: https://github.com/worxbend/dotbot-go/releases/download/${version}/dotbot-linux-amd64.tar.gz
           filename: dotbot.tar.gz
           archive:
             type: tar.gz

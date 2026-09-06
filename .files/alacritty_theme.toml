@@ -1,5 +1,7 @@
+# Catppuccin Mocha, with the background swapped for libadwaita's dark
+# view_bg_color so the terminal matches GNOME/Adwaita content areas.
 [colors.primary]
-background        = "#1e1e2e"
+background        = "#1e1e1e"
 foreground        = "#a6adc8"
 dim_foreground    = "#7f849c"
 bright_foreground = "#cdd6f4"

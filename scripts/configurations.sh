@@ -1,10 +1,5 @@
 #!/usr/bin/env zsh
 
-# Clone TPM (Tmux Plugin Manager)
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-
 echo "Init base git configuration"
 git config --global user.email "balyszyn@gmail.com"
 git config --global user.name "w0rxbend"

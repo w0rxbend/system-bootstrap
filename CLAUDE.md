@@ -5,7 +5,7 @@ Guidance for working in this repository.
 ## What this is
 
 `system-bootstrap` is a personal, multi-distro Linux workstation automation repo — **not an
-application**. It provisions a dev machine from scratch across **Fedora, Arch, and openSUSE** using
+application**. It provisions a dev machine from scratch across **Fedora and Arch** using
 shell scripts orchestrated by a `Justfile`, plus Dotbot-managed dotfiles. There is no build, test
 suite, or runtime; "correctness" means the scripts run cleanly and pass the format/lint gate.
 
@@ -15,11 +15,13 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
   call scripts in `scripts/`.
 - `scripts/` — Bash/zsh provisioning. Shared setup at the top level (`cli-tools.sh`,
   `binary-dist.sh`, `configurations.sh`, `install_golang.sh`, …); distro-specific under
-  `scripts/arch/`, `scripts/fedora/`, `scripts/opensuse/` (numbered `00-`, `01-`, … run order).
+  `scripts/arch/`, `scripts/fedora/` (numbered `00-`, `01-`, … run order).
 - `scripts/format.sh`, `scripts/lint.sh` — the quality gate (well-structured, `set -euo pipefail`,
   degrade gracefully when a tool is absent). Treat these as the reference style for new scripts.
 - `.files/` — dotfiles linked into `$HOME` by **Dotbot** via `install.conf.yaml` (root + per-distro
   overlays). Links use `force: true` — applying dotfiles overwrites matching local config paths.
+  Dotbot is not vendored here; `scripts/apply-dotfiles.sh` fetches the `worxbend/dotbot-go` release
+  binary to a temp dir on demand and applies the root config then the matching distro overlay.
   Neovim config (`.files/nvim/`) is an AstroNvim setup with a pinned `lazy-lock.json`.
 - `docs/`, `assets/` — notes (keyrings, SDDM, fonts) and wallpapers/icons.
 

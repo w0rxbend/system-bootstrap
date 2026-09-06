@@ -30,12 +30,6 @@ sudo dnf install google-noto-emoji-color-fonts
 
 _Note: Fedora usually installs this by default in Workstation/GNOME, but it might be missing in minimal Sway installs._
 
-**openSUSE** (Implemented in `scripts/opensuse/02-extras.sh`)
-
-```bash
-sudo zypper --non-interactive install google-noto-coloremoji-fonts fontawesome-fonts
-```
-
 ## How It Works (Fontconfig)
 
 Linux uses **Fontconfig** to handle font fallback. When an application requests a character (like 🚀) that isn't in your primary font (e.g., JetBrainsMono Nerd Font), Fontconfig looks through a prioritized list of other installed fonts to find one that has it.
@@ -76,7 +70,6 @@ In our specific project history, we encountered this with **Waybar**. Initial se
 **Resolution:**
 We explicitly added the emoji font packages to our installation scripts to ensure consistency across environments:
 
-- **openSUSE**: Added `google-noto-coloremoji-fonts` and `fontawesome-fonts` in `scripts/opensuse/02-extras.sh`.
 - **Arch**: Added `noto-fonts-emoji` in `scripts/arch/02-base-packages.sh`.
 
 This resolved the rendering issues across the UI without requiring complex manual `fonts.conf` editing.
