@@ -72,6 +72,8 @@
   "notificationPopupPrivacyMode": true,
   "notificationCompactMode": true,
   "notificationShowTimeoutBar": true,
+  "osdAlwaysShowValue": true,
+  "osdPosition": 4,
   "osdMediaPlaybackEnabled": true,
   "osdPowerProfileEnabled": true,
   "updaterCheckOnStart": true,
