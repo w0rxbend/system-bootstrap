@@ -1,0 +1,15 @@
+# Niri + DankMaterialShell. Every active name resolves with `pacman -Si` on
+# CachyOS (cachyos-extra-v3) and has a stated source.
+# The DMS shell itself (dms, dgop, danksearch) is not in the pacman repos: it
+# comes from the DMS installer. See README.md.
+
+# .files/.config/niri/config.kdl, .files/niri.conf.yaml
+niri
+# .files/.config/niri/config.kdl:136 (window rule for namespace "^quickshell$")
+quickshell
+# DMS README: theming engine for wallpaper-based color schemes
+matugen
+
+# unverified: xwayland-satellite cliphist cava
+# They exist in the repos, but no Niri/DMS file references them yet. Confirm
+# against the Niri host's `pacman -Qqe` before enabling.
