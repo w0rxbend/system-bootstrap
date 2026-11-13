@@ -8,6 +8,10 @@ if ! command -v pacman >/dev/null 2>&1; then
 fi
 
 sudo pacman -S --needed --noconfirm \
+    sway \
+    python \
+    libpulse \
+    alacritty \
     just \
     fuzzel \
     kanshi \

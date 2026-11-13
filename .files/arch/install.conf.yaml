@@ -10,12 +10,12 @@
       recursive: true
 - link:
     ~/system-update.sh: ./arch-system-update.sh
-    ~/.local/backgrounds: ../../assets/arch-backgrounds
+    ~/.local/backgrounds: ../../assets/wallpapers
 
 - shell:
-    - for i in {1..9}; do; gsettings set org.gnome.shell.keybindings switch-to-application-$i "[]"; done
-    - for i in {1..9}; do; gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']"; done
-    - for i in {1..9}; do; gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i "['<Super><Shift>$i']"; done
-    - gsettings set org.gnome.mutter dynamic-workspaces false
-    - gsettings set org.gnome.desktop.wm.preferences num-workspaces 9
-    - gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Super>Print', 'Print']"
+    - for i in 1 2 3 4 5 6 7 8 9; do gsettings list-schemas | grep -qx org.gnome.shell.keybindings && gsettings set org.gnome.shell.keybindings switch-to-application-$i "[]" || true; done
+    - for i in 1 2 3 4 5 6 7 8 9; do gsettings list-schemas | grep -qx org.gnome.desktop.wm.keybindings && gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']" || true; done
+    - for i in 1 2 3 4 5 6 7 8 9; do gsettings list-schemas | grep -qx org.gnome.desktop.wm.keybindings && gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-$i "['<Super><Shift>$i']" || true; done
+    - gsettings list-schemas | grep -qx org.gnome.mutter && gsettings set org.gnome.mutter dynamic-workspaces false || true
+    - gsettings list-schemas | grep -qx org.gnome.desktop.wm.preferences && gsettings set org.gnome.desktop.wm.preferences num-workspaces 9 || true
+    - gsettings list-schemas | grep -qx org.gnome.shell.keybindings && gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Super>Print', 'Print']" || true

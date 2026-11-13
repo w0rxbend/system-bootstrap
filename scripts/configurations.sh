@@ -8,5 +8,7 @@ git config --global init.defaultBranch main
 git config --global core.autocrlf input
 
 echo "Configuring Time..."
-timedatectl set-local-rtc 0
-timedatectl set-ntp true
+if [ -d /run/systemd/system ]; then
+    sudo timedatectl set-local-rtc 0
+    sudo timedatectl set-ntp true
+fi

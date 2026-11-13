@@ -65,7 +65,7 @@ exec_always "pkill -x swayidle || true; exec $scripts/idle.sh"
 exec_always "pkill -x autotiling || true; exec autotiling"
 # skbd is the layout daemon. SWAYSOCK changes every Sway start, so the unit
 # is restarted here instead of enabled at login.
-exec_always "systemctl --user import-environment SWAYSOCK && systemctl --user restart skbd.service"
+exec_always "systemctl --user cat skbd.service >/dev/null 2>&1 && systemctl --user import-environment SWAYSOCK && systemctl --user restart skbd.service"
 exec_always "$scripts/sunset.sh"
 exec_always "pkill -x wpaperd || true; exec wpaperd -d"
 exec_always "$scripts/wob.sh"

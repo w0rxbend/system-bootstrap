@@ -206,12 +206,6 @@ spec:
           - path: /usr/local/bin/vim
             target: ${installDir}/bin/nvim
             sudo: true
-          - path: /usr/bin/nvim
-            target: ${installDir}/bin/nvim
-            sudo: true
-          - path: /usr/bin/neovim
-            target: ${installDir}/bin/nvim
-            sudo: true
 
     - name: lazygit
       kind: binary-tool

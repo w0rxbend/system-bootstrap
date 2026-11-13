@@ -83,7 +83,7 @@ if [[ -f "${HOME}/.cargo/env" ]]; then
 fi
 
 printf 'System info: %s\n' "$(uname -a)"
-printf 'shell: %s\n' "${SHELL}"
+printf 'shell: %s\n' "${SHELL:-unknown}"
 
 update_system_packages() {
     if have shelly; then
@@ -125,7 +125,6 @@ update_cargo_binstall_crates() {
 update_nvm_and_node() {
     local nvm_dir="${NVM_DIR:-${HOME}/.nvm}"
     local latest_tag
-    local current_node
 
     if [[ ! -s "${nvm_dir}/nvm.sh" ]]; then
         skip "nvm not installed"
@@ -138,15 +137,18 @@ update_nvm_and_node() {
         git -C "${nvm_dir}" checkout "${latest_tag}"
     fi
 
-    # shellcheck source=/dev/null
-    source "${nvm_dir}/nvm.sh"
-
-    current_node="$(nvm current 2>/dev/null || true)"
-    if [[ -n "${current_node}" && "${current_node}" != "none" ]]; then
-        nvm install node --reinstall-packages-from=current --latest-npm
-    else
-        nvm install node --latest-npm
-    fi
+    # nvm.sh is not safe under `set -u`; run it in a child shell so an
+    # unbound variable fails this step instead of aborting the updater.
+    # shellcheck disable=SC2016
+    bash -c '
+        source "$1/nvm.sh"
+        current_node="$(nvm current 2>/dev/null || true)"
+        if [[ -n "${current_node}" && "${current_node}" != "none" ]]; then
+            nvm install node --reinstall-packages-from=current --latest-npm
+        else
+            nvm install node --latest-npm
+        fi
+    ' _ "${nvm_dir}"
 }
 
 update_sdkman() {
@@ -155,12 +157,16 @@ update_sdkman() {
         skip "SDKMAN not installed"
         return 0
     fi
-    # shellcheck source=/dev/null
-    source "${init}"
-    sdkman_auto_answer=true
-    sdk selfupdate
-    sdk update
-    sdk upgrade
+    # sdkman-init.sh reads unset variables; run it in a child shell so
+    # `set -u` here cannot abort the whole updater.
+    # shellcheck disable=SC2016
+    bash -c '
+        source "$1"
+        sdkman_auto_answer=true
+        sdk selfupdate
+        sdk update
+        sdk upgrade
+    ' _ "${init}"
 }
 
 update_pyenv() {

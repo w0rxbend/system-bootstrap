@@ -4,7 +4,7 @@
 sudo pacman -Syu --noconfirm
 
 # Terminal and utilities
-sudo pacman -S --noconfirm alacritty bat kitty tmux hyperfine asciinema wl-clipboard yq jq stacer net-tools xsensors stress
+sudo pacman -S --noconfirm alacritty bat kitty tmux hyperfine asciinema wl-clipboard yq jq net-tools xsensors stress
 
 # Media tools
 sudo pacman -S --noconfirm vlc ffmpeg ffmpegthumbs mpv \
@@ -36,8 +36,7 @@ sudo pacman -S --noconfirm llvm clang cmake make gcc \
 # GTK and GUI dev
 sudo pacman -S --noconfirm gtk3 gtk4 \
     gobject-introspection libxrandr libxi libxinerama libxcursor libxxf86vm \
-    libx11 libxext libxft libxrender libxfixes mesa mesa-utils \
-    mesa-vdpau mesa-libgl
+    libx11 libxext libxft libxrender libxfixes mesa mesa-utils
 # Fonts
 sudo pacman -S --noconfirm ttf-fira-code ttf-font-awesome noto-fonts noto-fonts-emoji
 
@@ -45,7 +44,7 @@ sudo pacman -S --noconfirm ttf-fira-code ttf-font-awesome noto-fonts noto-fonts-
 sudo pacman -S --noconfirm zathura zathura-pdf-mupdf mupdf
 
 # LaTeX
-sudo pacman -S --noconfirm texlive-core texlive-bin texlive-xetex
+sudo pacman -S --noconfirm texlive-basic texlive-bin texlive-xetex
 
 # Crystal language (AUR) — disabled: no AUR helper on CachyOS by default
 # paru -S --noconfirm crystal
@@ -66,7 +65,3 @@ sudo usermod -aG libvirt $(whoami)
 sudo pacman -S --needed --noconfirm docker docker-compose docker-buildx
 sudo systemctl enable --now docker.service
 sudo usermod -aG docker "$(whoami)"
-
-# --- Time Sync ---
-sudo timedatectl set-local-rtc 0
-sudo timedatectl set-ntp true

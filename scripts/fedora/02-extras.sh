@@ -9,9 +9,5 @@ sudo dnf -y install code
 # ── Containers ────────────────────────────────────────────────────────────────────
 sudo dnf -y install podman podman-docker
 
-# ── System configuration ──────────────────────────────────────────────────────────
-timedatectl set-local-rtc 0
-timedatectl set-ntp true
-
 # ── Other packages ────────────────────────────────────────────────────────────────
 sudo dnf install -y toolbox zoxide

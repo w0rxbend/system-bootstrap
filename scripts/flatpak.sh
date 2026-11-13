@@ -76,7 +76,6 @@ flatpak install flathub com.vscodium.codium -y
 flatpak install flathub io.gitlab.news_flash.NewsFlash -y
 
 # ===================== Health & Fitness ====================
-flatpak install flathub io.github.diegopvlk.Dosage -y
 flatpak install flathub dev.Cogitri.Health -y
 
 # ===================== Exhibit & Miscellaneous =====================
