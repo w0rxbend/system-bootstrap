@@ -13,5 +13,10 @@ build/
 node_modules/
 __pycache__/
 
+# Installer byproducts and timestamped backups
+*.bak.[0-9]*
+/kustomize
+/Miniforge3-*.sh
+
 # Local override
 local.sh
