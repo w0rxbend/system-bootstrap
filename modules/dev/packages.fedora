@@ -1,0 +1,18 @@
+# code comes from the VS Code repo that the base module adds.
+pipx libsecret libsecret-devel
+# Compilers and build tools
+gcc gcc-c++ clang clangd clang-format clang-analyzer clang-tools-extra
+llvm llvm-devel clang-devel compiler-rt lld lldb
+make cmake meson ninja-build ccache flex bison gperf
+readline-devel libffi-devel openssl-devel openssl
+dfu-util
+# Debugging and profiling
+gdb valgrind strace ltrace perf wireshark-cli protobuf-compiler
+# Development libraries
+gtk3-devel gtk4 gtk4-devel gobject-introspection gobject-introspection-devel
+webkitgtk6.0-devel
+libXcursor-devel libXrandr-devel libXi-devel libXinerama-devel libXxf86vm-devel
+mesa-libGL mesa-libGL-devel mesa-libgbm mesa-libglapi mesa-libEGL mesa-filesystem
+# LaTeX
+texlive-scheme-basic texlive-collection-xetex
+code

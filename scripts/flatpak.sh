@@ -1,82 +1,78 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+set -euo pipefail
 
-# ===================== Internet Browsers =====================
-flatpak install flathub io.gitlab.librewolf-community -y
-flatpak install flathub com.google.Chrome -y
-flatpak install flathub com.brave.Browser -y
-flatpak install flathub app.zen_browser.zen -y
-flatpak install flathub dev.zed.Zed -y
+# Flatpak apps from Flathub, in one non-interactive transaction.
+# Run by modules/desktop/setup.sh after it adds the flathub remote.
+# GNOME-only apps are installed by modules/gnome/setup.sh.
 
-# ===================== Communication =====================
-flatpak install flathub org.telegram.desktop -y
-flatpak install flathub com.discordapp.Discord -y
-flatpak install flathub org.zulip.Zulip -y
-flatpak install flathub dev.vencord.Vesktop -y
+APPS=(
+    # Internet Browsers
+    io.gitlab.librewolf-community
+    com.google.Chrome
+    com.brave.Browser
+    app.zen_browser.zen
+    dev.zed.Zed
+    # Communication
+    org.telegram.desktop
+    com.discordapp.Discord
+    org.zulip.Zulip
+    dev.vencord.Vesktop
+    # Media & Audio
+    com.spotify.Client
+    org.audacityteam.Audacity
+    org.kde.audiotube
+    io.github.hrkfdn.ncspot
+    org.gnome.Decibels
+    io.bassi.Amberol
+    com.github.neithern.g4music
+    # Video & Graphics Creation
+    org.kde.kdenlive
+    org.inkscape.Inkscape
+    org.kde.krita
+    org.blender.Blender
+    org.freecad.FreeCAD
+    org.godotengine.Godot
+    org.librecad.librecad
+    com.bambulab.BambuStudio
+    # Writing & Text Tools
+    io.gitlab.liferooter.TextPieces
+    org.gnome.gitlab.somas.Apostrophe
+    org.gnome.gitlab.ilhooq.Bookup
+    io.github.diegopvlk.Dosage
+    page.codeberg.censor.Censor
+    com.logseq.Logseq
+    # Terminal & Shell
+    app.devsuite.Ptyxis
+    org.wezfurlong.wezterm
+    # System Utilities
+    com.github.tchx84.Flatseal
+    io.github.giantpinkrobots.flatsweep
+    io.github.flattool.Warehouse
+    net.nokyan.Resources
+    io.missioncenter.MissionCenter
+    be.alexandervanhee.gradia
+    io.github.mrvladus.List
+    com.belmoussaoui.Authenticator
+    org.gnome.Polari
+    org.gnome.dspy
+    io.github.swordpuffin.rewaita
+    org.gnome.design.Emblem
+    org.mozilla.vpn
+    io.github.zingytomato.netpeek
+    com.oguzhaninan.Stacer
+    # Productivity Tools
+    com.pojtinger.felicitas.Sessions
+    com.rafaelmardojai.Blanket
+    io.github.nozwock.Packet
+    org.localsend.localsend_app
+    # DevTools
+    com.vscodium.codium
+    # News & Feeds
+    io.gitlab.news_flash.NewsFlash
+    # Health & Fitness
+    dev.Cogitri.Health
+    # Exhibit & Miscellaneous
+    io.github.nokse22.Exhibit
+)
 
-# ===================== Media & Audio =====================
-flatpak install flathub com.spotify.Client -y
-flatpak install flathub org.audacityteam.Audacity -y
-flatpak install flathub org.kde.audiotube -y
-flatpak install flathub io.github.hrkfdn.ncspot -y
-flatpak install flathub org.gnome.Decibels -y
-flatpak install flathub io.bassi.Amberol -y
-flatpak install flathub com.github.neithern.g4music -y
-
-# ===================== Video & Graphics Creation =====================
-flatpak install flathub org.kde.kdenlive -y
-flatpak install flathub org.inkscape.Inkscape -y
-flatpak install flathub org.kde.krita -y
-flatpak install flathub org.blender.Blender -y
-flatpak install flathub org.freecad.FreeCAD -y
-flatpak install flathub org.godotengine.Godot -y
-flatpak install flathub org.librecad.librecad -y
-flatpak install flathub com.bambulab.BambuStudio -y
-
-# ===================== Writing & Text Tools =====================
-flatpak install flathub io.gitlab.liferooter.TextPieces -y
-flatpak install flathub org.gnome.gitlab.somas.Apostrophe -y
-flatpak install flathub org.gnome.gitlab.ilhooq.Bookup -y
-flatpak install flathub io.github.diegopvlk.Dosage -y
-flatpak install flathub page.codeberg.censor.Censor -y
-flatpak install flathub com.logseq.Logseq -y
-
-# ===================== Terminal & Shell =====================
-flatpak install flathub app.devsuite.Ptyxis -y
-flatpak install flathub org.wezfurlong.wezterm -y
-
-# ===================== System Utilities =====================
-flatpak install flathub com.mattjakeman.ExtensionManager -y
-flatpak install flathub com.github.tchx84.Flatseal -y
-flatpak install flathub io.github.giantpinkrobots.flatsweep -y
-flatpak install flathub io.github.flattool.Warehouse -y
-flatpak install flathub net.nokyan.Resources -y
-flatpak install flathub page.tesk.Refine -y
-flatpak install flathub io.missioncenter.MissionCenter -y
-flatpak install flathub be.alexandervanhee.gradia -y
-flatpak install flathub io.github.mrvladus.List -y
-flatpak install flathub com.belmoussaoui.Authenticator -y
-flatpak install flathub org.gnome.Polari -y
-flatpak install flathub org.gnome.dspy -y
-flatpak install flathub io.github.swordpuffin.rewaita -y
-flatpak install flathub org.gnome.design.Emblem -y
-flatpak install flathub org.mozilla.vpn -y
-flatpak install flathub io.github.zingytomato.netpeek -y
-flatpak install flathub com.oguzhaninan.Stacer -y
-
-# ===================== Productivity Tools =================
-flatpak install flathub com.pojtinger.felicitas.Sessions -y
-flatpak install flathub com.rafaelmardojai.Blanket -y
-flatpak install flathub io.github.nozwock.Packet -y
-flatpak install flathub org.localsend.localsend_app -y
-
-# ===================== DevTools =====================
-flatpak install flathub com.vscodium.codium -y
-
-# ===================== News & Feeds =====================
-flatpak install flathub io.gitlab.news_flash.NewsFlash -y
-
-# ===================== Health & Fitness ====================
-flatpak install flathub dev.Cogitri.Health -y
-
-# ===================== Exhibit & Miscellaneous =====================
-flatpak install flathub io.github.nokse22.Exhibit -y
+flatpak install -y --noninteractive flathub "${APPS[@]}"

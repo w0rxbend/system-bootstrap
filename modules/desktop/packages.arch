@@ -1,0 +1,11 @@
+# Terminals and audio
+alacritty kitty wl-clipboard easyeffects
+# Media
+vlc ffmpeg ffmpegthumbs mpv
+gstreamer gst-plugins-base gst-plugins-good gst-plugin-pipewire
+gst-plugins-bad gst-plugins-ugly gst-libav
+libva-utils libva libvdpau-va-gl v4l2loopback-dkms
+# Fonts
+ttf-fira-code ttf-font-awesome noto-fonts noto-fonts-emoji
+# Documents
+zathura zathura-pdf-mupdf mupdf

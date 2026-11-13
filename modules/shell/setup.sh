@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Shell: a host-local ~/.zshrc stub, Oh My Zsh plugins and tmux plugins.
+# Shell: a host-local ~/.zshrc stub, Oh My Zsh, zsh as login shell,
+# Oh My Zsh plugins and tmux plugins.
 # Run by scripts/host.sh after this module's dotbot.yaml linked
 # ~/.config/zsh/zshrc and ~/.tmux.conf.
 #
@@ -32,6 +33,28 @@ if [ ! -e "${ZSHRC}" ]; then
     printf '%s\n' "${STUB_LINE}" >"${ZSHRC}"
 elif ! grep -qF '.config/zsh/zshrc' "${ZSHRC}"; then
     skip "${ZSHRC} does not load the shared config; add: ${STUB_LINE}"
+fi
+
+# Oh My Zsh after the stub: KEEP_ZSHRC=yes keeps it, and RUNZSH/CHSH=no stop
+# the installer from starting zsh or prompting.
+OMZ_DIR="${ZSH:-${HOME}/.oh-my-zsh}"
+if [ -f "${OMZ_DIR}/oh-my-zsh.sh" ]; then
+    skip "Oh My Zsh already installed in ${OMZ_DIR}"
+else
+    info "Installing Oh My Zsh"
+    omz_tmp="$(mktemp -d)"
+    trap 'rm -rf -- "${omz_tmp}"' EXIT
+    curl -fsSL -o "${omz_tmp}/install.sh" https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh "${omz_tmp}/install.sh" --unattended
+fi
+
+zsh_path="$(command -v zsh)" || die "zsh is not installed; it is in this module's package list"
+user="${USER:-$(id -un)}"
+if [ "$(getent passwd "${user}" | cut -d: -f7)" = "${zsh_path}" ]; then
+    skip "login shell of ${user} is already ${zsh_path}"
+else
+    info "Setting the login shell of ${user} to ${zsh_path}"
+    sudo chsh -s "${zsh_path}" "${user}"
 fi
 
 "${REPO_ROOT}/scripts/oh-my-zsh-plugins.sh"

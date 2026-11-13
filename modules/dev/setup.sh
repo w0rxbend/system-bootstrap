@@ -13,8 +13,10 @@ set -euo pipefail
 "${REPO_ROOT}/scripts/install_golang.sh"
 "${REPO_ROOT}/scripts/sdkman-packages.sh"
 
-if have conda; then
-    conda config --set changeps1 False
+# Miniforge was possibly installed a moment ago, so it is not on PATH yet.
+conda_bin="$(command -v conda || printf '%s' "${HOME}/.miniforge3/bin/conda")"
+if [ -x "${conda_bin}" ]; then
+    "${conda_bin}" config --set changeps1 False
 else
-    skip "conda is not on PATH; changeps1 not set (open a new shell and re-run this module)"
+    skip "conda not found; changeps1 not set"
 fi

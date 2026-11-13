@@ -1,0 +1,10 @@
+# ffmpeg itself is swapped in by setup.sh (RPM Fusion, --allowerasing).
+alacritty kitty wl-clipboard foot wev
+# Media
+vlc mpv gstreamer1-vaapi imv
+gstreamer1-plugins-good gstreamer1-plugins-base gstreamer1-plugin-openh264
+libva libva-utils mesa-va-drivers
+v4l2loopback
+# Fonts and documents
+fira-code-fonts
+zathura mupdf

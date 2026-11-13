@@ -1,0 +1,6 @@
+# From scripts/arch/00-system-update.sh and 02-base-packages.sh (zip unzip); just from sway/00-packages.sh.
+ca-certificates curl gnupg wget git fuse3 util-linux
+pipewire pipewire-alsa pipewire-pulse wireplumber
+power-profiles-daemon upower flatpak
+zip unzip
+just

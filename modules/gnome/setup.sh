@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# GNOME: workspace keybindings, and PaperWM settings when PaperWM is installed.
+# GNOME: workspace keybindings, Extension Manager and Refine flatpaks, and
+# PaperWM settings when PaperWM is installed.
 # PaperWM itself is installed by hand; this only loads its settings.
 # Run by scripts/host.sh.
 
@@ -37,6 +38,13 @@ if have gsettings; then
     gset org.gnome.shell.keybindings show-screenshot-ui "['<Super>Print', 'Print']"
 else
     skip "gsettings not found; GNOME keybindings not set"
+fi
+
+if have flatpak; then
+    info "Installing GNOME flatpaks"
+    flatpak install -y --noninteractive flathub com.mattjakeman.ExtensionManager page.tesk.Refine
+else
+    skip "flatpak not found; Extension Manager and Refine not installed"
 fi
 
 if [ ! -d "${PAPERWM_DIR}" ]; then

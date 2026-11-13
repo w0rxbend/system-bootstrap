@@ -1,31 +1,116 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
+set -euo pipefail
 
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# Install user-level language toolchains and CLI installers.
+# Run by modules/dev/setup.sh. Every installer runs non-interactively and is
+# skipped when its tool is already there; ~/system-update.sh updates them.
+# SDKMAN is installed by scripts/sdkman-packages.sh.
 
-curl -s "https://get.sdkman.io" | bash
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | bash
+# shellcheck source=scripts/lib/common.sh
+. "${REPO_ROOT}/scripts/lib/common.sh"
 
-curl https://pyenv.run | bash
+WORKDIR="$(mktemp -d)"
+trap 'rm -rf -- "${WORKDIR}"' EXIT
 
-curl -sSL https://install.python-poetry.org | python3 -
+# Download <url> into the work dir as <name> and print the path.
+fetch() {
+    local name="$1" url="$2"
 
-curl -sS https://starship.rs/install.sh | sh
+    curl --proto '=https' --tlsv1.2 -fsSL -o "${WORKDIR}/${name}" "${url}"
+    printf '%s\n' "${WORKDIR}/${name}"
+}
 
-curl -fsSL https://get.pnpm.io/install.sh | sh -
+# True, with a message, when <command> is on PATH or <path> exists.
+installed() {
+    if have "$1" || [ -e "$2" ]; then
+        skip "$1 already installed"
+        return 0
+    fi
+    return 1
+}
 
-curl -fsSL https://install.julialang.org | sh
+install_rustup() {
+    installed rustup "${HOME}/.cargo/bin/rustup" && return 0
+    sh "$(fetch rustup.sh https://sh.rustup.rs)" -y
+}
 
-curl -sfS "https://dotenvx.sh?directory=${HOME}/.local/bin" | sh
+install_nvm() {
+    installed nvm "${NVM_DIR:-${HOME}/.nvm}/nvm.sh" && return 0
+    bash "$(fetch nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh)"
+}
 
-curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh
-rm Miniforge3-$(uname)-$(uname -m).sh
+install_pyenv() {
+    installed pyenv "${PYENV_ROOT:-${HOME}/.pyenv}/bin/pyenv" && return 0
+    bash "$(fetch pyenv.sh https://pyenv.run)"
+}
 
-curl -LsSf https://astral.sh/uv/install.sh | sh
+install_poetry() {
+    installed poetry "${HOME}/.local/bin/poetry" && return 0
+    have python3 || die "python3 is required to install poetry"
+    python3 "$(fetch poetry.py https://install.python-poetry.org)"
+}
 
-curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+install_starship() {
+    installed starship /usr/local/bin/starship && return 0
+    sh "$(fetch starship.sh https://starship.rs/install.sh)" -y
+}
 
-curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+install_pnpm() {
+    installed pnpm "${HOME}/.local/share/pnpm/pnpm" && return 0
+    sh "$(fetch pnpm.sh https://get.pnpm.io/install.sh)"
+}
 
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
+install_juliaup() {
+    installed juliaup "${HOME}/.juliaup/bin/juliaup" && return 0
+    sh "$(fetch juliaup.sh https://install.julialang.org)" --yes
+}
+
+install_dotenvx() {
+    installed dotenvx "${HOME}/.local/bin/dotenvx" && return 0
+    sh "$(fetch dotenvx.sh "https://dotenvx.sh?directory=${HOME}/.local/bin")"
+}
+
+# Batch mode into ~/.miniforge3, the prefix .zshrc expects.
+install_miniforge() {
+    local installer
+
+    installed miniforge "${HOME}/.miniforge3/bin/conda" && return 0
+    installer="Miniforge3-$(uname)-$(uname -m).sh"
+    bash "$(fetch "${installer}" "https://github.com/conda-forge/miniforge/releases/latest/download/${installer}")" \
+        -b -p "${HOME}/.miniforge3"
+}
+
+install_uv() {
+    installed uv "${HOME}/.local/bin/uv" && return 0
+    sh "$(fetch uv.sh https://astral.sh/uv/install.sh)"
+}
+
+install_cargo_binstall() {
+    installed cargo-binstall "${HOME}/.cargo/bin/cargo-binstall" && return 0
+    bash "$(fetch cargo-binstall.sh https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh)"
+}
+
+# The upstream script writes ./kustomize, so run it in the work dir and keep
+# the binary in ~/.apps/kustomize/bin (on PATH in .zshrc).
+install_kustomize() {
+    local dest="${HOME}/.apps/kustomize/bin/kustomize" script
+
+    installed kustomize "${dest}" && return 0
+    script="$(fetch install_kustomize.sh https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh)"
+    (cd "${WORKDIR}" && bash "${script}")
+    install -Dm755 "${WORKDIR}/kustomize" "${dest}"
+}
+
+install_helm() {
+    installed helm /usr/local/bin/helm && return 0
+    bash "$(fetch get-helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4)"
+}
+
+have curl || die "curl is required"
+
+for tool in rustup nvm pyenv poetry starship pnpm juliaup dotenvx miniforge uv cargo_binstall kustomize helm; do
+    info "${tool}"
+    "install_${tool}"
+done

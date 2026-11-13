@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-flatpak install flathub com.obsproject.Studio -y
+# OBS Studio and its plugins from Flathub. Run by modules/desktop/setup.sh
+# when host.env sets OBS=1.
 
-# OBS Studio Plugins
-flatpak install flathub com.obsproject.Studio.Plugin.DroidCam -y
-flatpak install flathub com.obsproject.Studio.Plugin.BackgroundRemoval -y
-flatpak install flathub com.obsproject.Studio.Plugin.Gstreamer -y
-flatpak install flathub com.obsproject.Studio.Plugin.GStreamerVaapi -y
-flatpak install flathub com.obsproject.Studio.Plugin.OBSPWVideo -y
-flatpak install flathub com.obsproject.Studio.Plugin.AitumMultistream -y
-flatpak install flathub com.obsproject.Studio.Plugin.CompositeBlur -y
-flatpak install flathub com.obsproject.Studio.Plugin.AdvancedMasks -y
-flatpak install flathub com.obsproject.Studio.Plugin._3DEffect -y
-flatpak install flathub com.obsproject.Studio.Plugin.Shaderfilter -y
+APPS=(
+    com.obsproject.Studio
+    com.obsproject.Studio.Plugin.DroidCam
+    com.obsproject.Studio.Plugin.BackgroundRemoval
+    com.obsproject.Studio.Plugin.Gstreamer
+    com.obsproject.Studio.Plugin.GStreamerVaapi
+    com.obsproject.Studio.Plugin.OBSPWVideo
+    com.obsproject.Studio.Plugin.AitumMultistream
+    com.obsproject.Studio.Plugin.CompositeBlur
+    com.obsproject.Studio.Plugin.AdvancedMasks
+    com.obsproject.Studio.Plugin._3DEffect
+    com.obsproject.Studio.Plugin.Shaderfilter
+)
+
+flatpak install -y --noninteractive flathub "${APPS[@]}"

@@ -64,10 +64,18 @@ pkg_install() {
         return 0
     fi
 
+    pkg_install_names "${distro}" "${names[@]}"
+}
+
+# Install packages by name with the package manager of <distro>.
+pkg_install_names() {
+    local distro="$1"
+    shift
+
     case "${distro}" in
-        arch) sudo pacman -S --needed --noconfirm "${names[@]}" ;;
-        fedora) sudo dnf -y install "${names[@]}" ;;
-        *) die "pkg_install does not support ${distro} yet: ${list}" ;;
+        arch) sudo pacman -S --needed --noconfirm "$@" ;;
+        fedora) sudo dnf -y install "$@" ;;
+        *) die "pkg_install does not support ${distro} yet" ;;
     esac
 }
 
@@ -104,4 +112,24 @@ pkg_check() {
             ;;
         *) die "pkg_check does not support ${distro} yet: ${list}" ;;
     esac
+}
+
+# Enable and start a system service; skipped when systemd is not running.
+enable_service() {
+    if [ -d /run/systemd/system ]; then
+        sudo systemctl enable --now "$1"
+    else
+        skip "systemd is not running; $1 not enabled"
+    fi
+}
+
+# Add the current user to <group>. Takes effect after the next login.
+ensure_user_in_group() {
+    local group="$1" user="${USER:-$(id -un)}"
+
+    if [[ " $(id -nG "${user}") " == *" ${group} "* ]]; then
+        skip "${user} is already in the ${group} group"
+    else
+        sudo usermod -aG "${group}" "${user}"
+    fi
 }
