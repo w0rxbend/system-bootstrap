@@ -1,0 +1,2 @@
+# bat installs the binary as batcat.
+zsh fzf tmux bat zoxide

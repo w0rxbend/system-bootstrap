@@ -21,7 +21,7 @@ Waybar is a flat full-width strip, the same shape as stock swaybar, in the Dux p
 
 ## Apply
 
-From `~/.system-bootstrap`, with `just` installed (`sudo pacman -S --needed just`).
+From `~/.system-bootstrap`. On a fresh machine, `./bootstrap.sh arch-sway` installs `just` and runs `just host arch-sway`.
 
 ```bash
 just dry arch-sway                # preview: package check, dotbot -n, no changes

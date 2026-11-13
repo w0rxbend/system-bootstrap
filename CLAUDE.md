@@ -5,13 +5,14 @@ Guidance for working in this repository.
 ## What this is
 
 `system-bootstrap` is a personal, multi-distro Linux workstation automation repo — **not an
-application**. It provisions a dev machine from scratch across **Arch and Fedora** from
+application**. It provisions a dev machine from scratch across **Arch, Fedora and Ubuntu** from
 per-host module lists (`hosts/`, `modules/`) run by a `Justfile`, plus Dotbot-managed dotfiles. There is no build, test
 suite, or runtime; "correctness" means the scripts run cleanly and pass the format/lint gate.
 
 ## Layout
 
 - `Justfile` — the entry point: `host <h>`, `dry <h>`, `module <h> <m>`, plus `format`/`lint`/`check`.
+- `bootstrap.sh` — POSIX first-run entry: installs git, curl, zsh and just, then `just host <h>`.
 - `hosts/<host>/host.env` — one machine: `DISTRO` (`arch|fedora|ubuntu`) and the ordered `MODULES`
   list; optional `GIT_USER_NAME`, `GIT_USER_EMAIL`, `OBS=1`.
 - `modules/<module>/` — every file optional: `packages.<distro>` (names, `#` comments),
@@ -34,8 +35,8 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
 ## Conventions
 
 - **Every script must be reachable** from a `Justfile` recipe, or from a module `setup.sh` run by
-  `just host`. Don't leave orphan scripts or recipes pointing at non-existent files; `just lint`
-  checks both.
+  `just host`; `bootstrap.sh` is the one entry outside the Justfile. Don't leave orphan scripts or
+  recipes pointing at non-existent files; `just lint` checks both.
 - One owner per link target per host; `just lint` fails on a duplicate within a host's module set.
 - New shell scripts: start with `set -euo pipefail` (bash) and quote variable expansions. Match
   `format.sh`/`lint.sh` for anything new or reworked.

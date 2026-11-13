@@ -23,7 +23,7 @@
 ## ✨ What This Is
 
 `system-bootstrap` is a personal workstation automation repo for setting up a polished development environment across
-Arch Linux and Fedora.
+Arch Linux, Fedora and Ubuntu.
 
 It brings together package installation, binary tool installs, Dotbot-managed dotfiles, Nerd Fonts, terminal/editor
 configuration, desktop environments, wallpapers, and maintenance workflows.
@@ -43,8 +43,14 @@ configuration, desktop environments, wallpapers, and maintenance workflows.
 ## 📦 Quick Start
 
 ```bash
-git clone https://github.com/w0rxbend/system-bootstrap.git ~/.system-bootstrap
+git clone --filter=blob:none https://github.com/w0rxbend/system-bootstrap.git ~/.system-bootstrap
 cd ~/.system-bootstrap
+./bootstrap.sh arch-sway   # fresh machine: installs git, curl, zsh and just, then runs `just host arch-sway`
+```
+
+With `just` installed:
+
+```bash
 just dry arch-sway    # preview: read-only package check, dotbot -n, setup.sh syntax only
 just host arch-sway   # provision for real
 ```
@@ -56,7 +62,7 @@ A machine is a host under `hosts/`. Each `hosts/<host>/host.env` sets `DISTRO` a
 | `arch-niri`    | arch   | base shell dev cli containers virt desktop gnome niri-dms |
 | `arch-sway`    | arch   | base shell dev cli containers virt desktop sway           |
 | `fedora-gnome` | fedora | base shell dev cli containers virt desktop gnome          |
-| `ubuntu-vm`    | ubuntu | base shell dev cli desktop gnome                          |
+| `ubuntu-vm`    | ubuntu | base shell dev cli containers desktop gnome               |
 
 `host.env` may also set `GIT_USER_NAME`, `GIT_USER_EMAIL` and `OBS=1`.
 
@@ -78,6 +84,7 @@ A real run refuses a host whose `DISTRO` is not this machine's distro.
 
 ```text
 .system-bootstrap/
+├── bootstrap.sh               # First run: installs just, then `just host <host>`
 ├── hosts/<host>/host.env      # DISTRO and MODULES of one machine
 ├── modules/<module>/          # every file optional:
 │   ├── packages.<distro>      #   package names, one or more per line
@@ -172,6 +179,7 @@ GitHub Actions runs the same flow:
 | ---------- | --------------------------- | ---------------------------------------------------- |
 | Arch Linux | `modules/*/packages.arch`   | Arch and CachyOS. `niri-dms` has no package list yet |
 | Fedora     | `modules/*/packages.fedora` | base adds RPM Fusion and the VS Code repo            |
+| Ubuntu     | `modules/*/packages.ubuntu` | 24.04 names; `# unverified:` lines need a check      |
 
 Module setup scripts install system packages, enable services, write system config, and use `sudo`.
 Run `just dry <host>` and read a module before running it on a machine you care about.

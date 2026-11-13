@@ -1,0 +1,2 @@
+# Ubuntu 24.04 names. Check on the VM with: apt-cache policy <names>
+ca-certificates curl wget gnupg git fuse3 zip unzip flatpak

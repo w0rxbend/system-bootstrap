@@ -75,6 +75,10 @@ pkg_install_names() {
     case "${distro}" in
         arch) sudo pacman -S --needed --noconfirm "$@" ;;
         fedora) sudo dnf -y install "$@" ;;
+        ubuntu)
+            sudo apt-get update
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$@"
+            ;;
         *) die "pkg_install does not support ${distro} yet" ;;
     esac
 }
@@ -109,6 +113,14 @@ pkg_check() {
                 fi
             done
             return "${missing}"
+            ;;
+        ubuntu)
+            if ! have apt-get; then
+                skip "apt-get not found; cannot check ${list}"
+                return 0
+            fi
+            # A simulation needs no root; it fails on any name apt cannot find.
+            apt-get -s -q install "${names[@]}" >/dev/null
             ;;
         *) die "pkg_check does not support ${distro} yet: ${list}" ;;
     esac

@@ -65,7 +65,9 @@ case "${DISTRO}" in
         add_vscode_repo
         ;;
     ubuntu)
-        skip "no Ubuntu package step yet; install packages by hand"
+        info "Upgrading the system"
+        sudo apt-get update
+        sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
         ;;
     *)
         die "unsupported DISTRO: ${DISTRO}"
