@@ -63,9 +63,7 @@
       "name": "Main Bar",
       "enabled": true,
       "position": 0,
-      "screenPreferences": [
-        "all"
-      ],
+      "screenPreferences": ["all"],
       "showOnLastDisplay": true,
       "leftWidgets": [
         {
@@ -253,11 +251,7 @@
       "trigger": "qrg"
     }
   },
-  "launcherPluginOrder": [
-    "dms_settings_search",
-    "emojiLauncher",
-    "dms_clipboard_search"
-  ],
+  "launcherPluginOrder": ["dms_settings_search", "emojiLauncher", "dms_clipboard_search"],
   "barInsetPaddingShared": 4,
   "configVersion": 42,
   "radiusStrength": 38,
@@ -267,9 +261,7 @@
       "id": "dock",
       "name": "Dock",
       "enabled": true,
-      "screenPreferences": [
-        "all"
-      ],
+      "screenPreferences": ["all"],
       "showOnLastDisplay": true,
       "position": 1,
       "mode": "compact",
@@ -362,9 +354,7 @@
     }
   ],
   "blurBorderSeeded": true,
-  "dmsWindowsFloatingSeeded": [
-    "niri"
-  ],
+  "dmsWindowsFloatingSeeded": ["niri"],
   "matugenScheme": "scheme-neutral",
   "matugenSourceMode": "darkness",
   "matugenSpec": "dms",
