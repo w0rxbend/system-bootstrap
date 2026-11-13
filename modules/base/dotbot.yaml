@@ -15,3 +15,6 @@
 - create:
     - ~/Downloads
     - ~/.vim/undo-history
+
+- link:
+    ~/system-update.sh: modules/base/files/system-update.sh

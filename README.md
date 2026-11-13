@@ -80,6 +80,9 @@ A machine is a host under `hosts/`. Each `hosts/<host>/host.env` sets `DISTRO` a
 
 A real run refuses a host whose `DISTRO` is not this machine's distro.
 
+After provisioning, `~/system-update.sh` (zsh alias `update`) updates system packages, Flatpaks and the user
+toolchains on every distro. The base module links it.
+
 ## 🗂 Layout
 
 ```text

@@ -1,9 +1,0 @@
-# Host-specific links, applied last with the repo root as base dir.
-- defaults:
-    link:
-      relink: true
-      create: true
-      force: true
-
-- link:
-    ~/system-update.sh: .files/fedora/fedora-system-update.sh
