@@ -73,6 +73,10 @@ just fedora-step-2
 # Arch + Hyprland
 just arch-install
 
+# Arch + Sway. Does not run the recipes above.
+just arch-sway-packages
+just arch-sway-dotfiles
+
 # Shared setup (what `*-full-install` runs after the packages)
 just shared-setup
 ```
@@ -84,6 +88,8 @@ just shared-setup
 | `just`                     | Show all available recipes                                         |
 | `just fedora-full-install` | Fedora packages plus the full shared setup                         |
 | `just arch-full-install`   | Arch packages plus the full shared setup                           |
+| `just arch-sway-packages`  | Arch + Sway packages: bar, launcher, lock, sunset, wallpaper, clipboard |
+| `just arch-sway-dotfiles`  | Link only the Arch + Sway configs. Does not touch other profiles   |
 | `just shared-setup`        | Run every shared step: config, tools, fonts, flatpaks, dotfiles    |
 | `just configure-system`    | Configure Git, tmux plugin manager, and time settings              |
 | `just install-cli-tools`   | Install language/toolchain managers and CLI installers             |
@@ -101,6 +107,7 @@ just shared-setup
 ├── .files/                    # Dotfiles managed by Dotbot
 │   ├── .config/               # Shared XDG configs
 │   ├── arch/                  # Arch profile (GNOME + COSMIC)
+│   │   └── sway/              # Arch + Sway overlay, applied on its own
 │   ├── fedora/                # Fedora profile
 │   ├── nvim/                  # Neovim Lua config
 │   └── install.conf.yaml      # Shared Dotbot manifest

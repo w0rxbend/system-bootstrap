@@ -86,3 +86,14 @@ arch-install:
 
 # Full Arch bootstrap (packages + shared setup)
 arch-full-install: arch-install shared-setup
+
+# --- Arch + Sway ---
+# These recipes do not run arch-install, shared-setup, or any other desktop.
+
+# Install Fuzzel, Kanshi, Waybar, and the toxic-green font
+arch-sway-packages:
+    ./scripts/arch/sway/00-packages.sh
+
+# Link only the Arch + Sway dotfiles
+arch-sway-dotfiles:
+    ./scripts/arch/sway/apply-dotfiles.sh

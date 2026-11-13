@@ -1,0 +1,24 @@
+# Applied only by scripts/arch/sway/apply-dotfiles.sh.
+# No clean directive: this must not delete files owned by other profiles.
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- link:
+    ~/.config/sway/config: config/sway/config
+    ~/.config/sway/scripts: config/sway/scripts
+    ~/.config/sway/wallpaper: wallpaper
+    ~/.config/wpaperd/config.toml: config/wpaperd/config.toml
+    ~/.config/waybar/config.jsonc: config/waybar/config.jsonc
+    ~/.config/waybar/style.css: config/waybar/style.css
+    ~/.config/alacritty/theme.toml: config/alacritty/theme.toml
+    ~/.config/alacritty/alacritty.toml: config/alacritty/alacritty.toml
+    ~/.config/fuzzel/fuzzel.ini: config/fuzzel/fuzzel.ini
+    ~/.config/kanshi/config: config/kanshi/config
+    ~/.config/mako/config: config/mako/config
+    ~/.config/foot/foot.ini: config/foot/foot.ini
+    ~/.config/swaynag/config: config/swaynag/config
+    ~/.config/wlsunset/config: config/wlsunset/config
+    ~/.config/wob/wob.ini: config/wob/wob.ini
