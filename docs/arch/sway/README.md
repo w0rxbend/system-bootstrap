@@ -86,7 +86,7 @@ wlsunset shifts the display gamma from 6500 K during the day to 4000 K at night.
 
 ## Wallpaper
 
-`~/.config/sway/wallpaper` links to the `.files/arch/sway/wallpaper` directory. It holds `pmxrh3o9rdgb1.png` from [laggy-tux/sway-Dots](https://github.com/laggy-tux/sway-Dots), the 3840x2160 image that repo sets with swaybg. wpaperd shows a random image from that directory on every output and switches every 30 minutes with a fade. Add images to the directory to rotate them; subdirectories count too. `wpaperctl next` skips to the next image. Change the interval, order, or scaling in `~/.config/wpaperd/config.toml`; wpaperd reloads it on save. The path must stay a directory, because wpaperd rejects `duration` on a single file.
+`~/Pictures/walls` links to the repo's `assets/wallpapers` directory. It includes `pmxrh3o9rdgb1.png` from [laggy-tux/sway-Dots](https://github.com/laggy-tux/sway-Dots). wpaperd shows a random image from that directory on every output and switches every minute with a fade. Add images to the directory to rotate them; subdirectories count too. `wpaperctl next` skips to the next image. Change the interval, order, or scaling in `~/.config/wpaperd/config.toml`; wpaperd reloads it on save. The path must stay a directory, because wpaperd rejects `duration` on a single file.
 
 ## Clipboard
 

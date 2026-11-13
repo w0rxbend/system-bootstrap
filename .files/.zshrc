@@ -210,6 +210,14 @@ export PATH="$PATH:$HOME/.apps/jujutsu/bin"
 export PATH="$PATH:$HOME/.apps/zig/bin"
 # <<< zig install directory <<<
 
+# >>> skbd install directory >>>
+export PATH="$PATH:$HOME/.apps/skbd/bin"
+# <<< skbd install directory <<<
+
+# >>> airgradient-cli install directory >>>
+export PATH="$PATH:$HOME/.apps/airgradient-cli/bin"
+# <<< airgradient-cli install directory <<<
+
 # >>> coursier install directory >>>
 export PATH="$PATH:$HOME/.local/share/coursier/bin"
 # <<< coursier install directory <<<

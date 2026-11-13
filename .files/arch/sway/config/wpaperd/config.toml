@@ -1,7 +1,7 @@
-# Rotates every image in ~/.config/sway/wallpaper on every output.
+# Rotates every image in ~/Pictures/walls (repo assets/wallpapers) on every output.
 # wpaperd reloads this file on save. wpaperctl next skips to the next image.
 [default]
-path     = "~/.config/sway/wallpaper"
-duration = "30m"
+path     = "~/Pictures/walls"
+duration = "1m"
 sorting  = "random"
 mode     = "center"

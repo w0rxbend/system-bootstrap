@@ -74,7 +74,7 @@
     "tooltip": false
   },
   "custom/airgradient": {
-    "exec": "$HOME/.local/bin/airgradient-cli --waybar --waybar-format '\udb81\udfe4 {co2} · \udb80\udcb5 {pm25} · \uf06c {aqi}'",
+    "exec": "$HOME/.apps/airgradient-cli/bin/airgradient-cli --waybar --waybar-format '\udb81\udfe4 {co2} · \udb80\udcb5 {pm25} · \uf06c {aqi}'",
     "return-type": "json",
     "interval": 30,
     "format": "{text}",

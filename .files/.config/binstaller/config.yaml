@@ -21,6 +21,8 @@ spec:
     jujutsu: v0.40.0
     dotbot: v0.4.2
     lazygit: "0.61.0"
+    skbd: v0.4.1
+    airgradient-cli: v0.6.0
     kubectl:
       resolver:
         type: http-text
@@ -274,4 +276,48 @@ spec:
                   to: bin/dotbot
         executables:
           - path: bin/dotbot
+            mode: "0755"
+
+    - name: skbd
+      kind: binary-tool
+      description: Per-window keyboard layout daemon for Sway (worxbend/swaylingo-c)
+      spec:
+        versionRef: skbd
+        installDir: ${appsDir}/skbd/bin
+        download:
+          url: https://github.com/worxbend/swaylingo-c/releases/download/${version}/skbd-linux-amd64
+          filename: skbd
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/swaylingo-c/releases/download/${version}/SHA256SUMS
+              file: skbd-linux-amd64
+        executables:
+          - path: skbd
+            mode: "0755"
+
+    - name: airgradient-cli
+      kind: binary-tool
+      description: AirGradient LAN monitor CLI with Waybar output
+      spec:
+        versionRef: airgradient-cli
+        installDir: ${appsDir}/airgradient-cli
+        download:
+          url: https://github.com/worxbend/airgradient-cli/releases/download/${version}/airgradient-cli-${version}-linux-amd64.tar.gz
+          filename: airgradient-cli.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/airgradient-cli/releases/download/${version}/SHA256SUMS
+              file: ./airgradient-cli-${version}-linux-amd64.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: airgradient-cli
+                  to: bin/airgradient-cli
+        executables:
+          - path: bin/airgradient-cli
             mode: "0755"

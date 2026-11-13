@@ -9,7 +9,7 @@
 - link:
     ~/.config/sway/config: config/sway/config
     ~/.config/sway/scripts: config/sway/scripts
-    ~/.config/sway/wallpaper: wallpaper
+    ~/Pictures/walls: ../../../assets/wallpapers
     ~/.config/wpaperd/config.toml: config/wpaperd/config.toml
     ~/.config/waybar/config.jsonc: config/waybar/config.jsonc
     ~/.config/waybar/style.css: config/waybar/style.css
