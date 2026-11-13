@@ -20,7 +20,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Set up Node.js
         uses: actions/setup-node@v7
@@ -54,6 +54,7 @@ jobs:
         run: just format
 
       - name: Commit formatting changes
+        if: github.ref == 'refs/heads/main'
         run: |
           if git diff --quiet; then
             echo "No formatting changes to commit."

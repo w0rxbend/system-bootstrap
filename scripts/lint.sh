@@ -15,6 +15,11 @@ run() {
     fi
 }
 
+fail() {
+    printf 'error: %s\n' "$*" >&2
+    failures=1
+}
+
 collect_files() {
     find . \
         -path ./.git -prune -o \
@@ -119,8 +124,15 @@ else
 fi
 
 info "Checking YAML syntax"
-if [ "${#yaml_files[@]}" -gt 0 ]; then
+if have ruby; then
     run ruby -e 'require "yaml"; ARGV.each { |file| YAML.load_file(file) }' "${yaml_files[@]}"
+elif have python3 && python3 -c 'import yaml' 2>/dev/null; then
+    run python3 -c 'import sys, yaml
+for path in sys.argv[1:]:
+    with open(path, encoding="utf-8") as handle:
+        list(yaml.safe_load_all(handle))' "${yaml_files[@]}"
+else
+    skip "ruby and python3 yaml not found; YAML syntax check skipped"
 fi
 
 if have yamllint; then
@@ -131,13 +143,19 @@ else
 fi
 
 info "Checking JSON syntax"
-for file in "${strict_json_files[@]}"; do
-    run jq empty "$file"
-done
+if have jq; then
+    for file in "${strict_json_files[@]}"; do
+        run jq empty "$file"
+    done
+else
+    skip "jq not found; JSON syntax check skipped"
+fi
 
 info "Checking JSONC syntax"
 jsonc_parse_targets=("${jsonc_files[@]}" "${json_files_with_comments[@]}")
-if [ "${#jsonc_parse_targets[@]}" -gt 0 ]; then
+if ! have python3; then
+    skip "python3 not found; JSONC syntax check skipped"
+elif [ "${#jsonc_parse_targets[@]}" -gt 0 ]; then
     run python3 - "${jsonc_parse_targets[@]}" <<'PY'
 import json
 import re
@@ -188,7 +206,9 @@ PY
 fi
 
 info "Checking TOML syntax"
-if [ "${#toml_files[@]}" -gt 0 ]; then
+if ! have python3; then
+    skip "python3 not found; TOML syntax check skipped"
+elif [ "${#toml_files[@]}" -gt 0 ]; then
     run python3 - "${toml_files[@]}" <<'PY'
 import sys
 import tomllib
@@ -207,9 +227,13 @@ else
 fi
 
 info "Checking Lua syntax"
-for file in "${lua_files[@]}"; do
-    run luac -p "$file"
-done
+if have luac; then
+    for file in "${lua_files[@]}"; do
+        run luac -p "$file"
+    done
+else
+    skip "luac not found; Lua syntax check skipped"
+fi
 
 if have stylua; then
     info "Checking Lua formatting with stylua"
@@ -226,9 +250,13 @@ else
 fi
 
 info "Checking XML syntax"
-for file in "${xml_files[@]}"; do
-    run xmllint --noout "$file"
-done
+if have xmllint; then
+    for file in "${xml_files[@]}"; do
+        run xmllint --noout "$file"
+    done
+else
+    skip "xmllint not found; XML syntax check skipped"
+fi
 
 if have prettier; then
     info "Checking Prettier-managed files"
@@ -252,6 +280,137 @@ elif have markdownlint; then
     run markdownlint "${md_files[@]}"
 else
     skip "markdownlint not found; Markdown lint skipped"
+fi
+
+# Print "target<TAB>source" for every link in a dotbot manifest. Only the
+# restricted form used in this repo is understood (`- link:` followed by
+# 4-space `target: source` lines); anything else fails instead of being
+# silently skipped.
+manifest_links() {
+    awk -v file="$1" '
+        /^[[:space:]]*(#|$)/ { next }
+        /^- / {
+            key = $2
+            sub(/:.*/, "", key)
+            if (key !~ /^(defaults|link|create|clean|shell)$/) {
+                printf "%s:%d: unsupported dotbot directive: %s\n", file, NR, key > "/dev/stderr"
+                bad = 1
+            }
+            in_link = (key == "link")
+            next
+        }
+        /^[^ ]/ { in_link = 0 }
+        in_link && /^    [^ ]/ {
+            if (NF != 2) {
+                printf "%s:%d: unsupported link entry: %s\n", file, NR, $0 > "/dev/stderr"
+                bad = 1
+                next
+            }
+            target = $1
+            sub(/:$/, "", target)
+            sub(/\/$/, "", target)
+            print target "\t" $2
+        }
+        END { exit bad }
+    ' "$1"
+}
+
+# Legacy dotbot manifests and the base dir each one is applied with.
+declare -A manifest_base=(
+    [.files/install.conf.yaml]=.files
+    [.files/niri.conf.yaml]=.files
+    [.files/arch/install.conf.yaml]=.files/arch
+    [.files/fedora/install.conf.yaml]=.files/fedora
+    [.files/arch/sway/install.conf.yaml]=.files/arch/sway
+)
+
+# Manifest sets applied together on one machine today.
+manifest_sets=(
+    ".files/install.conf.yaml .files/arch/install.conf.yaml"
+    ".files/install.conf.yaml .files/arch/install.conf.yaml .files/arch/sway/install.conf.yaml"
+    ".files/install.conf.yaml .files/fedora/install.conf.yaml"
+    ".files/install.conf.yaml .files/niri.conf.yaml"
+)
+
+# The Sway overlay overrides the shared alacritty files on purpose until the
+# host/module split gives each target one owner.
+known_duplicate_targets=(
+    '~/.config/alacritty/alacritty.toml'
+    '~/.config/alacritty/theme.toml'
+)
+
+declare -A manifest_targets=()
+
+info "Checking dotbot manifests"
+mapfile -t manifests < <(printf '%s\n' "${!manifest_base[@]}" | sort)
+for manifest in "${manifests[@]}"; do
+    base="${manifest_base[$manifest]}"
+    if [ ! -f "${manifest}" ]; then
+        fail "dotbot manifest missing: ${manifest}"
+        continue
+    fi
+    if ! links="$(manifest_links "${manifest}")"; then
+        failures=1
+    fi
+    manifest_targets[$manifest]="$(cut -f1 <<<"${links}")"
+    while IFS=$'\t' read -r target source; do
+        [ -n "${target}" ] || continue
+        [ -e "${base}/${source}" ] || fail "${manifest}: ${target} -> ${base}/${source} does not exist"
+    done <<<"${links}"
+done
+
+for manifest_set in "${manifest_sets[@]}"; do
+    read -r -a set_members <<<"${manifest_set}"
+    while IFS= read -r target; do
+        [ -n "${target}" ] || continue
+        if [[ " ${known_duplicate_targets[*]} " == *" ${target} "* ]]; then
+            printf 'warn: %s is linked twice in: %s\n' "${target}" "${manifest_set}"
+        else
+            fail "${target} is linked twice in: ${manifest_set}"
+        fi
+    done < <(for member in "${set_members[@]}"; do printf '%s\n' "${manifest_targets[$member]:-}"; done | sort | uniq -d)
+done
+
+info "Checking Justfile and script references"
+while IFS= read -r script; do
+    [ -f "${script}" ] || fail "Justfile runs a missing script: ${script}"
+done < <(grep -oE '\./scripts/[^[:space:]]+' Justfile | sort -u)
+
+if have git && git rev-parse --git-dir >/dev/null 2>&1; then
+    while IFS= read -r script; do
+        if ! git grep -qF "${script}" -- Justfile 'scripts/*.sh' 'modules/*/setup.sh' ":(exclude)${script}"; then
+            fail "${script} is not run by the Justfile, a module setup.sh, or another script"
+        fi
+    done < <(git ls-files -- 'scripts/*.sh')
+
+    info "Checking tracked symlinks"
+    while IFS= read -r -d '' entry; do
+        path="${entry#*$'\t'}"
+        [ "${entry%% *}" = "120000" ] || continue
+        [ -e "${path}" ] || fail "tracked symlink does not resolve: ${path}"
+    done < <(git ls-files -s -z)
+
+    info "Checking for hardcoded home paths"
+    # Allowlisted until those files are reworked: .zshrc (installer blocks),
+    # danksearch and zellij (absolute paths in app config), the Sway
+    # alacritty.toml (imports the repo by clone path), btop (upstream comment).
+    grep_status=0
+    home_paths="$(git grep -nE '/home/[a-z]|\.system-bootstrap' -- .files modules \
+        ':(exclude).files/.zshrc' \
+        ':(exclude).files/.config/danksearch/config.toml' \
+        ':(exclude).files/.config/zellij/layouts/default.kdl' \
+        ':(exclude).files/arch/sway/config/alacritty/alacritty.toml' \
+        ':(exclude).files/.config/btop/btop.conf')" || grep_status=$?
+    case "${grep_status}" in
+        0)
+            fail "hardcoded home or clone path; use \$HOME or a relative path:"
+            printf '%s\n' "${home_paths}" >&2
+            ;;
+        1) ;;
+        *) fail "git grep failed with exit ${grep_status}" ;;
+    esac
+else
+    skip "not a git checkout; script reference, symlink and home path checks skipped"
 fi
 
 skip "SVG files are intentionally ignored"
