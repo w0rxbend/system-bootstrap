@@ -27,8 +27,8 @@ elif command -v apt-get >/dev/null 2>&1; then
     else
         # No just package in this release: use the upstream installer.
         mkdir -p "${HOME}/.local/bin"
-        curl --proto '=https' --tlsv1.2 -fsSL https://just.systems/install.sh |
-            bash -s -- --to "${HOME}/.local/bin"
+        curl --proto '=https' --tlsv1.2 -fsSL https://just.systems/install.sh \
+            | bash -s -- --to "${HOME}/.local/bin"
     fi
 else
     echo "error: no pacman, dnf or apt-get found; unsupported distro" >&2
