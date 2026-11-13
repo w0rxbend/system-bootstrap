@@ -4,19 +4,10 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${REPO_ROOT}"
 
+# shellcheck source=scripts/lib/common.sh
+. "${REPO_ROOT}/scripts/lib/common.sh"
+
 failures=0
-
-have() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-info() {
-    printf '\n==> %s\n' "$*"
-}
-
-skip() {
-    printf 'skip: %s\n' "$*"
-}
 
 run() {
     if ! "$@"; then

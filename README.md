@@ -123,9 +123,10 @@ just shared-setup
 
 Dotfiles live under `.files` and are linked with Dotbot.
 
-Dotbot is not vendored in this repo. `scripts/apply-dotfiles.sh` downloads the
-[dotbot-go](https://github.com/worxbend/dotbot-go) release binary into a temporary directory on demand, verifies its
-published SHA-256, applies the configs, and discards it. It runs two passes: the shared `.files/install.conf.yaml` and
+Dotbot is not vendored in this repo. `scripts/apply-dotfiles.sh` uses an installed
+[dotbot-go](https://github.com/worxbend/dotbot-go) binary that reports the pinned version (`scripts/lib/dotbot.sh`), or
+downloads that release into a temporary directory, checks it against the pinned SHA-256, applies the configs, and
+discards it. It runs two passes: the shared `.files/install.conf.yaml` and
 `.files/niri.conf.yaml`, then the distro overlay (`.files/arch/`, `.files/fedora/`) matching `ID`/`ID_LIKE` in
 `/etc/os-release`.
 
@@ -138,9 +139,9 @@ just apply-dotfiles
 # Preview without touching anything
 DOTBOT_ARGS=-n just apply-dotfiles
 
-# Force a specific overlay, or pin the dotbot release
+# Force a specific overlay, or use a specific dotbot binary
 DOTFILES_PROFILE=arch just apply-dotfiles
-DOTBOT_VERSION=v0.4.2 just apply-dotfiles
+DOTBOT=~/.apps/dotbot/bin/dotbot just apply-dotfiles
 ```
 
 Managed highlights:
