@@ -22,5 +22,5 @@ fi
 info "Installing niri and DankMaterialShell with the official installer"
 # Unattended mode needs cached sudo credentials.
 sudo -v
-curl --proto '=https' --tlsv1.2 -fsSL "${DMS_INSTALL_URL}" |
-    bash -s -- --compositor niri --term alacritty --dux-search --yes
+curl --proto '=https' --tlsv1.2 -fsSL "${DMS_INSTALL_URL}" \
+    | bash -s -- --compositor niri --term alacritty --dux-search --yes
