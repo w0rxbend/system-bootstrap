@@ -4,16 +4,16 @@ Isolated overlay for this Sway session. It does not change Fedora, the Arch Hypr
 
 The look follows the Dux dark purple theme: square corners, no blur. Window borders are 1 pixel and hide when a workspace has a single window. The focused frame stays lavender. Only the edge where the next window opens is marked, in deep purple, whether that window opens beside this one or below it. Urgent windows, a wrong password, and errors use the Dux urgent pink.
 
-| Role            | Hex       | Dux token            |
-| --------------- | --------- | -------------------- |
-| Background      | `#141218` | surface, background  |
-| Text            | `#e6e0e9` | surface text         |
-| Outline         | `#948f99` | inactive border      |
-| Primary         | `#d0bcff` | focused frame        |
-| Primary text    | `#381e72` | text on primary      |
-| Primary container | `#4f378b` | spawn edge           |
-| Secondary       | `#ccc2dc` | match, warning       |
-| Error           | `#f2b8b5` | urgent, wrong        |
+| Role              | Hex       | Dux token           |
+| ----------------- | --------- | ------------------- |
+| Background        | `#141218` | surface, background |
+| Text              | `#e6e0e9` | surface text        |
+| Outline           | `#948f99` | inactive border     |
+| Primary           | `#d0bcff` | focused frame       |
+| Primary text      | `#381e72` | text on primary     |
+| Primary container | `#4f378b` | spawn edge          |
+| Secondary         | `#ccc2dc` | match, warning      |
+| Error             | `#f2b8b5` | urgent, wrong       |
 
 Region select dims the screen with the background and draws a lavender border. The bar shows the binding mode (for example `resize`) in lavender while a mode is active.
 
@@ -36,20 +36,20 @@ Then log out of Sway and back in. Sway chooses `~/.config/sway/config` at startu
 
 ## What gets linked
 
-| Repo path                                          | Home path                     |
-| -------------------------------------------------- | ----------------------------- |
-| `.files/arch/sway/config/sway/config`              | `~/.config/sway/config`       |
-| `.files/arch/sway/config/sway/scripts/`            | `~/.config/sway/scripts`      |
-| `.files/arch/sway/config/waybar/config.jsonc`      | `~/.config/waybar/config.jsonc` |
-| `.files/arch/sway/config/waybar/style.css`         | `~/.config/waybar/style.css`  |
-| `.files/arch/sway/config/alacritty/theme.toml`     | `~/.config/alacritty/theme.toml` |
-| `.files/arch/sway/config/fuzzel/fuzzel.ini`        | `~/.config/fuzzel/fuzzel.ini` |
-| `.files/arch/sway/config/kanshi/config`            | `~/.config/kanshi/config`     |
-| `.files/arch/sway/config/mako/config`              | `~/.config/mako/config`       |
-| `.files/arch/sway/config/foot/foot.ini`            | `~/.config/foot/foot.ini`     |
-| `.files/arch/sway/config/swaynag/config`           | `~/.config/swaynag/config`    |
-| `.files/arch/sway/config/wlsunset/config`          | `~/.config/wlsunset/config`   |
-| `.files/arch/sway/config/wob/wob.ini`              | `~/.config/wob/wob.ini`       |
+| Repo path                                      | Home path                        |
+| ---------------------------------------------- | -------------------------------- |
+| `.files/arch/sway/config/sway/config`          | `~/.config/sway/config`          |
+| `.files/arch/sway/config/sway/scripts/`        | `~/.config/sway/scripts`         |
+| `.files/arch/sway/config/waybar/config.jsonc`  | `~/.config/waybar/config.jsonc`  |
+| `.files/arch/sway/config/waybar/style.css`     | `~/.config/waybar/style.css`     |
+| `.files/arch/sway/config/alacritty/theme.toml` | `~/.config/alacritty/theme.toml` |
+| `.files/arch/sway/config/fuzzel/fuzzel.ini`    | `~/.config/fuzzel/fuzzel.ini`    |
+| `.files/arch/sway/config/kanshi/config`        | `~/.config/kanshi/config`        |
+| `.files/arch/sway/config/mako/config`          | `~/.config/mako/config`          |
+| `.files/arch/sway/config/foot/foot.ini`        | `~/.config/foot/foot.ini`        |
+| `.files/arch/sway/config/swaynag/config`       | `~/.config/swaynag/config`       |
+| `.files/arch/sway/config/wlsunset/config`      | `~/.config/wlsunset/config`      |
+| `.files/arch/sway/config/wob/wob.ini`          | `~/.config/wob/wob.ini`          |
 
 Links are forced. A real file already at one of those paths is replaced by the symlink.
 
@@ -57,24 +57,24 @@ Links are forced. A real file already at one of those paths is replaced by the s
 
 Same as the stock Sway config, with two launcher changes:
 
-| Key             | Action                                                                 |
-| --------------- | ---------------------------------------------------------------------- |
-| Super+Space     | Switch keyboard layout: English (US), then Ukrainian                   |
-| Super+Ctrl+Space | Move focus between floating and tiled windows                         |
-| Super+Return    | Alacritty                                                              |
-| Super+D         | Fuzzel app launcher                                                    |
-| Super+Shift+E   | Power menu: lock, suspend, log out, reboot, shut down                 |
-| Super+Escape    | Lock the screen                                                        |
-| Super+Shift+A   | Audio menu: choose the output, then the input                         |
-| Super+Shift+C   | Reload Sway                                                            |
-| Print           | Region screenshot, saved and copied                                    |
-| Shift+Print     | Full-screen screenshot, saved and copied                               |
-| Super+Print     | Focused window screenshot, saved and copied                            |
-| Super+Shift+R   | Start or stop a recording of the focused output, with its audio       |
-| Super+Alt+R     | Start or stop a region recording, with the default output's audio     |
-| Super+Shift+V   | Clipboard history                                              |
-| Super+Alt+V     | Delete one clipboard entry                                     |
-| Super+Shift+G   | Cycle sunset: day, night, then automatic                       |
+| Key              | Action                                                            |
+| ---------------- | ----------------------------------------------------------------- |
+| Super+Space      | Switch keyboard layout: English (US), then Ukrainian              |
+| Super+Ctrl+Space | Move focus between floating and tiled windows                     |
+| Super+Return     | Alacritty                                                         |
+| Super+D          | Fuzzel app launcher                                               |
+| Super+Shift+E    | Power menu: lock, suspend, log out, reboot, shut down             |
+| Super+Escape     | Lock the screen                                                   |
+| Super+Shift+A    | Audio menu: choose the output, then the input                     |
+| Super+Shift+C    | Reload Sway                                                       |
+| Print            | Region screenshot, saved and copied                               |
+| Shift+Print      | Full-screen screenshot, saved and copied                          |
+| Super+Print      | Focused window screenshot, saved and copied                       |
+| Super+Shift+R    | Start or stop a recording of the focused output, with its audio   |
+| Super+Alt+R      | Start or stop a region recording, with the default output's audio |
+| Super+Shift+V    | Clipboard history                                                 |
+| Super+Alt+V      | Delete one clipboard entry                                        |
+| Super+Shift+G    | Cycle sunset: day, night, then automatic                          |
 
 Screenshots go to `~/Pictures/screenshots`. Recordings go to `~/Videos/recordings`. The bar shows `rec` while `wf-recorder` is running. Click `vol` to open the audio menu; right-click still mutes. The screen locks after 5 idle minutes and before sleep.
 

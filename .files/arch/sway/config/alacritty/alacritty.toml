@@ -8,16 +8,16 @@ size = 14
 
 [font.normal]
 family = "RecMonoLinear Nerd Font Mono"
-style = "Regular"
+style  = "Regular"
 
 [font.bold]
 family = "RecMonoLinear Nerd Font Mono"
-style = "Bold"
+style  = "Bold"
 
 [font.italic]
 family = "RecMonoLinear Nerd Font Mono"
-style = "Italic"
+style  = "Italic"
 
 [font.bold_italic]
 family = "RecMonoLinear Nerd Font Mono"
-style = "Bold Italic"
+style  = "Bold Italic"

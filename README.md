@@ -83,22 +83,22 @@ just shared-setup
 
 ## 🕹 Commands
 
-| Command                    | Purpose                                                            |
-| -------------------------- | ------------------------------------------------------------------ |
-| `just`                     | Show all available recipes                                         |
-| `just fedora-full-install` | Fedora packages plus the full shared setup                         |
-| `just arch-full-install`   | Arch packages plus the full shared setup                           |
+| Command                    | Purpose                                                                 |
+| -------------------------- | ----------------------------------------------------------------------- |
+| `just`                     | Show all available recipes                                              |
+| `just fedora-full-install` | Fedora packages plus the full shared setup                              |
+| `just arch-full-install`   | Arch packages plus the full shared setup                                |
 | `just arch-sway-packages`  | Arch + Sway packages: bar, launcher, lock, sunset, wallpaper, clipboard |
-| `just arch-sway-dotfiles`  | Link only the Arch + Sway configs. Does not touch other profiles   |
-| `just shared-setup`        | Run every shared step: config, tools, fonts, flatpaks, dotfiles    |
-| `just configure-system`    | Configure Git, tmux plugin manager, and time settings              |
-| `just install-cli-tools`   | Install language/toolchain managers and CLI installers             |
-| `just install-binaries`    | Install portable binary tools into `~/.apps`                       |
-| `just install-fonts`       | Install configured Nerd Fonts with `worxbend/nerd-fonts-installer` |
-| `just apply-dotfiles`      | Force-link dotfiles from `.files`                                  |
-| `just format`              | Format supported repo files                                        |
-| `just lint`                | Syntax-check and lint supported repo files                         |
-| `just check`               | Run the repo quality gate                                          |
+| `just arch-sway-dotfiles`  | Link only the Arch + Sway configs. Does not touch other profiles        |
+| `just shared-setup`        | Run every shared step: config, tools, fonts, flatpaks, dotfiles         |
+| `just configure-system`    | Configure Git, tmux plugin manager, and time settings                   |
+| `just install-cli-tools`   | Install language/toolchain managers and CLI installers                  |
+| `just install-binaries`    | Install portable binary tools into `~/.apps`                            |
+| `just install-fonts`       | Install configured Nerd Fonts with `worxbend/nerd-fonts-installer`      |
+| `just apply-dotfiles`      | Force-link dotfiles from `.files`                                       |
+| `just format`              | Format supported repo files                                             |
+| `just lint`                | Syntax-check and lint supported repo files                              |
+| `just check`               | Run the repo quality gate                                               |
 
 ## 🗂 Layout
 

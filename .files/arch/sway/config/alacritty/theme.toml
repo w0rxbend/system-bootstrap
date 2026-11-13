@@ -1,21 +1,21 @@
 # Dux dark purple. Background is the Dux surface. Lavender is the primary.
 
 [colors.primary]
-background = "#141218"
-foreground = "#e6e0e9"
-dim_foreground = "#948f99"
+background        = "#141218"
+foreground        = "#e6e0e9"
+dim_foreground    = "#948f99"
 bright_foreground = "#e6e0e9"
 
 [colors.cursor]
-text = "#381e72"
+text   = "#381e72"
 cursor = "#d0bcff"
 
 [colors.vi_mode_cursor]
-text = "#141218"
+text   = "#141218"
 cursor = "#ccc2dc"
 
 [colors.selection]
-text = "#381e72"
+text       = "#381e72"
 background = "#d0bcff"
 
 [colors.search.matches]
@@ -39,31 +39,31 @@ foreground = "#141218"
 background = "#ccc2dc"
 
 [colors.normal]
-black = "#141218"
-red = "#f2b8b5"
-green = "#ccc2dc"
-yellow = "#cac4cf"
-blue = "#d0bcff"
+black   = "#141218"
+red     = "#f2b8b5"
+green   = "#ccc2dc"
+yellow  = "#cac4cf"
+blue    = "#d0bcff"
 magenta = "#4f378b"
-cyan = "#948f99"
-white = "#e6e0e9"
+cyan    = "#948f99"
+white   = "#e6e0e9"
 
 [colors.bright]
-black = "#49454e"
-red = "#f2b8b5"
-green = "#ccc2dc"
-yellow = "#cac4cf"
-blue = "#d0bcff"
+black   = "#49454e"
+red     = "#f2b8b5"
+green   = "#ccc2dc"
+yellow  = "#cac4cf"
+blue    = "#d0bcff"
 magenta = "#ccc2dc"
-cyan = "#948f99"
-white = "#ffffff"
+cyan    = "#948f99"
+white   = "#ffffff"
 
 [colors.dim]
-black = "#100e14"
-red = "#8c1d18"
-green = "#49454e"
-yellow = "#36343a"
-blue = "#4f378b"
+black   = "#100e14"
+red     = "#8c1d18"
+green   = "#49454e"
+yellow  = "#36343a"
+blue    = "#4f378b"
 magenta = "#2b292f"
-cyan = "#49454e"
-white = "#948f99"
+cyan    = "#49454e"
+white   = "#948f99"

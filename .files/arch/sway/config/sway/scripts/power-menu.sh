@@ -4,8 +4,8 @@ set -euo pipefail
 
 dir="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 choice="$(
-    printf '%s\n' Lock Suspend 'Log out' Reboot 'Shut down' |
-        fuzzel --dmenu --prompt 'power> ' --width 24 --lines 5
+    printf '%s\n' Lock Suspend 'Log out' Reboot 'Shut down' \
+        | fuzzel --dmenu --prompt 'power> ' --width 24 --lines 5
 )" || exit 0
 
 case "${choice}" in

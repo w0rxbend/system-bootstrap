@@ -4,7 +4,16 @@
   "height": 26,
   "spacing": 0,
   "modules-left": ["sway/workspaces", "sway/mode", "cpu", "memory", "disk"],
-  "modules-right": ["custom/lang", "custom/airgradient", "pulseaudio", "network", "custom/recording", "clock", "tray", "idle_inhibitor"],
+  "modules-right": [
+    "custom/lang",
+    "custom/airgradient",
+    "pulseaudio",
+    "network",
+    "custom/recording",
+    "clock",
+    "tray",
+    "idle_inhibitor"
+  ],
   "sway/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
