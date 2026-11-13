@@ -73,7 +73,9 @@ pkg_install_names() {
     shift
 
     case "${distro}" in
-        arch) sudo pacman -S --needed --noconfirm "$@" ;;
+        # -Syu, not -S: a stale sync database 404s on new packages, and a
+        # bare -Sy would be a partial upgrade.
+        arch) sudo pacman -Syu --needed --noconfirm "$@" ;;
         fedora) sudo dnf -y install "$@" ;;
         ubuntu)
             sudo apt-get update

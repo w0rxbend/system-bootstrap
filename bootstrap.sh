@@ -14,7 +14,7 @@ cd "$(dirname "$0")"
 }
 
 if command -v pacman >/dev/null 2>&1; then
-    sudo pacman -S --needed --noconfirm git curl zsh just
+    sudo pacman -Syu --needed --noconfirm git curl zsh just
 elif command -v dnf >/dev/null 2>&1; then
     sudo dnf -y install git curl zsh just
 elif command -v apt-get >/dev/null 2>&1; then
