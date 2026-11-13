@@ -32,7 +32,7 @@ configuration, desktop environments, wallpapers, and maintenance workflows.
 
 | Area         | What You Get                                                        |
 | ------------ | ------------------------------------------------------------------- |
-| 🐧 Distros   | Fedora and Arch Linux bootstrap scripts                             |
+| 🐧 Distros   | Arch Linux, Fedora and Ubuntu, per-host module lists                |
 | 🧰 Dev tools | Zsh, tmux, Neovim, Go, Rust, Java, Node, Python, Kubernetes tools   |
 | 🖥 Desktop    | GNOME, Niri + DankMaterialShell, Sway, Waybar, Fuzzel               |
 | 🎨 Terminal  | Alacritty, Kitty, WezTerm, Ghostty, Starship, Zellij                |
