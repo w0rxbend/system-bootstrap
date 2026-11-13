@@ -1,0 +1,18 @@
+# Applied with the repo root as base dir (scripts/host.sh).
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- link:
+    ~/.ideavimrc: .files/.ideavimrc
+    ~/.config/nvim: .files/nvim
+    ~/.config/btop: .files/.config/btop
+    ~/.config/lazygit/config.yml: .files/.config/lazygit/config.yml
+    ~/.config/lsd/config.yaml: .files/.config/lsd/config.yaml
+    ~/.config/lsd/colors.yaml: .files/.config/lsd/colors.yaml
+    ~/.config/yazi/yazi.toml: .files/.config/yazi/yazi.toml
+    ~/.config/yazi/theme.toml: .files/.config/yazi/theme.toml
+    ~/.config/yazi/keymap.toml: .files/.config/yazi/keymap.toml
+    ~/.config/binstaller/config.yaml: .files/.config/binstaller/config.yaml

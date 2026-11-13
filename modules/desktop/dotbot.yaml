@@ -1,0 +1,20 @@
+# Applied with the repo root as base dir (scripts/host.sh).
+# Alacritty: alacritty.toml only imports base, theme, wm (owned by the WM
+# module, optional) and local (host-local, untracked, optional).
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- link:
+    ~/.config/alacritty/alacritty.toml: modules/desktop/files/alacritty/alacritty.toml
+    ~/.config/alacritty/base.toml: .files/alacritty.toml
+    ~/.config/alacritty/theme.toml: .files/alacritty_theme.toml
+    ~/.config/kitty/kitty.conf: .files/kitty.conf
+    ~/.wezterm.lua: .files/.wezterm.lua
+    ~/.config/ghostty: .files/.config/ghostty
+    ~/.config/zathura/zathurarc: .files/zathurarc
+    ~/.hidden: .files/.hidden
+    ~/.config/nerd-fonts-installer/config.yaml: .files/.config/nerd-fonts-installer/config.yaml
+    ~/.local/backgrounds: assets/wallpapers

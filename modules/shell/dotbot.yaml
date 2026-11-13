@@ -1,0 +1,14 @@
+# Applied with the repo root as base dir (scripts/host.sh).
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- link:
+    ~/.tmux.conf: .files/.tmux.conf
+    ~/.config/starship.toml: .files/starship.toml
+    ~/.config/zellij/config.kdl: .files/.config/zellij/config.kdl
+    ~/.config/zellij/layouts/default.kdl: .files/.config/zellij/layouts/default.kdl
+    ~/.config/zellij/layouts/editor.kdl: .files/.config/zellij/layouts/editor.kdl
+    ~/.config/zellij/layouts/media.kdl: .files/.config/zellij/layouts/media.kdl

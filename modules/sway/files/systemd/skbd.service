@@ -1,0 +1,13 @@
+[Unit]
+Description=Per-window keyboard layout for Sway
+StartLimitIntervalSec=10
+StartLimitBurst=5
+
+[Service]
+Type=simple
+# SWAYSOCK contains Sway's pid. Import it after Sway starts, then restart
+# this service. A copy started at login, before that import, cannot see Sway.
+ExecStart=%h/.apps/skbd/bin/skbd
+Restart=on-failure
+RestartSec=2
+RestartPreventExitStatus=2

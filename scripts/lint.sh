@@ -285,14 +285,14 @@ fi
 # Print "target<TAB>source" for every link in a dotbot manifest. Only the
 # restricted form used in this repo is understood (`- link:` followed by
 # 4-space `target: source` lines); anything else fails instead of being
-# silently skipped.
+# silently skipped. $2 is the regex of allowed top-level directives.
 manifest_links() {
-    awk -v file="$1" '
+    awk -v file="$1" -v allowed="^($2)$" '
         /^[[:space:]]*(#|$)/ { next }
         /^- / {
             key = $2
             sub(/:.*/, "", key)
-            if (key !~ /^(defaults|link|create|clean|shell)$/) {
+            if (key !~ allowed) {
                 printf "%s:%d: unsupported dotbot directive: %s\n", file, NR, key > "/dev/stderr"
                 bad = 1
             }
@@ -324,6 +324,11 @@ declare -A manifest_base=(
     [.files/arch/sway/install.conf.yaml]=.files/arch/sway
 )
 
+# Module and host manifests: scripts/host.sh applies them with the repo root as base dir.
+for manifest in modules/*/dotbot.yaml hosts/*/dotbot.yaml; do
+    [ -f "${manifest}" ] && manifest_base[$manifest]=.
+done
+
 # Manifest sets applied together on one machine today.
 manifest_sets=(
     ".files/install.conf.yaml .files/arch/install.conf.yaml"
@@ -341,6 +346,15 @@ known_duplicate_targets=(
 
 declare -A manifest_targets=()
 
+# Print every target that more than one of the given manifests links.
+duplicate_targets() {
+    local member
+
+    for member in "$@"; do
+        printf '%s\n' "${manifest_targets[$member]:-}"
+    done | grep -v '^$' | sort | uniq -d
+}
+
 info "Checking dotbot manifests"
 mapfile -t manifests < <(printf '%s\n' "${!manifest_base[@]}" | sort)
 for manifest in "${manifests[@]}"; do
@@ -349,7 +363,10 @@ for manifest in "${manifests[@]}"; do
         fail "dotbot manifest missing: ${manifest}"
         continue
     fi
-    if ! links="$(manifest_links "${manifest}")"; then
+    # Module and host manifests run no shell steps; setup.sh does that work.
+    directives='defaults|link|create|clean|shell'
+    [ "${base}" != . ] || directives='defaults|link|create|clean'
+    if ! links="$(manifest_links "${manifest}" "${directives}")"; then
         failures=1
     fi
     manifest_targets[$manifest]="$(cut -f1 <<<"${links}")"
@@ -362,13 +379,41 @@ done
 for manifest_set in "${manifest_sets[@]}"; do
     read -r -a set_members <<<"${manifest_set}"
     while IFS= read -r target; do
-        [ -n "${target}" ] || continue
         if [[ " ${known_duplicate_targets[*]} " == *" ${target} "* ]]; then
             printf 'warn: %s is linked twice in: %s\n' "${target}" "${manifest_set}"
         else
             fail "${target} is linked twice in: ${manifest_set}"
         fi
-    done < <(for member in "${set_members[@]}"; do printf '%s\n' "${manifest_targets[$member]:-}"; done | sort | uniq -d)
+    done < <(duplicate_targets "${set_members[@]}")
+done
+
+# Host sets: the modules in MODULES plus the host dir. Every target has one owner.
+info "Checking host module sets"
+for host_env in hosts/*/host.env; do
+    [ -f "${host_env}" ] || continue
+    host_dir="$(dirname "${host_env}")"
+    if ! host_vars="$(env -i bash -c 'set -eu; . "$1"; printf "%s\n%s\n" "${DISTRO}" "${MODULES}"' _ "${host_env}")"; then
+        fail "${host_env}: does not parse or does not set DISTRO and MODULES"
+        continue
+    fi
+    host_distro="${host_vars%%$'\n'*}"
+    read -r -a host_modules <<<"${host_vars#*$'\n'}"
+    case "${host_distro}" in
+        arch | fedora | ubuntu) ;;
+        *) fail "${host_env}: unsupported DISTRO '${host_distro}'" ;;
+    esac
+    set_members=()
+    for module in "${host_modules[@]}"; do
+        if [ ! -d "modules/${module}" ]; then
+            fail "${host_env}: module '${module}' has no directory modules/${module}"
+        elif [ -f "modules/${module}/dotbot.yaml" ]; then
+            set_members+=("modules/${module}/dotbot.yaml")
+        fi
+    done
+    [ ! -f "${host_dir}/dotbot.yaml" ] || set_members+=("${host_dir}/dotbot.yaml")
+    while IFS= read -r target; do
+        fail "${target} is linked twice for ${host_dir}: ${set_members[*]}"
+    done < <(duplicate_targets "${set_members[@]}")
 done
 
 info "Checking Justfile and script references"

@@ -1,0 +1,9 @@
+# Applied with the repo root as base dir (scripts/host.sh).
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- create:
+    - ~/.local/share/gnome-background-properties/

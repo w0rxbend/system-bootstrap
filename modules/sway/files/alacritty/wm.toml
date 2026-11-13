@@ -1,0 +1,90 @@
+# Sway terminal face: Dux colors and the RecMono font. Imported after the
+# shared theme, so it wins. Also reached through the old sway theme.toml path.
+# Dux dark purple. Background is the Dux surface. Lavender is the primary.
+
+[colors.primary]
+background        = "#141218"
+foreground        = "#e6e0e9"
+dim_foreground    = "#948f99"
+bright_foreground = "#e6e0e9"
+
+[colors.cursor]
+text   = "#381e72"
+cursor = "#d0bcff"
+
+[colors.vi_mode_cursor]
+text   = "#141218"
+cursor = "#ccc2dc"
+
+[colors.selection]
+text       = "#381e72"
+background = "#d0bcff"
+
+[colors.search.matches]
+foreground = "#141218"
+background = "#ccc2dc"
+
+[colors.search.focused_match]
+foreground = "#e6e0e9"
+background = "#4f378b"
+
+[colors.footer_bar]
+foreground = "#e6e0e9"
+background = "#49454e"
+
+[colors.hints.start]
+foreground = "#381e72"
+background = "#d0bcff"
+
+[colors.hints.end]
+foreground = "#141218"
+background = "#ccc2dc"
+
+[colors.normal]
+black   = "#141218"
+red     = "#f2b8b5"
+green   = "#ccc2dc"
+yellow  = "#cac4cf"
+blue    = "#d0bcff"
+magenta = "#4f378b"
+cyan    = "#948f99"
+white   = "#e6e0e9"
+
+[colors.bright]
+black   = "#49454e"
+red     = "#f2b8b5"
+green   = "#ccc2dc"
+yellow  = "#cac4cf"
+blue    = "#d0bcff"
+magenta = "#ccc2dc"
+cyan    = "#948f99"
+white   = "#ffffff"
+
+[colors.dim]
+black   = "#100e14"
+red     = "#8c1d18"
+green   = "#49454e"
+yellow  = "#36343a"
+blue    = "#4f378b"
+magenta = "#2b292f"
+cyan    = "#49454e"
+white   = "#948f99"
+
+[font]
+size = 14
+
+[font.normal]
+family = "RecMonoLinear Nerd Font Mono"
+style  = "Regular"
+
+[font.bold]
+family = "RecMonoLinear Nerd Font Mono"
+style  = "Bold"
+
+[font.italic]
+family = "RecMonoLinear Nerd Font Mono"
+style  = "Italic"
+
+[font.bold_italic]
+family = "RecMonoLinear Nerd Font Mono"
+style  = "Bold Italic"

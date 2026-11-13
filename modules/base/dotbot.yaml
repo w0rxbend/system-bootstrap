@@ -1,0 +1,17 @@
+# Applied with the repo root as base dir (scripts/host.sh).
+# clean removes dead links that point into this repo.
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- clean: ["~"]
+
+- clean:
+    ~/.config:
+      recursive: true
+
+- create:
+    - ~/Downloads
+    - ~/.vim/undo-history

@@ -1,0 +1,12 @@
+# Imports only. Later files win; a missing file is skipped.
+#   base.toml   shared settings (.files/alacritty.toml)
+#   theme.toml  shared colors (desktop module)
+#   wm.toml     window-manager face (WM module, optional)
+#   local.toml  this machine only (untracked, optional)
+[general]
+import = [
+  "~/.config/alacritty/base.toml",
+  "~/.config/alacritty/theme.toml",
+  "~/.config/alacritty/wm.toml",
+  "~/.config/alacritty/local.toml",
+]
