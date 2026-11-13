@@ -6,6 +6,7 @@
       force: true
 
 - link:
+    ~/.config/zsh/zshrc: .files/.zshrc
     ~/.tmux.conf: .files/.tmux.conf
     ~/.config/starship.toml: .files/starship.toml
     ~/.config/zellij/config.kdl: .files/.config/zellij/config.kdl

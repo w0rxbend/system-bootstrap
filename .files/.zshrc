@@ -3,7 +3,7 @@
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
+(( $+commands[pyenv] )) && eval "$(pyenv init - zsh)"
 
 
 # Path to your oh-my-zsh installation.
@@ -139,9 +139,11 @@ alias projects="cd $HOME/Projects"
 alias myubuntu="cd $HOME/Projects/ubuntu-bootstrap"
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias ls='eza --icons --group-directories-first'
-alias ll='eza -lh --icons --git'
-alias lsa='eza -lha --icons --git'
+if (( $+commands[eza] )); then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -lh --icons --git'
+    alias lsa='eza -lha --icons --git'
+fi
 alias lsda="lsd -la"
 alias lsdar="lsd -laR"
 alias df='df -h'
@@ -276,7 +278,7 @@ gu=38;5;245
 [[ -d "$HOME/.nimble/bin" ]] && export PATH=$HOME/.nimble/bin:$PATH
 
 
-eval "$(starship init zsh)"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
 
 # User configuration
 if [[ $WITH_TMUX = true ]]; then
@@ -322,7 +324,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 
 # pnpm
-export PNPM_HOME="/home/worxbend/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -333,25 +335,25 @@ esac
 
 # !! Contents within this block are managed by juliaup !!
 
-path=('/home/worxbend/.juliaup/bin' $path)
+path=("$HOME/.juliaup/bin" $path)
 export PATH
 # Tab completion for juliaup and julia channel selection
-[ -f "/home/worxbend/.julia/juliaup/completions/zsh.zsh" ] && source "/home/worxbend/.julia/juliaup/completions/zsh.zsh"
+[ -f "$HOME/.julia/juliaup/completions/zsh.zsh" ] && source "$HOME/.julia/juliaup/completions/zsh.zsh"
 
 # <<< juliaup initialize <<<
 
-source /home/worxbend/.config/broot/launcher/bash/br
+[[ -r "$HOME/.config/broot/launcher/bash/br" ]] && source "$HOME/.config/broot/launcher/bash/br"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/worxbend/.miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$("$HOME/.miniforge3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/worxbend/.miniforge3/etc/profile.d/conda.sh" ]; then
-        . "/home/worxbend/.miniforge3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/.miniforge3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/.miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/worxbend/.miniforge3/bin:$PATH"
+        export PATH="$HOME/.miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -360,8 +362,8 @@ unset __conda_setup
 
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba shell init' !!
-export MAMBA_EXE='/home/worxbend/.miniforge3/bin/mamba';
-export MAMBA_ROOT_PREFIX='/home/worxbend/.miniforge3';
+export MAMBA_EXE="$HOME/.miniforge3/bin/mamba";
+export MAMBA_ROOT_PREFIX="$HOME/.miniforge3";
 __mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__mamba_setup"
@@ -384,10 +386,10 @@ export ANDROID_AVD_HOME="$ANDROID_USER_HOME/avd"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
 
 # opencode
-[[ -d /home/worxbend/.opencode/bin ]] && export PATH="/home/worxbend/.opencode/bin:$PATH"
+[[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
 
 # kimi-code
-[[ -d /home/worxbend/.kimi-code/bin ]] && export PATH="/home/worxbend/.kimi-code/bin:$PATH"
+[[ -d "$HOME/.kimi-code/bin" ]] && export PATH="$HOME/.kimi-code/bin:$PATH"
 
 # >>> grok installer >>>
 export PATH="$HOME/.grok/bin:$PATH"

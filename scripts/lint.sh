@@ -436,12 +436,11 @@ if have git && git rev-parse --git-dir >/dev/null 2>&1; then
     done < <(git ls-files -s -z)
 
     info "Checking for hardcoded home paths"
-    # Allowlisted until those files are reworked: .zshrc (installer blocks),
-    # danksearch and zellij (absolute paths in app config), the Sway
-    # alacritty.toml (imports the repo by clone path), btop (upstream comment).
+    # Allowlisted until those files are reworked: danksearch and zellij
+    # (absolute paths in app config), the Sway alacritty.toml (imports the
+    # repo by clone path), btop (upstream comment).
     grep_status=0
     home_paths="$(git grep -nE '/home/[a-z]|\.system-bootstrap' -- .files modules \
-        ':(exclude).files/.zshrc' \
         ':(exclude).files/.config/danksearch/config.toml' \
         ':(exclude).files/.config/zellij/layouts/default.kdl' \
         ':(exclude).files/arch/sway/config/alacritty/alacritty.toml' \

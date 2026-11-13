@@ -19,7 +19,6 @@
 
 - link:
     ~/.tmux.conf: .tmux.conf
-    ~/.zshrc: .zshrc
     ~/.ideavimrc: .ideavimrc
     ~/.wezterm.lua: .wezterm.lua
     ~/.config/starship.toml: starship.toml
