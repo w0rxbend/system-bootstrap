@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="assets/main.png" width="128" alt="System Bootstrap logo">
-</p>
-
 <h1 align="center">System Bootstrap</h1>
 
 <p align="center">
@@ -9,15 +5,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/limpid-kzonix/system-bootstrap/actions/workflows/format-and-lint.yml">
+  <a href="https://github.com/w0rxbend/system-bootstrap/actions/workflows/format-and-lint.yml">
     <img
       alt="Format and lint"
-      src="https://github.com/limpid-kzonix/system-bootstrap/actions/workflows/format-and-lint.yml/badge.svg"
+      src="https://github.com/w0rxbend/system-bootstrap/actions/workflows/format-and-lint.yml/badge.svg"
     >
   </a>
   <img alt="Fedora" src="https://img.shields.io/badge/Fedora-ready-51A2DA?logo=fedora&logoColor=white">
   <img alt="Arch Linux" src="https://img.shields.io/badge/Arch-ready-1793D1?logo=archlinux&logoColor=white">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-green">
+  <img alt="License" src="https://img.shields.io/badge/license-GPL--3.0-blue">
 </p>
 
 <p align="center">
@@ -27,7 +23,7 @@
 ## ✨ What This Is
 
 `system-bootstrap` is a personal workstation automation repo for setting up a polished development environment across
-Fedora and Arch Linux.
+Arch Linux and Fedora.
 
 It brings together package installation, binary tool installs, Dotbot-managed dotfiles, Nerd Fonts, terminal/editor
 configuration, desktop environments, wallpapers, and maintenance workflows.
@@ -38,7 +34,7 @@ configuration, desktop environments, wallpapers, and maintenance workflows.
 | ------------ | ------------------------------------------------------------------- |
 | 🐧 Distros   | Fedora and Arch Linux bootstrap scripts                             |
 | 🧰 Dev tools | Zsh, tmux, Neovim, Go, Rust, Java, Node, Python, Kubernetes tools   |
-| 🖥 Desktop    | GNOME, COSMIC, Sway, Waybar, Fuzzel, GDM/SDDM tweaks                |
+| 🖥 Desktop    | GNOME, Niri + DankMaterialShell, Sway, Waybar, Fuzzel               |
 | 🎨 Terminal  | Alacritty, Kitty, WezTerm, Ghostty, Starship, Zellij                |
 | 🔤 Fonts     | Nerd Font installer config stored in the repo and linked via Dotbot |
 | 🧹 Quality   | `just format`, `just lint`, and GitHub Actions auto-format + lint   |
@@ -47,101 +43,71 @@ configuration, desktop environments, wallpapers, and maintenance workflows.
 ## 📦 Quick Start
 
 ```bash
-git clone --recursive https://github.com/limpid-kzonix/system-bootstrap.git ~/.system-bootstrap
+git clone https://github.com/w0rxbend/system-bootstrap.git ~/.system-bootstrap
 cd ~/.system-bootstrap
-just
+just dry arch-sway    # preview: read-only package check, dotbot -n, setup.sh syntax only
+just host arch-sway   # provision for real
 ```
 
-Then run the full bootstrap for your machine — distro packages followed by the shared setup:
+A machine is a host under `hosts/`. Each `hosts/<host>/host.env` sets `DISTRO` and the ordered `MODULES` list:
 
-```bash
-# Fedora
-just fedora-full-install
+| Host           | Distro | Modules                                                   |
+| -------------- | ------ | --------------------------------------------------------- |
+| `arch-niri`    | arch   | base shell dev cli containers virt desktop gnome niri-dms |
+| `arch-sway`    | arch   | base shell dev cli containers virt desktop sway           |
+| `fedora-gnome` | fedora | base shell dev cli containers virt desktop gnome          |
+| `ubuntu-vm`    | ubuntu | base shell dev cli desktop gnome                          |
 
-# Arch + Hyprland
-just arch-full-install
-```
-
-Or drive the steps yourself if you want to stop and inspect between them:
-
-```bash
-# Fedora
-just fedora-step-0
-just fedora-step-1
-just fedora-step-2
-
-# Arch + Hyprland
-just arch-install
-
-# Arch + Sway. Does not run the recipes above.
-just arch-sway-packages
-just arch-sway-dotfiles
-
-# Shared setup (what `*-full-install` runs after the packages)
-just shared-setup
-```
+`host.env` may also set `GIT_USER_NAME`, `GIT_USER_EMAIL` and `OBS=1`.
 
 ## 🕹 Commands
 
-| Command                    | Purpose                                                                 |
-| -------------------------- | ----------------------------------------------------------------------- |
-| `just`                     | Show all available recipes                                              |
-| `just fedora-full-install` | Fedora packages plus the full shared setup                              |
-| `just arch-full-install`   | Arch packages plus the full shared setup                                |
-| `just arch-sway-packages`  | Arch + Sway packages: bar, launcher, lock, sunset, wallpaper, clipboard |
-| `just arch-sway-dotfiles`  | Link only the Arch + Sway configs. Does not touch other profiles        |
-| `just shared-setup`        | Run every shared step: config, tools, fonts, flatpaks, dotfiles         |
-| `just configure-system`    | Configure Git, tmux plugin manager, and time settings                   |
-| `just install-cli-tools`   | Install language/toolchain managers and CLI installers                  |
-| `just install-binaries`    | Install portable binary tools into `~/.apps`                            |
-| `just install-fonts`       | Install configured Nerd Fonts with `worxbend/nerd-fonts-installer`      |
-| `just apply-dotfiles`      | Force-link dotfiles from `.files`                                       |
-| `just format`              | Format supported repo files                                             |
-| `just lint`                | Syntax-check and lint supported repo files                              |
-| `just check`               | Run the repo quality gate                                               |
+| Command               | Purpose                                                                      |
+| --------------------- | ---------------------------------------------------------------------------- |
+| `just`                | Show all available recipes                                                   |
+| `just host <h>`       | Provision host `<h>`: packages, dotfiles and setup of every module, in order |
+| `just dry <h>`        | Dry run: package lists resolved read-only, `dotbot -n`, `bash -n` on setup   |
+| `just module <h> <m>` | Run one module of host `<h>` for real                                        |
+| `just format`         | Format supported repo files                                                  |
+| `just lint`           | Syntax-check and lint supported repo files                                   |
+| `just check`          | Run the repo quality gate                                                    |
+
+A real run refuses a host whose `DISTRO` is not this machine's distro.
 
 ## 🗂 Layout
 
 ```text
 .system-bootstrap/
-├── .files/                    # Dotfiles managed by Dotbot
-│   ├── .config/               # Shared XDG configs
-│   ├── arch/                  # Arch profile (GNOME + COSMIC)
-│   │   └── sway/              # Arch + Sway overlay, applied on its own
-│   ├── fedora/                # Fedora profile
-│   ├── nvim/                  # Neovim Lua config
-│   └── install.conf.yaml      # Shared Dotbot manifest
-├── .github/workflows/         # Auto-format and lint workflow
-├── assets/                    # Wallpapers, icons, and visual resources
-├── docs/                      # Notes for fonts, keyrings, SDDM, and desktop quirks
-├── scripts/                   # Bootstrap, package, formatter, and lint scripts
-├── Justfile                   # Command runner
-└── README.md
+├── hosts/<host>/host.env      # DISTRO and MODULES of one machine
+├── modules/<module>/          # every file optional:
+│   ├── packages.<distro>      #   package names, one or more per line
+│   ├── dotbot.yaml            #   links, applied with the repo root as base dir
+│   ├── setup.sh               #   idempotent, non-interactive bash
+│   └── files/                 #   config sources owned by the module
+├── .files/                    # Config sources linked by the module manifests
+├── scripts/                   # host.sh runner, shared installers, lib/, format and lint
+├── assets/                    # Wallpapers and icons
+├── docs/                      # Notes for fonts, keyrings, and desktop quirks
+└── Justfile                   # Command runner
 ```
+
+For each module in `MODULES`, `scripts/host.sh` installs `packages.<distro>`, applies `dotbot.yaml`, then runs
+`setup.sh`, and finally does the same for `hosts/<host>/`.
 
 ## 🧬 Dotfiles
 
-Dotfiles live under `.files` and are linked with Dotbot.
-
-Dotbot is not vendored in this repo. `scripts/apply-dotfiles.sh` uses an installed
+Dotbot is not vendored in this repo. `scripts/host.sh` uses an installed
 [dotbot-go](https://github.com/worxbend/dotbot-go) binary that reports the pinned version (`scripts/lib/dotbot.sh`), or
-downloads that release into a temporary directory, checks it against the pinned SHA-256, applies the configs, and
-discards it. It runs two passes: the shared `.files/install.conf.yaml` and
-`.files/niri.conf.yaml`, then the distro overlay (`.files/arch/`, `.files/fedora/`) matching `ID`/`ID_LIKE` in
-`/etc/os-release`.
+downloads that release into a temporary directory, checks it against the pinned SHA-256, and discards it afterwards.
 
 The repo is intentionally opinionated: link defaults use `force: true`, so repo-managed files replace local targets.
-Run this only when you want this repository to own those config paths.
+Run this only when you want this repository to own those config paths. `~/.zshrc` is not linked: the shell module
+writes a local stub that sources `~/.config/zsh/zshrc`, so installers that append to `~/.zshrc` do not edit the repo.
 
 ```bash
-just apply-dotfiles
-
-# Preview without touching anything
-DOTBOT_ARGS=-n just apply-dotfiles
-
-# Force a specific overlay, or use a specific dotbot binary
-DOTFILES_PROFILE=arch just apply-dotfiles
-DOTBOT=~/.apps/dotbot/bin/dotbot just apply-dotfiles
+# Use a specific dotbot binary, or pass extra flags to it
+DOTBOT=~/.apps/dotbot/bin/dotbot just host arch-sway
+DOTBOT_ARGS=-v just module arch-sway sway
 ```
 
 Managed highlights:
@@ -151,22 +117,14 @@ Managed highlights:
 - 🧱 tmux, Zellij, Starship
 - 🖥 Alacritty, Kitty, WezTerm, Ghostty
 - 📁 Yazi, Lazygit, LSD, Btop
-- 🪟 GNOME, COSMIC, Niri + DankMaterialShell, Sway, Waybar, Fuzzel
+- 🪟 GNOME, Niri + DankMaterialShell, Sway, Waybar, Fuzzel
 
 ### DankMaterialShell
 
-Portable DMS settings and DMS-generated Niri snippets live under `.files/.config/` and are linked by
-`.files/niri.conf.yaml`. Runtime state, caches, generated themes, and plugin checkout directories stay local.
-
-The plugin lock is tracked as a snapshot because DMS replaces its live lockfile instead of writing through symlinks:
-
-```bash
-# Refresh the snapshot after installing or updating DMS plugins
-dms plugins lock --output ~/.system-bootstrap/.files/.config/DankMaterialShell/plugins.lock.json
-
-# Reproduce the saved plugin revisions on another machine
-dms plugins restore ~/.system-bootstrap/.files/.config/DankMaterialShell/plugins.lock.json
-```
+Portable DMS settings and the Niri config live under `.files/.config/` and are linked by the `niri-dms` module. DMS
+writes its settings through these links, so the sources stay at their `.files/` paths. Runtime state, caches, generated
+themes, and plugin checkout directories stay local. See [modules/niri-dms/README.md](modules/niri-dms/README.md) for
+the plugin lock commands.
 
 ## 🔤 Nerd Fonts
 
@@ -185,10 +143,10 @@ Dotbot links it to:
 ~/.config/nerd-fonts-installer/config.yaml
 ```
 
-Install the configured font set:
+The desktop module installs the configured font set:
 
 ```bash
-just install-fonts
+just module <host> desktop
 ```
 
 ## 🧪 Formatting And Linting
@@ -210,13 +168,13 @@ GitHub Actions runs the same flow:
 
 ## 🧭 Distro Notes
 
-| Distro     | Profile                               | Desktop Focus              |
-| ---------- | ------------------------------------- | -------------------------- |
-| Fedora     | `scripts/fedora/*`, `.files/fedora/*` | GNOME-oriented workstation |
-| Arch Linux | `scripts/arch/*`, `.files/arch/*`     | GNOME + COSMIC             |
+| Distro     | Package lists               | Notes                                                |
+| ---------- | --------------------------- | ---------------------------------------------------- |
+| Arch Linux | `modules/*/packages.arch`   | Arch and CachyOS. `niri-dms` has no package list yet |
+| Fedora     | `modules/*/packages.fedora` | base adds RPM Fusion and the VS Code repo            |
 
-Some scripts install system packages, enable services, write system config, or require `sudo`.
-Read a script before running it on a machine you care about.
+Module setup scripts install system packages, enable services, write system config, and use `sudo`.
+Run `just dry <host>` and read a module before running it on a machine you care about.
 
 ## ⚠️ Operational Notes
 
@@ -233,4 +191,4 @@ Read a script before running it on a machine you care about.
 
 ## 📄 License
 
-MIT. See [LICENSE](LICENSE).
+GPL-3.0. See [LICENSE](LICENSE).

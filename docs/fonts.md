@@ -70,6 +70,6 @@ In our specific project history, we encountered this with **Waybar**. Initial se
 **Resolution:**
 We explicitly added the emoji font packages to our installation scripts to ensure consistency across environments:
 
-- **Arch**: Added `noto-fonts-emoji` in `scripts/arch/02-base-packages.sh`.
+- **Arch**: Added `noto-fonts-emoji` in `modules/desktop/packages.arch`.
 
 This resolved the rendering issues across the UI without requiring complex manual `fonts.conf` editing.

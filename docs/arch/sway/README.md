@@ -1,6 +1,6 @@
 # Arch + Sway
 
-Isolated overlay for this Sway session. It does not change Fedora, the Arch Hyprland notes, Niri, or DankMaterialShell.
+The `sway` module (`modules/sway/`) for the `arch-sway` host. Only hosts that list `sway` in `MODULES` get it; it does not change GNOME, Niri, or DankMaterialShell.
 
 The look follows the Dux dark purple theme: square corners, no blur. Window borders are 1 pixel and hide when a workspace has a single window. The focused frame stays lavender. Only the edge where the next window opens is marked, in deep purple, whether that window opens beside this one or below it. Urgent windows, a wrong password, and errors use the Dux urgent pink.
 
@@ -19,37 +19,39 @@ Region select dims the screen with the background and draws a lavender border. T
 
 Waybar is a flat full-width strip, the same shape as stock swaybar, in the Dux purple colors. Workspace numbers sit on the left. The focused one is a lavender block with deep purple text. Next to them: `cpu`, `mem`, `disk`. On the right, first is `us` or `ua`, then CO2, PM2.5, and AQI from the AirGradient monitor, then `vol`, the network, secondary `rec` while recording, and a 24-hour clock. The far right is `idle` (or `awake` while the screen is held on). Click `idle` to stop the lock and the panel power-off. Click `awake` to allow them again. Fuzzel replaces Wofi and wmenu. App icons in Fuzzel stay off. Kanshi sets the monitor. Sway does not set resolution, position, or scale. Alacritty and Foot use the same colors. The shared Catppuccin file stays at `.files/alacritty_theme.toml`.
 
-## Run by hand
+## Apply
 
-From `~/.system-bootstrap`. `just` is not required for the first run; the package script installs it.
+From `~/.system-bootstrap`, with `just` installed (`sudo pacman -S --needed just`).
 
 ```bash
-./scripts/arch/sway/00-packages.sh
-./scripts/arch/sway/apply-dotfiles.sh
+just dry arch-sway                # preview: package check, dotbot -n, no changes
+just host arch-sway               # every module of the host
+just module arch-sway sway        # only this module: packages.arch, links, setup.sh
 ```
-
-After `just` is installed, the same two steps are `just arch-sway-packages` and `just arch-sway-dotfiles`.
 
 Then log out of Sway and back in. Sway chooses `~/.config/sway/config` at startup. A reload of the current session keeps using `/etc/sway/config` if that is what it started with.
 
-`just arch-sway-packages` and `just arch-sway-dotfiles` are not part of `just arch-install` or `just arch-full-install`. `just apply-dotfiles` still applies only the shared files and the distro overlay. Do not use it to install this Sway config. That command also force-cleans `~/.config`.
+The desktop module owns `~/.config/alacritty/alacritty.toml`, `base.toml` and `theme.toml`. This module adds `wm.toml` with the Dux colors and the RecMono font, which alacritty loads after the shared theme. The base module's `clean` step only removes dead links that point into this repo.
 
 ## What gets linked
 
-| Repo path                                      | Home path                        |
-| ---------------------------------------------- | -------------------------------- |
-| `.files/arch/sway/config/sway/config`          | `~/.config/sway/config`          |
-| `.files/arch/sway/config/sway/scripts/`        | `~/.config/sway/scripts`         |
-| `.files/arch/sway/config/waybar/config.jsonc`  | `~/.config/waybar/config.jsonc`  |
-| `.files/arch/sway/config/waybar/style.css`     | `~/.config/waybar/style.css`     |
-| `.files/arch/sway/config/alacritty/theme.toml` | `~/.config/alacritty/theme.toml` |
-| `.files/arch/sway/config/fuzzel/fuzzel.ini`    | `~/.config/fuzzel/fuzzel.ini`    |
-| `.files/arch/sway/config/kanshi/config`        | `~/.config/kanshi/config`        |
-| `.files/arch/sway/config/mako/config`          | `~/.config/mako/config`          |
-| `.files/arch/sway/config/foot/foot.ini`        | `~/.config/foot/foot.ini`        |
-| `.files/arch/sway/config/swaynag/config`       | `~/.config/swaynag/config`       |
-| `.files/arch/sway/config/wlsunset/config`      | `~/.config/wlsunset/config`      |
-| `.files/arch/sway/config/wob/wob.ini`          | `~/.config/wob/wob.ini`          |
+| Repo path                                     | Home path                             |
+| --------------------------------------------- | ------------------------------------- |
+| `.files/arch/sway/config/sway/config`         | `~/.config/sway/config`               |
+| `.files/arch/sway/config/sway/scripts/`       | `~/.config/sway/scripts`              |
+| `assets/wallpapers/`                          | `~/Pictures/walls`                    |
+| `.files/arch/sway/config/wpaperd/config.toml` | `~/.config/wpaperd/config.toml`       |
+| `.files/arch/sway/config/waybar/config.jsonc` | `~/.config/waybar/config.jsonc`       |
+| `.files/arch/sway/config/waybar/style.css`    | `~/.config/waybar/style.css`          |
+| `modules/sway/files/alacritty/wm.toml`        | `~/.config/alacritty/wm.toml`         |
+| `.files/arch/sway/config/fuzzel/fuzzel.ini`   | `~/.config/fuzzel/fuzzel.ini`         |
+| `.files/arch/sway/config/kanshi/config`       | `~/.config/kanshi/config`             |
+| `.files/arch/sway/config/mako/config`         | `~/.config/mako/config`               |
+| `.files/arch/sway/config/foot/foot.ini`       | `~/.config/foot/foot.ini`             |
+| `.files/arch/sway/config/swaynag/config`      | `~/.config/swaynag/config`            |
+| `.files/arch/sway/config/wlsunset/config`     | `~/.config/wlsunset/config`           |
+| `.files/arch/sway/config/wob/wob.ini`         | `~/.config/wob/wob.ini`               |
+| `modules/sway/files/systemd/skbd.service`     | `~/.config/systemd/user/skbd.service` |
 
 Links are forced. A real file already at one of those paths is replaced by the symlink.
 
@@ -107,4 +109,4 @@ Kanshi only enables a profile when every currently connected output is listed in
 
 ## Font
 
-The bar, titles, launcher, notifications, lock, swaynag, region readout, Foot, and Alacritty use RecMono Linear (`RecMonoLinear Nerd Font Mono`), Recursive Mono 1.085. The bar is 15px. The lock text is 23px and the ring radius is 112. Titles, menus, notifications, swaynag, and Foot are 16px. Alacritty stays at 14px and keeps the shared keybinds. `just arch-sway-packages` installs `ttf-recursive-nerd`, which also includes Casual, Duotone, and SemiCasual.
+The bar, titles, launcher, notifications, lock, swaynag, region readout, Foot, and Alacritty use RecMono Linear (`RecMonoLinear Nerd Font Mono`), Recursive Mono 1.085. The bar is 15px. The lock text is 23px and the ring radius is 112. Titles, menus, notifications, swaynag, and Foot are 16px. Alacritty stays at 14px and keeps the shared keybinds. `modules/sway/packages.arch` installs `ttf-recursive-nerd`, which also includes Casual, Duotone, and SemiCasual.

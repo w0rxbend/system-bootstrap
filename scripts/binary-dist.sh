@@ -13,7 +13,7 @@ INSTALL_DIR="${BINSTALLER_INSTALL_DIR:-${HOME}/.local/bin}"
 BINSTALLER="${INSTALL_DIR}/binstaller"
 
 # Prefer the installed/linked config; fall back to the in-repo copy when dotfiles
-# have not been applied yet (this script runs before `just apply-dotfiles`).
+# have not been linked yet (the cli module links them first; a run by hand may not).
 CONFIG_PATH="${BINSTALLER_CONFIG:-${HOME}/.config/binstaller/config.yaml}"
 if [ ! -f "${CONFIG_PATH}" ]; then
     CONFIG_PATH="${REPO_ROOT}/.files/.config/binstaller/config.yaml"

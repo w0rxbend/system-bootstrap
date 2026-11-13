@@ -5,35 +5,43 @@ Guidance for working in this repository.
 ## What this is
 
 `system-bootstrap` is a personal, multi-distro Linux workstation automation repo — **not an
-application**. It provisions a dev machine from scratch across **Fedora and Arch** using
-shell scripts orchestrated by a `Justfile`, plus Dotbot-managed dotfiles. There is no build, test
+application**. It provisions a dev machine from scratch across **Arch and Fedora** from
+per-host module lists (`hosts/`, `modules/`) run by a `Justfile`, plus Dotbot-managed dotfiles. There is no build, test
 suite, or runtime; "correctness" means the scripts run cleanly and pass the format/lint gate.
 
 ## Layout
 
-- `Justfile` — the entry point. Every workflow is a recipe (`just --list` to see them). Recipes just
-  call scripts in `scripts/`.
-- `scripts/` — Bash/zsh provisioning. Shared setup at the top level (`cli-tools.sh`,
-  `binary-dist.sh`, `configurations.sh`, `install_golang.sh`, …); distro-specific under
-  `scripts/arch/`, `scripts/fedora/` (numbered `00-`, `01-`, … run order).
+- `Justfile` — the entry point: `host <h>`, `dry <h>`, `module <h> <m>`, plus `format`/`lint`/`check`.
+- `hosts/<host>/host.env` — one machine: `DISTRO` (`arch|fedora|ubuntu`) and the ordered `MODULES`
+  list; optional `GIT_USER_NAME`, `GIT_USER_EMAIL`, `OBS=1`.
+- `modules/<module>/` — every file optional: `packages.<distro>` (names, `#` comments),
+  `dotbot.yaml` (links only: `defaults|link|create|clean`, sources relative to the repo root),
+  `setup.sh` (bash, idempotent, non-interactive; gets `HOST DISTRO REPO_ROOT`), `files/` (sources
+  owned by the module).
+- `scripts/host.sh` — the runner. Per module, in `MODULES` order: packages → dotbot → setup.sh, then
+  `hosts/<host>/` as a last module. `--dry` never runs `sudo` or `setup.sh`.
+- `scripts/lib/` — `common.sh` (helpers, `os_id`, `pkg_install`/`pkg_check`) and `dotbot.sh`
+  (pinned dotbot-go, SHA-256 checked). Other `scripts/*.sh` are shared installers that module
+  `setup.sh` files call.
 - `scripts/format.sh`, `scripts/lint.sh` — the quality gate (well-structured, `set -euo pipefail`,
   degrade gracefully when a tool is absent). Treat these as the reference style for new scripts.
-- `.files/` — dotfiles linked into `$HOME` by **Dotbot** via `install.conf.yaml` (root + per-distro
-  overlays). Links use `force: true` — applying dotfiles overwrites matching local config paths.
-  Dotbot is not vendored here; `scripts/apply-dotfiles.sh` fetches the `worxbend/dotbot-go` release
-  binary to a temp dir on demand and applies the root config then the matching distro overlay.
-  Neovim config (`.files/nvim/`) is an AstroNvim setup with a pinned `lazy-lock.json`.
-- `docs/`, `assets/` — notes (keyrings, SDDM, fonts) and wallpapers/icons.
+- `.files/` — config sources linked by the module manifests. Links use `force: true` — applying
+  overwrites matching local config paths. DankMaterialShell writes through its links, so the
+  `niri-dms` sources stay at their `.files/` paths. Neovim config (`.files/nvim/`) is an AstroNvim
+  setup with a pinned `lazy-lock.json`.
+- `docs/`, `assets/` — notes (keyrings, fonts, Sway) and wallpapers/icons.
 
 ## Conventions
 
-- **Every script must be reachable from a `Justfile` recipe.** Don't leave orphan scripts or recipes
-  pointing at non-existent files — the two must stay in sync.
-- New shell scripts: start with `set -euo pipefail` (bash) and quote variable expansions. The older
-  top-level installer scripts predate this and are looser; match `format.sh`/`lint.sh` for anything
-  new or reworked.
+- **Every script must be reachable** from a `Justfile` recipe, or from a module `setup.sh` run by
+  `just host`. Don't leave orphan scripts or recipes pointing at non-existent files; `just lint`
+  checks both.
+- One owner per link target per host; `just lint` fails on a duplicate within a host's module set.
+- New shell scripts: start with `set -euo pipefail` (bash) and quote variable expansions. Match
+  `format.sh`/`lint.sh` for anything new or reworked.
 - Prefer `${HOME}` / `$XDG_*` over hardcoded `/home/<user>` paths.
-- Pin tool versions in `binary-dist.sh` via the `*_VERSION` variables at the top.
+- Pin tool versions in `.files/.config/binstaller/config.yaml` (`spec.versions`); Go is pinned in
+  `scripts/install_golang.sh` (version and SHA-256 together).
 
 ## Quality gate
 

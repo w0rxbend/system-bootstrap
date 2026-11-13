@@ -6,13 +6,6 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["/scripts/binary-dist\\.sh/"],
-      "matchStrings": ["YAZI_VERSION=(?<currentValue>v[\\d.]+)"],
-      "depNameTemplate": "sxyazi/yazi",
-      "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
       "managerFilePatterns": ["/scripts/cli-tools\\.sh/"],
       "matchStrings": ["nvm-sh/nvm/(?<currentValue>v[\\d.]+)/install\\.sh"],
       "depNameTemplate": "nvm-sh/nvm",

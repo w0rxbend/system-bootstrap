@@ -47,7 +47,7 @@ fi
 
 # Installing the plugins needs both tmux and a linked .tmux.conf to read the
 # `@plugin` list from. Either can legitimately be missing when this runs before
-# the distro packages or `just apply-dotfiles`, so degrade instead of failing.
+# the shell module's packages or links, so degrade instead of failing.
 if ! have tmux; then
     skip "tmux not installed; TPM is in place, plugins will install on first run"
     exit 0
@@ -62,7 +62,7 @@ for candidate in "${TMUX_CONFS[@]}"; do
 done
 
 if [ -z "${tmux_conf}" ]; then
-    skip "no tmux.conf found (${TMUX_CONFS[*]}); run 'just apply-dotfiles' first, then re-run this"
+    skip "no tmux.conf found (${TMUX_CONFS[*]}); run 'just host <host>' first, then re-run this"
     exit 0
 fi
 

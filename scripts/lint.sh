@@ -315,35 +315,6 @@ manifest_links() {
     ' "$1"
 }
 
-# Legacy dotbot manifests and the base dir each one is applied with.
-declare -A manifest_base=(
-    [.files/install.conf.yaml]=.files
-    [.files/niri.conf.yaml]=.files
-    [.files/arch/install.conf.yaml]=.files/arch
-    [.files/fedora/install.conf.yaml]=.files/fedora
-    [.files/arch/sway/install.conf.yaml]=.files/arch/sway
-)
-
-# Module and host manifests: scripts/host.sh applies them with the repo root as base dir.
-for manifest in modules/*/dotbot.yaml hosts/*/dotbot.yaml; do
-    [ -f "${manifest}" ] && manifest_base[$manifest]=.
-done
-
-# Manifest sets applied together on one machine today.
-manifest_sets=(
-    ".files/install.conf.yaml .files/arch/install.conf.yaml"
-    ".files/install.conf.yaml .files/arch/install.conf.yaml .files/arch/sway/install.conf.yaml"
-    ".files/install.conf.yaml .files/fedora/install.conf.yaml"
-    ".files/install.conf.yaml .files/niri.conf.yaml"
-)
-
-# The Sway overlay overrides the shared alacritty files on purpose until the
-# host/module split gives each target one owner.
-known_duplicate_targets=(
-    '~/.config/alacritty/alacritty.toml'
-    '~/.config/alacritty/theme.toml'
-)
-
 declare -A manifest_targets=()
 
 # Print every target that more than one of the given manifests links.
@@ -355,36 +326,19 @@ duplicate_targets() {
     done | grep -v '^$' | sort | uniq -d
 }
 
+# Module and host manifests: scripts/host.sh applies them with the repo root
+# as base dir. They run no shell steps; setup.sh does that work.
 info "Checking dotbot manifests"
-mapfile -t manifests < <(printf '%s\n' "${!manifest_base[@]}" | sort)
-for manifest in "${manifests[@]}"; do
-    base="${manifest_base[$manifest]}"
-    if [ ! -f "${manifest}" ]; then
-        fail "dotbot manifest missing: ${manifest}"
-        continue
-    fi
-    # Module and host manifests run no shell steps; setup.sh does that work.
-    directives='defaults|link|create|clean|shell'
-    [ "${base}" != . ] || directives='defaults|link|create|clean'
-    if ! links="$(manifest_links "${manifest}" "${directives}")"; then
+for manifest in modules/*/dotbot.yaml hosts/*/dotbot.yaml; do
+    [ -f "${manifest}" ] || continue
+    if ! links="$(manifest_links "${manifest}" 'defaults|link|create|clean')"; then
         failures=1
     fi
     manifest_targets[$manifest]="$(cut -f1 <<<"${links}")"
     while IFS=$'\t' read -r target source; do
         [ -n "${target}" ] || continue
-        [ -e "${base}/${source}" ] || fail "${manifest}: ${target} -> ${base}/${source} does not exist"
+        [ -e "${source}" ] || fail "${manifest}: ${target} -> ${source} does not exist"
     done <<<"${links}"
-done
-
-for manifest_set in "${manifest_sets[@]}"; do
-    read -r -a set_members <<<"${manifest_set}"
-    while IFS= read -r target; do
-        if [[ " ${known_duplicate_targets[*]} " == *" ${target} "* ]]; then
-            printf 'warn: %s is linked twice in: %s\n' "${target}" "${manifest_set}"
-        else
-            fail "${target} is linked twice in: ${manifest_set}"
-        fi
-    done < <(duplicate_targets "${set_members[@]}")
 done
 
 # Host sets: the modules in MODULES plus the host dir. Every target has one owner.
