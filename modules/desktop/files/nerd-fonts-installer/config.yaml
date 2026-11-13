@@ -1,0 +1,46 @@
+release: latest
+destination: ~/.local/share/fonts/NerdFonts
+refresh_font_cache: true
+families:
+  - JetBrainsMono
+  - MPlus
+  - Terminus
+  - FantasqueSansMono
+  - Noto
+  - Hack
+  - HeavyData
+  - 3270
+  - FiraCode
+  - LiberationMono
+  - RobotoMono
+  - Mononoki
+  - Ubuntu
+  - DroidSansMono
+  - Monoid
+  - SpaceMono
+  - SourceCodePro
+  - ComicShannsMono
+  - NerdFontsSymbolsOnly
+  - DaddyTimeMono
+  - UbuntuMono
+  - Meslo
+  - FiraMono
+  - CodeNewRoman
+  - CascadiaCode
+  - Hasklig
+  - DejaVuSansMono
+  - ZedMono
+  - Inconsolata
+  - Hermit
+  - CommitMono
+  - Agave
+  - GeistMono
+  - Monaspace
+  - ShareTechMono
+  - Recursive
+  - D2Coding
+  - EnvyCodeR
+  - IosevkaTerm
+  - Lekton
+  - Lilex
+  - VictorMono

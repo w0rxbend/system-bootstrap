@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Clone or fast-forward the Oh My Zsh custom plugins used by .files/.zshrc.
+# Clone or fast-forward the Oh My Zsh custom plugins used by modules/shell/files/zshrc.
 # Safe to re-run: existing checkouts are pulled instead of cloned again.
 
 PLUGINS_DIR="${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins"

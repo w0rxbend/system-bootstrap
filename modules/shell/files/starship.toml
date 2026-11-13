@@ -1,0 +1,497 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = "catppuccin_mocha"
+
+format = """
+[](surface0)\
+$os\
+[](fg:prev_fg bg:maroon)\
+$username\
+$hostname\
+[](fg:prev_bg bg:yellow)\
+$directory\
+[](fg:prev_bg bg:peach)\
+$git_branch\
+$git_commit\
+$git_status\
+$git_state\
+$git_metrics\
+[](fg:prev_bg bg:rosewater)\
+$aws\
+$azure\
+$buf\
+$bun\
+$c\
+$cmake\
+$cobol\
+$conda\
+$container\
+$crystal\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$fossil_branch\
+$gleam\
+$golang\
+$gradle\
+$guix_shell\
+$haskell\
+$helm\
+$hg_branch\
+$java\
+$julia\
+$jobs\
+$kotlin\
+$kubernetes\
+$lua\
+$meson\
+$nim\
+$nix_shell\
+$nodejs\
+$ocaml\
+$opa\
+$openstack\
+$package\
+$perl\
+$php\
+$pijul_channel\
+$pulumi\
+$purescript\
+$python\
+$quarto\
+$raku\
+$red\
+$rlang\
+$ruby\
+$rust\
+$scala\
+$shell\
+$shlvl\
+$singularity\
+$solidity\
+$spack\
+$status\
+$sudo\
+$swift\
+$terraform\
+$typst\
+$vagrant\
+$vcsh\
+$vlang\
+$zig\
+[ ](fg:prev_bg bg:surface0)\
+$docker_context\
+$gcloud\
+$cmd_duration\
+$battery\
+[ ](fg:prev_bg)\
+$line_break$character"""
+
+
+# Order of modules on prompt
+command_timeout = 1500
+
+add_newline = false
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo  = "#f2cdcd"
+pink      = "#f5c2e7"
+mauve     = "#cba6f7"
+red       = "#f38ba8"
+maroon    = "#eba0ac"
+peach     = "#fab387"
+yellow    = "#f9e2af"
+green     = "#a6e3a1"
+teal      = "#94e2d5"
+sky       = "#89dceb"
+sapphire  = "#74c7ec"
+blue      = "#89b4fa"
+lavender  = "#b4befe"
+text      = "#cdd6f4"
+subtext1  = "#bac2de"
+subtext0  = "#a6adc8"
+overlay2  = "#9399b2"
+overlay1  = "#7f849c"
+overlay0  = "#6c7086"
+surface2  = "#585b70"
+surface1  = "#45475a"
+surface0  = "#313244"
+base      = "#1e1e2e"
+mantle    = "#181825"
+crust     = "#11111b"
+
+[os]
+disabled = false
+style    = "bg:prev_bg fg:prev_bg"
+format   = "[$symbol ]($style)"
+
+[os.symbols]
+Ubuntu      = "[](fg:peach bg:prev_fg)"
+SUSE        = "[](fg:green bg:prev_fg)"
+openSUSE    = "[](fg:green bg:prev_fg)"
+Raspbian    = "[󰐿](fg:red bg:prev_fg)"
+Mint        = "[󰣭](fg:green bg:prev_fg)"
+Macos       = "[󰀵](fg:text bg:prev_fg)"
+Manjaro     = "[](fg:green bg:prev_fg)"
+Linux       = "[󰌽](fg:text bg:prev_fg)"
+Gentoo      = "[󰣨](fg:text bg:prev_fg)"
+Fedora      = "[󰣛](fg:red bg:prev_fg)"
+Alpine      = "[](fg:teal bg:prev_fg)"
+Android     = "[](fg:green bg:prev_fg)"
+Arch        = "[󰣇](fg:blue bg:prev_fg)"
+CachyOS     = "[󰣇](fg:blue bg:prev_fg)"
+Artix       = "[󰣇](fg:blue bg:prev_fg)"
+EndeavourOS = "[](fg:mauve bg:prev_fg)"
+CentOS      = "[](fg:blue bg:prev_fg)"
+Debian      = "[󰣚](fg:red bg:prev_fg)"
+Redhat      = "[󱄛](fg:red bg:prev_fg)"
+Pop         = "[](fg:teal bg:prev_fg)"
+
+[username]
+show_always = true
+style_user  = "bg:prev_bg fg:crust"
+style_root  = "bg:prev_bg fg:crust"
+format      = '[  $user ]($style)'
+
+[hostname]
+ssh_symbol = ""
+style      = "fg:prev_fg bg:prev_bg"
+format     = "[$ssh_symbol $hostname ]($style)"
+
+[directory]
+style             = "bg:prev_bg fg:crust"
+read_only_style   = "fg:red bg:prev_bg"
+format            = "[ $path ]($style)[$read_only]($read_only_style)"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only         = "󰌾 "
+
+[git_branch]
+symbol            = ""
+style             = "fg:crust bg:prev_bg"
+format            = '[ $symbol $branch ]($style)'
+truncation_length = 4
+truncation_symbol = ''
+[git_commit]
+style  = "fg:prev_fg bg:prev_bg"
+format = "[($tag)]($style) "
+
+[git_status]
+style  = "fg:crust bg:prev_bg"
+format = '[($all_status$ahead_behind )]($style)'
+
+[git_state]
+style       = "fg:crust bg:prev_bg"
+format      = '\[($state($progress_current/$progress_total))\]($style)'
+cherry_pick = '[ PICKING](bold red)'
+
+[git_metrics]
+format        = '[+$added]($added_style)[/](fg:crust bg:prev_bg)[-$deleted]($deleted_style)'
+disabled      = true
+added_style   = "fg:crust bg:prev_bg"
+deleted_style = "fg:crust bg:prev_bg"
+
+[nodejs]
+symbol = ""
+style  = "fg:crust bg:blue"
+format = '[ ](fg:prev_bg bg:blue)[ $symbol( $version) ]($style)'
+
+[c]
+symbol = " "
+style  = "fg:crust bg:green"
+format = '[ ](fg:prev_bg bg:green)[ $symbol( $version) ]($style)'
+
+[rust]
+symbol = ""
+style  = "fg:crust bg:red"
+format = '[ ](fg:prev_bg bg:red)[ $symbol( $version) ]($style)'
+
+[golang]
+symbol = ""
+style  = "fg:crust bg:teal"
+format = '[ ](fg:prev_bg bg:teal)[ $symbol( $version) ]($style)'
+
+[php]
+symbol = ""
+style  = "fg:crust bg:mauve"
+format = '[ ](fg:prev_bg bg:mauve)[ $symbol( $version) ]($style)'
+
+[lua]
+symbol = ""
+style  = "fg:crust bg:pink"
+format = '[ ](fg:prev_bg bg:pink)[ $symbol( $version ) ]($style)'
+
+[scala]
+symbol = ""
+style = "fg:crust bg:red"
+format = '[ ](fg:prev_bg bg:red)[$symbol( $version) ]($style)'
+detect_files = [
+  "build.sbt",
+  "build.sc",
+  "build.gradle",
+  "build.gradle.kts",
+  "pom.xml",
+  "project/build.properties",
+  "scala.version",
+  "metals.sbt",
+  "scala-cli",
+  "mill",
+  "ammonite",
+  "build.mill",
+  ".mill-version",
+]
+detect_folders = [
+  ".metals",
+  ".bloop",
+  ".ammonite",
+  ".mill",
+  ".sbt",
+  ".scala-steward",
+]
+
+
+[java]
+symbol = ""
+style  = "fg:crust bg:yellow"
+format = '[ ](fg:prev_bg bg:yellow)[$symbol( $version ) ]($style)'
+
+[kotlin]
+symbol = ""
+style  = "fg:crust bg:peach"
+format = '[ ](fg:prev_bg bg:peach)[ $symbol( $version) ]($style)'
+
+[haskell]
+symbol = ""
+style  = "fg:crust bg:lavender"
+format = '[ ](fg:prev_bg bg:lavender)[ $symbol( $version) ]($style)'
+
+[python]
+symbol = ""
+style  = "fg:crust bg:maroon"
+format = '[ ](fg:prev_bg bg:maroon)[ $symbol( $version)( $virtualenv) ]($style)'
+
+[docker_context]
+symbol = ""
+style  = "fg:crust bg:blue"
+format = '[ ](fg:prev_bg bg:blue)[ $symbol( $context) ]($style)'
+
+[conda]
+ignore_base = false
+symbol      = ""
+style       = "fg:crust bg:green"
+format      = '[ ](fg:prev_bg bg:green)[ $symbol( $environment) ]($style)'
+
+[jobs]
+symbol = "󰆅"
+style  = "fg:crust bg:yellow"
+format = '[ ](fg:prev_bg bg:yellow)[ $symbol( $number) ]($style)'
+
+[cmd_duration]
+style  = "fg:prev_fg bg:prev_bg"
+format = "[ $duration ]($style)"
+
+[memory_usage]
+symbol    = "󰍛"
+style     = "bold fg:crust bg:prev_bg"
+format    = "[ $symbol ${ram}]($style)"
+disabled  = false
+threshold = -1
+
+[character]
+disabled                  = false
+success_symbol            = '[](bold fg:green)'
+error_symbol              = '[](bold fg:red)'
+vimcmd_symbol             = '[](bold fg:green)'
+vimcmd_replace_one_symbol = '[](bold fg:mauve)'
+vimcmd_replace_symbol     = '[](bold fg:mauve)'
+vimcmd_visual_symbol      = '[](bold fg:yellow)'
+
+[aws]
+style  = "fg:crust bg:sky"
+format = '[ ](fg:prev_bg bg:sky)[ $symbol $profile(\($region\)) ]($style)'
+
+[azure]
+style  = "fg:crust bg:blue"
+format = '[ ](fg:prev_bg bg:blue)[ $symbol $subscription ]($style)'
+
+[buf]
+style  = "fg:crust bg:mauve"
+format = '[ ](fg:prev_bg bg:mauve)[ $symbol( $version) ]($style)'
+
+[bun]
+style  = "fg:crust bg:yellow"
+format = '[ ](fg:prev_bg bg:yellow)[ $symbol( $version) ]($style)'
+
+[cmake]
+style  = "fg:crust bg:red"
+format = '[ ](fg:prev_bg bg:red)[ $symbol( $version) ]($style)'
+
+[cobol]
+style  = "fg:crust bg:yellow"
+format = '[ ](fg:prev_bg bg:yellow)[ $symbol( $version) ]($style)'
+
+[container]
+style  = "fg:crust bg:blue"
+format = '[ ](fg:prev_bg bg:blue)[ $symbol $name ]($style)'
+
+[crystal]
+style  = "fg:crust bg:green"
+format = '[ ](fg:prev_bg bg:green)[ $symbol( $version) ]($style)'
+
+[dart]
+style  = "fg:crust bg:mauve"
+format = '[ ](fg:prev_bg bg:mauve)[ $symbol( $version) ]($style)'
+
+[deno]
+style  = "fg:crust bg:pink"
+format = '[ ](fg:prev_bg bg:pink)[ $symbol( $version) ]($style)'
+
+[dotnet]
+style  = "fg:crust bg:peach"
+format = '[ ](fg:prev_bg bg:peach)[ $symbol( $version) ]($style)'
+
+[elixir]
+style  = "fg:crust bg:lavender"
+format = '[ ](fg:prev_bg bg:lavender)[ $symbol( $version) ]($style)'
+
+[elm]
+style  = "fg:crust bg:sky"
+format = '[ ](fg:prev_bg bg:sky)[ $symbol( $version) ]($style)'
+
+[erlang]
+style  = "fg:crust bg:teal"
+format = '[ ](fg:prev_bg bg:teal)[ $symbol( $version) ]($style)'
+
+[fennel]
+style  = "fg:crust bg:maroon"
+format = '[ ](fg:prev_bg bg:maroon)[ $symbol( $version) ]($style)'
+
+[gleam]
+style  = "fg:crust bg:red"
+format = '[ ](fg:prev_bg bg:red)[ $symbol( $version) ]($style)'
+
+[gcloud]
+style  = "fg:crust bg:yellow"
+format = '[ ](fg:prev_bg bg:yellow)[ $symbol $account(\($region\)) ]($style)'
+
+[gradle]
+style  = "fg:crust bg:blue"
+format = '[ ](fg:prev_bg bg:blue)[ $symbol( $version) ]($style)'
+
+[guix_shell]
+style  = "fg:crust bg:green"
+format = '[ ](fg:prev_bg bg:green)[ $symbol $name ]($style)'
+
+[haxe]
+style  = "fg:crust bg:mauve"
+format = '[ ](fg:prev_bg bg:mauve)[ $symbol( $version) ]($style)'
+
+[helm]
+style  = "fg:crust bg:pink"
+format = '[ ](fg:prev_bg bg:pink)[ $symbol( $version) ]($style)'
+
+[hg_branch]
+style  = "fg:crust bg:peach"
+format = '[ ](fg:prev_bg bg:peach)[ $symbol $branch ]($style)'
+
+[julia]
+style  = "fg:crust bg:lavender"
+format = '[ ](fg:prev_bg bg:lavender)[ $symbol( $version) ]($style)'
+
+[kubernetes]
+style  = "fg:crust bg:sky"
+format = '[ ](fg:prev_bg bg:sky)[ $symbol $context(\($namespace\)) ]($style)'
+
+[localip]
+style  = "fg:crust bg:teal"
+format = '[ ](fg:prev_bg bg:teal)[ $symbol $localipv4 ]($style)'
+
+[meson]
+style  = "fg:crust bg:maroon"
+format = '[ ](fg:prev_bg bg:maroon)[ $symbol( $version) ]($style)'
+
+[nix_shell]
+style  = "fg:crust bg:red"
+format = '[ ](fg:prev_bg bg:red)[ $symbol $name ]($style)'
+
+[opa]
+style  = "fg:crust bg:yellow"
+format = '[ ](fg:prev_bg bg:yellow)[ $symbol( $version) ]($style)'
+
+[openstack]
+style  = "fg:crust bg:blue"
+format = '[ ](fg:prev_bg bg:blue)[ $symbol $cloud ]($style)'
+
+[package]
+style  = "fg:crust bg:green"
+format = '[ ](fg:prev_bg bg:green)[ $symbol $version ]($style)'
+
+[pijul_channel]
+style  = "fg:crust bg:mauve"
+format = '[ ](fg:prev_bg bg:mauve)[ $symbol $channel ]($style)'
+
+[pulumi]
+style  = "fg:crust bg:pink"
+format = '[ ](fg:prev_bg bg:pink)[ $symbol $stack ]($style)'
+
+[quarto]
+style  = "fg:crust bg:peach"
+format = '[ ](fg:prev_bg bg:peach)[ $symbol( $version) ]($style)'
+
+[raku]
+style  = "fg:crust bg:lavender"
+format = '[ ](fg:prev_bg bg:lavender)[ $symbol( $version) ]($style)'
+
+[red]
+style  = "fg:crust bg:sky"
+format = '[ ](fg:prev_bg bg:sky)[ $symbol( $version) ]($style)'
+
+[rlang]
+style  = "fg:crust bg:teal"
+format = '[ ](fg:prev_bg bg:teal)[ $symbol( $version) ]($style)'
+
+[shell]
+style  = "fg:crust bg:maroon"
+format = '[ ](fg:prev_bg bg:maroon)[ $symbol( $version) ]($style)'
+
+[shlvl]
+style  = "fg:crust bg:red"
+format = '[ ](fg:prev_bg bg:red)[ $symbol $shlvl ]($style)'
+
+[status]
+style  = "fg:crust bg:mauve"
+format = '[ ](fg:prev_bg bg:mauve)[ $symbol $status ]($style)'
+
+[sudo]
+style  = "fg:crust bg:pink"
+format = '[ ](fg:prev_bg bg:pink)[ $symbol ]($style)'
+
+[terraform]
+style  = "fg:crust bg:peach"
+format = '[ ](fg:prev_bg bg:peach)[ $symbol $workspace ]($style)'
+
+[typst]
+style  = "fg:crust bg:lavender"
+format = '[ ](fg:prev_bg bg:lavender)[ $symbol( $version) ]($style)'
+
+[vagrant]
+style  = "fg:crust bg:sky"
+format = '[ ](fg:prev_bg bg:sky)[ $symbol $version ]($style)'
+
+[vcsh]
+style  = "fg:crust bg:teal"
+format = '[ ](fg:prev_bg bg:teal)[ $symbol $repo ]($style)'
+
+[vlang]
+style  = "fg:crust bg:maroon"
+format = '[ ](fg:prev_bg bg:maroon)[ $symbol( $version) ]($style)'
+
+[zig]
+style  = "fg:crust bg:red"
+format = '[ ](fg:prev_bg bg:red)[ $symbol( $version) ]($style)'

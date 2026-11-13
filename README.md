@@ -94,7 +94,7 @@ toolchains on every distro. The base module links it.
 │   ├── dotbot.yaml            #   links, applied with the repo root as base dir
 │   ├── setup.sh               #   idempotent, non-interactive bash
 │   └── files/                 #   config sources owned by the module
-├── .files/                    # Config sources linked by the module manifests
+├── .files/                    # Niri/DMS sources and compat links to moved sources
 ├── scripts/                   # host.sh runner, shared installers, lib/, format and lint
 ├── assets/                    # Wallpapers and icons
 ├── docs/                      # Notes for fonts, keyrings, and desktop quirks
@@ -144,7 +144,7 @@ Nerd Fonts are installed through
 The config is stored in the repo at:
 
 ```text
-.files/.config/nerd-fonts-installer/config.yaml
+modules/desktop/files/nerd-fonts-installer/config.yaml
 ```
 
 Dotbot links it to:

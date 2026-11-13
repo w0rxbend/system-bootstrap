@@ -9,7 +9,7 @@ INSTALLER_REPO="${NERDFONT_INSTALLER_REPO:-worxbend/nerd-fonts-installer}"
 # Prefer the installed/linked config; fall back to the in-repo copy if not applied yet.
 CONFIG_PATH="${NERDFONT_CONFIG:-${HOME}/.config/nerd-fonts-installer/config.yaml}"
 if [ ! -f "${CONFIG_PATH}" ]; then
-    CONFIG_PATH="${REPO_ROOT}/.files/.config/nerd-fonts-installer/config.yaml"
+    CONFIG_PATH="${REPO_ROOT}/modules/desktop/files/nerd-fonts-installer/config.yaml"
 fi
 
 detect_os() {

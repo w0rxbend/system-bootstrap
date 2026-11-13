@@ -1,0 +1,149 @@
+[cursor]
+style            = { shape = "Beam", blinking = "Always" }
+vi_mode_style    = { shape = "Beam", blinking = "Always" }
+unfocused_hollow = true
+
+[env]
+TERM      = "xterm-256color"
+WITH_TMUX = 'true'
+
+[font]
+size = 14
+
+[font.bold]
+family = "Victor Mono Nerd Font"
+style  = "Regular"
+
+[font.bold_italic]
+family = "Victor Mono Nerd Font"
+style  = "Bold Italic"
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.italic]
+family = "Victor Mono Nerd Font"
+style  = "Italic"
+
+[font.normal]
+family = "Victor Mono Nerd Font"
+style  = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[[keyboard.bindings]]
+action = "Paste"
+key    = "V"
+mods   = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "Copy"
+key    = "C"
+mods   = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "PasteSelection"
+key    = "Insert"
+mods   = "Shift"
+
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key    = "Key0"
+mods   = "Control"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key    = "Equals"
+mods   = "Control"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key    = "Minus"
+mods   = "Control"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key    = "Return"
+mods   = "Alt"
+
+[[keyboard.bindings]]
+action = "Paste"
+key    = "Paste"
+
+[[keyboard.bindings]]
+action = "Copy"
+key    = "Copy"
+
+[[keyboard.bindings]]
+action = "ClearLogNotice"
+key    = "L"
+mods   = "Control"
+
+[[keyboard.bindings]]
+chars = "\f"
+key   = "L"
+mods  = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollPageUp"
+key    = "PageUp"
+mode   = "~Alt"
+mods   = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollPageDown"
+key    = "PageDown"
+mode   = "~Alt"
+mods   = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollToTop"
+key    = "Home"
+mode   = "~Alt"
+mods   = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollToBottom"
+key    = "End"
+mode   = "~Alt"
+mods   = "Shift"
+
+[mouse]
+hide_when_typing = false
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse  = "Middle"
+
+[scrolling]
+history    = 2500
+multiplier = 3
+
+[selection]
+save_to_clipboard     = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+[window]
+decorations     = "Full"
+dynamic_padding = false
+dynamic_title   = true
+opacity         = 0.85
+startup_mode    = "Windowed"
+
+[window.dimensions]
+columns = 125
+lines   = 55
+
+[window.padding]
+x = 3
+y = 3
+
+[general]
+
+live_config_reload = true
+working_directory  = "None"
+
+import = ["~/.config/alacritty/theme.toml"]

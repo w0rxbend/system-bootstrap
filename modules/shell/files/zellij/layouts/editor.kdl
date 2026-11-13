@@ -1,0 +1,34 @@
+layout {
+  tab name="Main" split_direction="horizontal" cwd="~/" {
+    pane {
+      name "Files"
+      command "lsd"
+      args "-la"
+    }
+    pane split_direction="vertical" {
+      pane {
+				size "80%"
+				command "btop"
+				borderless true
+			}
+      pane {
+				size "20%"
+				name "fastfetch"
+				command "fastfetch"
+			}
+    }
+  }
+  tab name="Worxpace" split_direction="horizontal" cwd="~/Workspace/" {
+    pane {
+			size "20%"
+			name "File Tree"
+			command "eza"
+			args "-la"
+    }
+		pane {
+			name "File Viewer"
+			size "80%"
+			command "xplr"
+		}
+  }
+}

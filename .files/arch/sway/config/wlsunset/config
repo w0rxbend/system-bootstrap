@@ -1,6 +1,1 @@
-# Day and night gamma for wlsunset. One decimal place is enough.
-# Default matches the system timezone Europe/Kyiv. Edit these if you are elsewhere.
-latitude=50.5
-longitude=30.5
-high_temp=6500
-low_temp=4000
+../../../../../modules/sway/files/wlsunset/config

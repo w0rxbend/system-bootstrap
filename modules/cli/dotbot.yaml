@@ -6,13 +6,13 @@
       force: true
 
 - link:
-    ~/.ideavimrc: .files/.ideavimrc
-    ~/.config/nvim: .files/nvim
-    ~/.config/btop: .files/.config/btop
-    ~/.config/lazygit/config.yml: .files/.config/lazygit/config.yml
-    ~/.config/lsd/config.yaml: .files/.config/lsd/config.yaml
-    ~/.config/lsd/colors.yaml: .files/.config/lsd/colors.yaml
-    ~/.config/yazi/yazi.toml: .files/.config/yazi/yazi.toml
-    ~/.config/yazi/theme.toml: .files/.config/yazi/theme.toml
-    ~/.config/yazi/keymap.toml: .files/.config/yazi/keymap.toml
-    ~/.config/binstaller/config.yaml: .files/.config/binstaller/config.yaml
+    ~/.ideavimrc: modules/cli/files/ideavimrc
+    ~/.config/nvim: modules/cli/files/nvim
+    ~/.config/btop: modules/cli/files/btop
+    ~/.config/lazygit/config.yml: modules/cli/files/lazygit/config.yml
+    ~/.config/lsd/config.yaml: modules/cli/files/lsd/config.yaml
+    ~/.config/lsd/colors.yaml: modules/cli/files/lsd/colors.yaml
+    ~/.config/yazi/yazi.toml: modules/cli/files/yazi/yazi.toml
+    ~/.config/yazi/theme.toml: modules/cli/files/yazi/theme.toml
+    ~/.config/yazi/keymap.toml: modules/cli/files/yazi/keymap.toml
+    ~/.config/binstaller/config.yaml: modules/cli/files/binstaller/config.yaml

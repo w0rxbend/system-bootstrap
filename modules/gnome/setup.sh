@@ -12,7 +12,7 @@ set -euo pipefail
 . "${REPO_ROOT}/scripts/lib/common.sh"
 
 PAPERWM_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/gnome-shell/extensions/paperwm@paperwm.github.com"
-PAPERWM_CONF="${REPO_ROOT}/.files/paperwm.conf"
+PAPERWM_CONF="${REPO_ROOT}/modules/gnome/files/paperwm.conf"
 
 # Set a key only when its schema exists; GNOME versions differ.
 gset() {

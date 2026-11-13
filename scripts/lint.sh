@@ -33,7 +33,7 @@ is_shell_file() {
     local file="$1" first_line
 
     case "$(basename "$file")" in
-        .zshrc | *.zsh) return 0 ;;
+        zshrc | *.zsh) return 0 ;;
     esac
 
     case "$file" in
@@ -48,7 +48,7 @@ shell_dialect() {
     local file="$1" first_line
 
     case "$(basename "$file")" in
-        .zshrc | *.zsh)
+        zshrc | *.zsh)
             echo "zsh"
             return
             ;;
@@ -244,7 +244,7 @@ fi
 
 if have selene; then
     info "Linting Lua with selene"
-    run selene --config .files/nvim/selene.toml .files/nvim
+    run selene --config modules/cli/files/nvim/selene.toml modules/cli/files/nvim
 else
     skip "selene not found; Lua semantic lint skipped"
 fi
@@ -396,9 +396,9 @@ if have git && git rev-parse --git-dir >/dev/null 2>&1; then
     grep_status=0
     home_paths="$(git grep -nE '/home/[a-z]|\.system-bootstrap' -- .files modules \
         ':(exclude).files/.config/danksearch/config.toml' \
-        ':(exclude).files/.config/zellij/layouts/default.kdl' \
+        ':(exclude)modules/shell/files/zellij/layouts/default.kdl' \
         ':(exclude).files/arch/sway/config/alacritty/alacritty.toml' \
-        ':(exclude).files/.config/btop/btop.conf')" || grep_status=$?
+        ':(exclude)modules/cli/files/btop/btop.conf')" || grep_status=$?
     case "${grep_status}" in
         0)
             fail "hardcoded home or clone path; use \$HOME or a relative path:"

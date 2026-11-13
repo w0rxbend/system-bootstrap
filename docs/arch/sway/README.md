@@ -17,7 +17,7 @@ The look follows the Dux dark purple theme: square corners, no blur. Window bord
 
 Region select dims the screen with the background and draws a lavender border. The bar shows the binding mode (for example `resize`) in lavender while a mode is active.
 
-Waybar is a flat full-width strip, the same shape as stock swaybar, in the Dux purple colors. Workspace numbers sit on the left. The focused one is a lavender block with deep purple text. Next to them: `cpu`, `mem`, `disk`. On the right, first is `us` or `ua`, then CO2, PM2.5, and AQI from the AirGradient monitor, then `vol`, the network, secondary `rec` while recording, and a 24-hour clock. The far right is `idle` (or `awake` while the screen is held on). Click `idle` to stop the lock and the panel power-off. Click `awake` to allow them again. Fuzzel replaces Wofi and wmenu. App icons in Fuzzel stay off. Kanshi sets the monitor. Sway does not set resolution, position, or scale. Alacritty and Foot use the same colors. The shared Catppuccin file stays at `.files/alacritty_theme.toml`.
+Waybar is a flat full-width strip, the same shape as stock swaybar, in the Dux purple colors. Workspace numbers sit on the left. The focused one is a lavender block with deep purple text. Next to them: `cpu`, `mem`, `disk`. On the right, first is `us` or `ua`, then CO2, PM2.5, and AQI from the AirGradient monitor, then `vol`, the network, secondary `rec` while recording, and a 24-hour clock. The far right is `idle` (or `awake` while the screen is held on). Click `idle` to stop the lock and the panel power-off. Click `awake` to allow them again. Fuzzel replaces Wofi and wmenu. App icons in Fuzzel stay off. Kanshi sets the monitor. Sway does not set resolution, position, or scale. Alacritty and Foot use the same colors. The shared Catppuccin file stays at `modules/desktop/files/alacritty/theme.toml`.
 
 ## Apply
 
@@ -35,23 +35,23 @@ The desktop module owns `~/.config/alacritty/alacritty.toml`, `base.toml` and `t
 
 ## What gets linked
 
-| Repo path                                     | Home path                             |
-| --------------------------------------------- | ------------------------------------- |
-| `.files/arch/sway/config/sway/config`         | `~/.config/sway/config`               |
-| `.files/arch/sway/config/sway/scripts/`       | `~/.config/sway/scripts`              |
-| `assets/wallpapers/`                          | `~/Pictures/walls`                    |
-| `.files/arch/sway/config/wpaperd/config.toml` | `~/.config/wpaperd/config.toml`       |
-| `.files/arch/sway/config/waybar/config.jsonc` | `~/.config/waybar/config.jsonc`       |
-| `.files/arch/sway/config/waybar/style.css`    | `~/.config/waybar/style.css`          |
-| `modules/sway/files/alacritty/wm.toml`        | `~/.config/alacritty/wm.toml`         |
-| `.files/arch/sway/config/fuzzel/fuzzel.ini`   | `~/.config/fuzzel/fuzzel.ini`         |
-| `.files/arch/sway/config/kanshi/config`       | `~/.config/kanshi/config`             |
-| `.files/arch/sway/config/mako/config`         | `~/.config/mako/config`               |
-| `.files/arch/sway/config/foot/foot.ini`       | `~/.config/foot/foot.ini`             |
-| `.files/arch/sway/config/swaynag/config`      | `~/.config/swaynag/config`            |
-| `.files/arch/sway/config/wlsunset/config`     | `~/.config/wlsunset/config`           |
-| `.files/arch/sway/config/wob/wob.ini`         | `~/.config/wob/wob.ini`               |
-| `modules/sway/files/systemd/skbd.service`     | `~/.config/systemd/user/skbd.service` |
+| Repo path                                 | Home path                             |
+| ----------------------------------------- | ------------------------------------- |
+| `modules/sway/files/sway/config`          | `~/.config/sway/config`               |
+| `modules/sway/files/sway/scripts/`        | `~/.config/sway/scripts`              |
+| `assets/wallpapers/`                      | `~/Pictures/walls`                    |
+| `modules/sway/files/wpaperd/config.toml`  | `~/.config/wpaperd/config.toml`       |
+| `modules/sway/files/waybar/config.jsonc`  | `~/.config/waybar/config.jsonc`       |
+| `modules/sway/files/waybar/style.css`     | `~/.config/waybar/style.css`          |
+| `modules/sway/files/alacritty/wm.toml`    | `~/.config/alacritty/wm.toml`         |
+| `modules/sway/files/fuzzel/fuzzel.ini`    | `~/.config/fuzzel/fuzzel.ini`         |
+| `modules/sway/files/kanshi/config`        | `~/.config/kanshi/config`             |
+| `modules/sway/files/mako/config`          | `~/.config/mako/config`               |
+| `modules/sway/files/foot/foot.ini`        | `~/.config/foot/foot.ini`             |
+| `modules/sway/files/swaynag/config`       | `~/.config/swaynag/config`            |
+| `modules/sway/files/wlsunset/config`      | `~/.config/wlsunset/config`           |
+| `modules/sway/files/wob/wob.ini`          | `~/.config/wob/wob.ini`               |
+| `modules/sway/files/systemd/skbd.service` | `~/.config/systemd/user/skbd.service` |
 
 Links are forced. A real file already at one of those paths is replaced by the symlink.
 

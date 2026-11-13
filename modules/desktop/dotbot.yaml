@@ -9,12 +9,12 @@
 
 - link:
     ~/.config/alacritty/alacritty.toml: modules/desktop/files/alacritty/alacritty.toml
-    ~/.config/alacritty/base.toml: .files/alacritty.toml
-    ~/.config/alacritty/theme.toml: .files/alacritty_theme.toml
-    ~/.config/kitty/kitty.conf: .files/kitty.conf
-    ~/.wezterm.lua: .files/.wezterm.lua
-    ~/.config/ghostty: .files/.config/ghostty
-    ~/.config/zathura/zathurarc: .files/zathurarc
-    ~/.hidden: .files/.hidden
-    ~/.config/nerd-fonts-installer/config.yaml: .files/.config/nerd-fonts-installer/config.yaml
+    ~/.config/alacritty/base.toml: modules/desktop/files/alacritty/base.toml
+    ~/.config/alacritty/theme.toml: modules/desktop/files/alacritty/theme.toml
+    ~/.config/kitty/kitty.conf: modules/desktop/files/kitty/kitty.conf
+    ~/.wezterm.lua: modules/desktop/files/wezterm.lua
+    ~/.config/ghostty: modules/desktop/files/ghostty
+    ~/.config/zathura/zathurarc: modules/desktop/files/zathura/zathurarc
+    ~/.hidden: modules/desktop/files/hidden
+    ~/.config/nerd-fonts-installer/config.yaml: modules/desktop/files/nerd-fonts-installer/config.yaml
     ~/.local/backgrounds: assets/wallpapers

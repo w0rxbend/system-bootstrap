@@ -16,7 +16,7 @@ BINSTALLER="${INSTALL_DIR}/binstaller"
 # have not been linked yet (the cli module links them first; a run by hand may not).
 CONFIG_PATH="${BINSTALLER_CONFIG:-${HOME}/.config/binstaller/config.yaml}"
 if [ ! -f "${CONFIG_PATH}" ]; then
-    CONFIG_PATH="${REPO_ROOT}/.files/.config/binstaller/config.yaml"
+    CONFIG_PATH="${REPO_ROOT}/modules/cli/files/binstaller/config.yaml"
 fi
 
 if [ ! -f "${CONFIG_PATH}" ]; then

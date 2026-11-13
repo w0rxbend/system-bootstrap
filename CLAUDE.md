@@ -26,10 +26,12 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
   `setup.sh` files call.
 - `scripts/format.sh`, `scripts/lint.sh` — the quality gate (well-structured, `set -euo pipefail`,
   degrade gracefully when a tool is absent). Treat these as the reference style for new scripts.
-- `.files/` — config sources linked by the module manifests. Links use `force: true` — applying
-  overwrites matching local config paths. DankMaterialShell writes through its links, so the
-  `niri-dms` sources stay at their `.files/` paths. Neovim config (`.files/nvim/`) is an AstroNvim
-  setup with a pinned `lazy-lock.json`.
+- `modules/<m>/files/` — config sources linked by the module manifests. Links use `force: true` —
+  applying overwrites matching local config paths. Neovim config (`modules/cli/files/nvim/`) is an
+  AstroNvim setup with a pinned `lazy-lock.json`.
+- `.files/` — the `niri-dms` sources (DankMaterialShell writes through its links, so they stay
+  here), unlinked backups, and relative compat symlinks at the old paths of moved sources. Hosts
+  that have not re-run `just host` still link through them; remove them once every host has.
 - `docs/`, `assets/` — notes (keyrings, fonts, Sway) and wallpapers/icons.
 
 ## Conventions
@@ -41,7 +43,7 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
 - New shell scripts: start with `set -euo pipefail` (bash) and quote variable expansions. Match
   `format.sh`/`lint.sh` for anything new or reworked.
 - Prefer `${HOME}` / `$XDG_*` over hardcoded `/home/<user>` paths.
-- Pin tool versions in `.files/.config/binstaller/config.yaml` (`spec.versions`); Go is pinned in
+- Pin tool versions in `modules/cli/files/binstaller/config.yaml` (`spec.versions`); Go is pinned in
   `scripts/install_golang.sh` (version and SHA-256 together).
 
 ## Quality gate

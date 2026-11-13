@@ -15,7 +15,7 @@ set -euo pipefail
 . "${REPO_ROOT}/scripts/lib/common.sh"
 
 ZSHRC="${HOME}/.zshrc"
-SHARED_ZSHRC="${REPO_ROOT}/.files/.zshrc"
+SHARED_ZSHRC="${REPO_ROOT}/modules/shell/files/zshrc"
 STUB_LINE='[[ -r ~/.config/zsh/zshrc ]] && source ~/.config/zsh/zshrc'
 
 # Writing through the old link would edit the repo file, so remove the link

@@ -232,7 +232,7 @@ update_binstaller() {
     local binstaller_cmd="binstaller"
 
     if [[ ! -f "${config}" ]]; then
-        config="${repo_root}/.files/.config/binstaller/config.yaml"
+        config="${repo_root}/modules/cli/files/binstaller/config.yaml"
     fi
     if [[ ! -f "${config}" ]]; then
         skip "binstaller config not found"
@@ -253,7 +253,7 @@ update_nerd_fonts() {
     local installer="nerd-fonts-installer"
 
     if [[ ! -f "${config}" ]]; then
-        config="${repo_root}/.files/.config/nerd-fonts-installer/config.yaml"
+        config="${repo_root}/modules/desktop/files/nerd-fonts-installer/config.yaml"
     fi
     if [[ ! -f "${config}" ]]; then
         skip "nerd-fonts-installer config not found"

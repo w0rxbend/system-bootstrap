@@ -1,0 +1,14 @@
+# This machine: Dell P3223QE, connector DP-1, 3840x2160 @ 59.997 Hz, scale 1.25.
+# 1.25 is a small step up from native on this 32-inch panel (logical 3072x1728).
+# Kanshi activates a profile only when every connected output is listed in it.
+# A second monitor needs its own profile that names both outputs.
+# Read names with: swaymsg -t get_outputs
+
+profile dell-p3223qe {
+    output "Dell Inc. DELL P3223QE 6BVG3P3" {
+        enable
+        mode 3840x2160@59.997Hz
+        position 0,0
+        scale 1.25
+    }
+}

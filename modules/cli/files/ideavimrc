@@ -1,0 +1,78 @@
+
+" ╭─────────────────────────────────────────────────────────╮
+" │                  AstroNvim-like IdeaVim                 │
+" ╰─────────────────────────────────────────────────────────╯
+
+" ─[ General Settings ]────────────────────────────────────
+set number
+set relativenumber
+set ignorecase
+set smartcase
+set incsearch
+set clipboard=unnamed
+set scrolloff=8
+set sidescrolloff=8
+set whichwrap+=<,>,h,l
+
+" ─[ Leader Key ]───────────────────────────────────────────
+let mapleader = " "
+
+" ─[ Save, Quit, etc. ]─────────────────────────────────────
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>Q :q!<CR>
+
+" ─[ Window Navigation ]────────────────────────────────────
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" ─[ File Navigation (Telescope-like) ]────────────────────
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>fb :action Switcher<CR>
+nnoremap <leader>fg :action FindInPath<CR>
+nnoremap <leader>fc :action RecentFiles<CR>
+nnoremap <leader>fr :action ReplaceInPath<CR>
+
+" ─[ LSP-like Actions ]────────────────────────────────────
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+nnoremap <leader>gd :action GotoDeclaration<CR>
+nnoremap <leader>gr :action FindUsages<CR>
+nnoremap <leader>gi :action GotoImplementation<CR>
+nnoremap <leader>gh :action QuickJavaDoc<CR>
+nnoremap K :action QuickJavaDoc<CR>
+
+" ─[ Terminal ]─────────────────────────────────────────────
+nnoremap <leader>tt :action Terminal<CR>
+
+" ─[ Git ]──────────────────────────────────────────────────
+nnoremap <leader>gs :action Git.Show.Log<CR>
+nnoremap <leader>gc :action Git.Commit<CR>
+nnoremap <leader>gp :action Git.Push<CR>
+nnoremap <leader>gl :action Git.Pull<CR>
+
+" ─[ Commenting ]───────────────────────────────────────────
+nnoremap <leader>/ :action CommentByLineComment<CR>
+vnoremap <leader>/ :action CommentByLineComment<CR>
+
+" ─[ Code Actions ]─────────────────────────────────────────
+nnoremap <leader>o :action OptimizeImports<CR>
+nnoremap <leader>f :action ReformatCode<CR>
+
+" ─[ Misc Actions ]─────────────────────────────────────────
+nnoremap <leader>u :action ToggleDistractionFreeMode<CR>
+nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+nnoremap <leader>m :action ShowBookmarks<CR>
+
+" ─[ Completion ]───────────────────────────────────────────
+inoremap <C-Space> <Esc>:action CodeCompletion<CR>
+
+" ─[ Diagnostics ]──────────────────────────────────────────
+nnoremap <leader>xx :action ProblemsView.Show<CR>
+nnoremap <leader>xn :action GotoNextError<CR>
+nnoremap <leader>xp :action GotoPreviousError<CR>
+
+set clipboard^=unnamedplus
+set clipboard=unnamedplus

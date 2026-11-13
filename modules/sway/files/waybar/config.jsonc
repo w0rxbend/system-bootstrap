@@ -1,0 +1,93 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 26,
+  "spacing": 0,
+  "modules-left": ["sway/workspaces", "sway/mode", "cpu", "memory", "disk"],
+  "modules-right": [
+    "custom/lang",
+    "custom/airgradient",
+    "pulseaudio",
+    "network",
+    "custom/recording",
+    "clock",
+    "tray",
+    "idle_inhibitor"
+  ],
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{name}"
+  },
+  "sway/mode": {
+    "format": "{}",
+    "tooltip": false
+  },
+  "cpu": {
+    "format": "\uf4bc {usage}%",
+    "interval": 5,
+    "tooltip": false
+  },
+  "memory": {
+    "format": "\udb80\udf5b {percentage}%",
+    "interval": 5,
+    "tooltip": false
+  },
+  "disk": {
+    "format": "\uf0a0 {percentage_used}%",
+    "paths": ["/"],
+    "interval": 30,
+    "tooltip": false
+  },
+  "pulseaudio": {
+    "format": "vol {volume}%",
+    "format-muted": "vol muted",
+    "scroll-step": 5,
+    "tooltip": false,
+    "on-click": "sh -c ~/.config/sway/scripts/audio-menu.py",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+  },
+  "network": {
+    "format-ethernet": "{ifname}",
+    "format-wifi": "{essid}",
+    "format-disconnected": "down",
+    "tooltip-format": "{ifname}\n{ipaddr}",
+    "interval": 5
+  },
+  "custom/recording": {
+    "exec": "printf 'rec'",
+    "exec-if": "test -f \"${XDG_RUNTIME_DIR}/sway-record.pid\"",
+    "interval": 2,
+    "signal": 8,
+    "tooltip": false
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "awake",
+      "deactivated": "idle"
+    },
+    "tooltip": false
+  },
+  "custom/lang": {
+    "exec": "sh -c ~/.config/sway/scripts/lang.py",
+    "tooltip": false
+  },
+  "custom/airgradient": {
+    "exec-if": "test -x $HOME/.apps/airgradient-cli/bin/airgradient-cli",
+    "exec": "$HOME/.apps/airgradient-cli/bin/airgradient-cli --waybar --waybar-format '\udb81\udfe4 {co2} · \udb80\udcb5 {pm25} · \uf06c {aqi}'",
+    "return-type": "json",
+    "interval": 30,
+    "format": "{text}",
+    "tooltip": true
+  },
+  "clock": {
+    "format": "{:%a  %b %d %Y  %H:%M}",
+    "locale": "en_US.UTF-8",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 14,
+    "spacing": 6
+  }
+}

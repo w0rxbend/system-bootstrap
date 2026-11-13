@@ -4,7 +4,7 @@ set -euo pipefail
 # Install TPM (Tmux Plugin Manager) and the plugins declared in .tmux.conf.
 # https://github.com/tmux-plugins/tpm
 #
-# The plugin list lives in `.files/.tmux.conf` (`set -g @plugin ...`), which
+# The plugin list lives in `modules/shell/files/tmux.conf` (`set -g @plugin ...`), which
 # ends with `run '~/.tmux/plugins/tpm/tpm'` — so TPM must sit at that exact
 # path. Plugins are installed non-interactively via TPM's own `bin/install_plugins`
 # instead of the in-tmux `prefix + I` binding.

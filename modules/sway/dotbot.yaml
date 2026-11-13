@@ -7,18 +7,18 @@
       force: true
 
 - link:
-    ~/.config/sway/config: .files/arch/sway/config/sway/config
-    ~/.config/sway/scripts: .files/arch/sway/config/sway/scripts
+    ~/.config/sway/config: modules/sway/files/sway/config
+    ~/.config/sway/scripts: modules/sway/files/sway/scripts
     ~/Pictures/walls: assets/wallpapers
-    ~/.config/wpaperd/config.toml: .files/arch/sway/config/wpaperd/config.toml
-    ~/.config/waybar/config.jsonc: .files/arch/sway/config/waybar/config.jsonc
-    ~/.config/waybar/style.css: .files/arch/sway/config/waybar/style.css
+    ~/.config/wpaperd/config.toml: modules/sway/files/wpaperd/config.toml
+    ~/.config/waybar/config.jsonc: modules/sway/files/waybar/config.jsonc
+    ~/.config/waybar/style.css: modules/sway/files/waybar/style.css
     ~/.config/alacritty/wm.toml: modules/sway/files/alacritty/wm.toml
-    ~/.config/fuzzel/fuzzel.ini: .files/arch/sway/config/fuzzel/fuzzel.ini
-    ~/.config/kanshi/config: .files/arch/sway/config/kanshi/config
-    ~/.config/mako/config: .files/arch/sway/config/mako/config
-    ~/.config/foot/foot.ini: .files/arch/sway/config/foot/foot.ini
-    ~/.config/swaynag/config: .files/arch/sway/config/swaynag/config
-    ~/.config/wlsunset/config: .files/arch/sway/config/wlsunset/config
-    ~/.config/wob/wob.ini: .files/arch/sway/config/wob/wob.ini
+    ~/.config/fuzzel/fuzzel.ini: modules/sway/files/fuzzel/fuzzel.ini
+    ~/.config/kanshi/config: modules/sway/files/kanshi/config
+    ~/.config/mako/config: modules/sway/files/mako/config
+    ~/.config/foot/foot.ini: modules/sway/files/foot/foot.ini
+    ~/.config/swaynag/config: modules/sway/files/swaynag/config
+    ~/.config/wlsunset/config: modules/sway/files/wlsunset/config
+    ~/.config/wob/wob.ini: modules/sway/files/wob/wob.ini
     ~/.config/systemd/user/skbd.service: modules/sway/files/systemd/skbd.service
