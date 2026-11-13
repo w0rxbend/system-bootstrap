@@ -1,0 +1,40 @@
+{
+  "lockfileVersion": 1,
+  "plugins": {
+    "amdGpuMonitor": {
+      "repo": "https://github.com/navidagz/dms-amd-gpu-monitor",
+      "commit": "04692ce1b93dc5ddaa5b7d1e5db2fddef64ae14a"
+    },
+    "dankDesktopWeather": {
+      "repo": "https://github.com/AvengeMedia/dms-plugins",
+      "path": "DankDesktopWeather",
+      "commit": "7a964dad725964550734e43dbbcf88c72829d847"
+    },
+    "dockerManager": {
+      "repo": "https://github.com/LuckShiba/DmsDockerManager",
+      "commit": "f6f7d94c84510da098980a2bb733137e90f98fd8"
+    },
+    "emojiLauncher": {
+      "repo": "https://github.com/devnullvoid/dms-emoji-launcher",
+      "commit": "cd7bbba76c0d9b8da65337de5125659846e1ce5c"
+    },
+    "emojiPicker": {
+      "repo": "https://github.com/hthienloc/dms-plugins",
+      "path": "emojiPicker",
+      "commit": "b25e0a5d5fcbb3ddb0b77b07c5690fabe41ddf1a"
+    },
+    "quickCapture": {
+      "repo": "https://github.com/hthienloc/dms-plugins",
+      "path": "quickCapture",
+      "commit": "b25e0a5d5fcbb3ddb0b77b07c5690fabe41ddf1a"
+    },
+    "screenCaptureToolbar": {
+      "repo": "https://github.com/JDKamalakar/DMS-ScreenCapture_Toolbar",
+      "commit": "ee2050e6398bbd1a0fc56df9bbd0468944e87aec"
+    },
+    "shellyUpdater": {
+      "repo": "https://github.com/rdannenbring/dms-shelly-updater",
+      "commit": "a48f4ad44fca329e3a593da47c4329f2c50a043f"
+    }
+  }
+}

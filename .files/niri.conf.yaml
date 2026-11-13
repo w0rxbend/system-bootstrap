@@ -1,26 +1,4 @@
-# niri + DankMaterialShell.
-#
-# The Niri config includes these optional DMS snippets. DMS may regenerate their
-# contents from DankMaterialShell/settings.json on startup.
-#   ~/.config/alacritty/dank-theme.toml     ~/.config/kitty/dank-{theme,tabs}.conf
-#   ~/.config/gtk-{3.0,4.0}/dank-colors.css ~/.config/qt{5,6}ct/colors/matugen.conf
-#   ~/.config/dgop/colors.json              ~/.config/ghostty/themes/dankcolors
-#   ~/.config/DankMaterialShell/{firefox,zen}.css
-#   ~/.local/share/color-schemes/DankMatugen*.colors
-#
-# Per-machine runtime state is out of scope: ~/.local/state/DankMaterialShell/
-# holds session, wallpaper, weather, and output state; ~/.cache/DankMaterialShell/
-# holds generated colors and usage history.
-#
-# DMS saves settings.json and plugin_settings.json with Qt's symlink-safe atomic
-# writer. Clipboard settings use a direct write, which also follows the symlink.
-# Consequently, UI changes to these three files land directly in this repo.
-#
-# plugins.lock.json is deliberately a snapshot rather than a link: DMS replaces
-# that file during updates, which would destroy a file-level symlink. Refresh it:
-#   dms plugins lock --output ~/.system-bootstrap/.files/.config/DankMaterialShell/plugins.lock.json
-# Restore it on another machine:
-#   dms plugins restore ~/.system-bootstrap/.files/.config/DankMaterialShell/plugins.lock.json
+# niri + dms.
 - defaults:
     link:
       relink: true
@@ -29,18 +7,11 @@
 
 - link:
     ~/.config/niri/config.kdl: .config/niri/config.kdl
-    ~/.config/niri/dms/colors.kdl: .config/niri/dms/colors.kdl
-    ~/.config/niri/dms/layout.kdl: .config/niri/dms/layout.kdl
-    ~/.config/niri/dms/alttab.kdl: .config/niri/dms/alttab.kdl
     ~/.config/niri/dms/binds.kdl: .config/niri/dms/binds.kdl
-    ~/.config/niri/dms/outputs.kdl: .config/niri/dms/outputs.kdl
-    ~/.config/niri/dms/cursor.kdl: .config/niri/dms/cursor.kdl
-    ~/.config/niri/dms/input.kdl: .config/niri/dms/input.kdl
     ~/.config/niri/dms/windowrules.kdl: .config/niri/dms/windowrules.kdl
-    ~/.config/niri/dms/wpblur.kdl: .config/niri/dms/wpblur.kdl
-    ~/.config/DankMaterialShell/settings.json: .config/DankMaterialShell/settings.json
-    ~/.config/DankMaterialShell/plugin_settings.json: .config/DankMaterialShell/plugin_settings.json
-    ~/.config/DankMaterialShell/clsettings.json: .config/DankMaterialShell/clsettings.json
+    ~/.config/dms/settings.json: .config/dms/settings.json
+    ~/.config/dms/plugin_settings.json: .config/dms/plugin_settings.json
+    ~/.config/dms/clsettings.json: .config/dms/clsettings.json
     ~/.config/danksearch/config.toml: .config/danksearch/config.toml
     ~/.config/environment.d/90-dms.conf: .config/environment.d/90-dms.conf
     ~/.config/mimeapps.list: .config/mimeapps.list
