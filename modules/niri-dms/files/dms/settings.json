@@ -63,7 +63,9 @@
       "name": "Main Bar",
       "enabled": true,
       "position": 0,
-      "screenPreferences": ["all"],
+      "screenPreferences": [
+        "all"
+      ],
       "showOnLastDisplay": true,
       "leftWidgets": [
         {
@@ -189,13 +191,13 @@
       "innerPadding": 4,
       "barInsetPadding": 15,
       "bottomGap": 0,
-      "transparency": 1,
+      "transparency": 0.8,
       "widgetTransparency": 1,
       "squareCorners": false,
       "noBackground": false,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
-      "widgetPadding": 7,
+      "widgetPadding": 8,
       "gothCornersEnabled": false,
       "gothCornerRadiusOverride": false,
       "gothCornerRadiusValue": 12,
@@ -231,10 +233,11 @@
       "hoverPopoutDelay": 150,
       "shadowDirectionMode": "autoBar",
       "attachToScreenEdge": false,
-      "followInterfaceStyle": true,
+      "followInterfaceStyle": false,
       "widgetFollowInterfaceStyle": true,
       "island": false,
-      "dot": false
+      "dot": false,
+      "widgetStyle": "segments"
     }
   ],
   "builtInPluginSettings": {
@@ -251,7 +254,11 @@
       "trigger": "qrg"
     }
   },
-  "launcherPluginOrder": ["dms_settings_search", "emojiLauncher", "dms_clipboard_search"],
+  "launcherPluginOrder": [
+    "dms_settings_search",
+    "emojiLauncher",
+    "dms_clipboard_search"
+  ],
   "barInsetPaddingShared": 4,
   "configVersion": 42,
   "radiusStrength": 38,
@@ -261,7 +268,9 @@
       "id": "dock",
       "name": "Dock",
       "enabled": true,
-      "screenPreferences": ["all"],
+      "screenPreferences": [
+        "all"
+      ],
       "showOnLastDisplay": true,
       "position": 1,
       "mode": "compact",
@@ -270,11 +279,11 @@
       "widgetExpansion": "popout",
       "iconSize": 40,
       "spacing": 15,
-      "itemSpacing": 6,
+      "itemSpacing": 8,
       "margin": 0,
       "bottomGap": 0,
-      "transparency": 0.85,
-      "followInterfaceStyle": false,
+      "transparency": 0.71,
+      "followInterfaceStyle": true,
       "autoHide": false,
       "smartAutoHide": true,
       "useOverlayLayer": true,
@@ -354,20 +363,22 @@
     }
   ],
   "blurBorderSeeded": true,
-  "dmsWindowsFloatingSeeded": ["niri"],
+  "dmsWindowsFloatingSeeded": [
+    "niri"
+  ],
   "matugenScheme": "scheme-neutral",
   "matugenSourceMode": "darkness",
   "matugenSpec": "dms",
   "interfaceStyle": "expressive",
-  "density": "compact",
+  "density": "comfortable",
   "connectedFrameBarStyleBackups": {},
   "frameEnabled": false,
   "launcherStyle": "spotlight",
   "niriOverviewLauncherStyle": "full",
   "monoFontFamily": "RecMonoLinear Nerd Font",
   "displayFontFamily": "GeistMono Nerd Font",
-  "fontWeight": 400,
-  "fontScale": 1,
+  "fontWeight": 600,
+  "fontScale": 1.25,
   "notificationPopupPosition": -1,
   "notificationFocusedMonitor": true,
   "osdPositionOverrides": {
@@ -380,5 +391,10 @@
   },
   "osdKeyboardLayoutEnabled": true,
   "displayProfileAutoSelect": true,
-  "niriLayoutBorderSize": -1
+  "niriLayoutBorderSize": -1,
+  "floatingWindowSyncGlobal": false,
+  "floatingWindowTransparency": 0.95,
+  "floatingWindowForegroundTransparency": 0.9,
+  "popupTransparency": 0.9,
+  "foregroundLayerTransparency": 0.95
 }
