@@ -12,6 +12,7 @@ set $up k
 set $right l
 set $term alacritty
 set $menu fuzzel
+set $files thunar
 set $scripts ~/.config/sway/scripts
 set $bg #141218
 set $line #948f99
@@ -58,6 +59,30 @@ client.urgent            $red    $bg   $text $red    $red
 client.placeholder       $line   $bg   $dim  $line   $line
 client.background        $bg
 
+# Picture-in-Picture. Firefox and Zen title it "Picture-in-Picture"; Chrome,
+# Chromium and Brave title it "Picture in picture". Sticky keeps it on every
+# workspace of its output. It opens 480x270 in the bottom-right corner.
+for_window [title="(?i)^picture.in.picture$"] floating enable, sticky enable, resize set 480 270, move position 100 ppt 100 ppt, move left 496 px, move up 286 px
+# Firefox and Zen show this while sharing screen, camera or mic.
+for_window [title="Sharing Indicator$"] floating enable, sticky enable
+for_window [app_id="^(firefox|zen|librewolf)$" title="^Library$"] floating enable
+# X11 browser popups and dialogs. Native Wayland dialogs float on their own.
+for_window [window_role="^(pop-up|bubble|dialog)$"] floating enable
+
+# Portal file chooser. It has no parent window, so Sway would tile it.
+for_window [app_id="^xdg-desktop-portal-gtk$"] floating enable
+# Small tools you open, use and close.
+for_window [app_id="^org\.pulseaudio\.pavucontrol$"] floating enable, resize set 50 ppt 60 ppt, move position center
+for_window [app_id="^com\.belmoussaoui\.Authenticator$"] floating enable
+for_window [app_id="^(mozillavpn|org\.mozilla\.vpn)$"] floating enable
+for_window [title="^Quick Access .*1Password$"] floating enable, sticky enable
+for_window [app_id="^virt-manager$" title="^Virtual Machine Manager$"] floating enable
+# Secondary windows of tiled apps.
+for_window [app_id="^org\.telegram\.desktop$" title="^Media viewer$"] floating enable
+for_window [title="^Blender (Preferences|File View)$"] floating enable
+for_window [class="^BambuStudio$" title="^Login$"] floating enable
+for_window [app_id="^thunar$" title="^File Operation Progress$"] floating enable
+
 exec_always "pkill -x waybar || true; exec waybar"
 exec_always "pkill -x kanshi || true; exec kanshi"
 exec_always "pkill -x mako || true; exec mako"
@@ -75,6 +100,7 @@ exec wl-paste --type image --watch cliphist store
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
+bindsym $mod+Shift+f exec $files
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec $scripts/power-menu.sh

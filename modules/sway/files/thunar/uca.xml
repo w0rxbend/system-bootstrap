@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Replaces the stock exo-open action, which defaults to xfce4-terminal. -->
+<actions>
+  <action>
+    <icon>utilities-terminal</icon>
+    <name>Open Terminal Here</name>
+    <submenu/>
+    <unique-id>1731600000000000-1</unique-id>
+    <command>alacritty --working-directory %f</command>
+    <description>Open Alacritty in this folder</description>
+    <range/>
+    <patterns>*</patterns>
+    <startup-notify/>
+    <directories/>
+  </action>
+</actions>

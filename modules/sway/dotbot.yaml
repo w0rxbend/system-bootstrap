@@ -22,3 +22,5 @@
     ~/.config/wlsunset/config: modules/sway/files/wlsunset/config
     ~/.config/wob/wob.ini: modules/sway/files/wob/wob.ini
     ~/.config/systemd/user/skbd.service: modules/sway/files/systemd/skbd.service
+    ~/.config/gtk-3.0/gtk.css: modules/sway/files/gtk-3.0/gtk.css
+    ~/.config/Thunar/uca.xml: modules/sway/files/thunar/uca.xml

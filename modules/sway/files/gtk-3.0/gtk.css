@@ -1,0 +1,29 @@
+/* Dux dark purple for GTK3 apps (Thunar). Only the adw-gtk3 theme reads
+   these libadwaita color names; sway/setup.sh selects adw-gtk3-dark.
+   Same values as waybar/style.css and the Ghostty dux theme. */
+
+@define-color window_bg_color #141218;
+@define-color window_fg_color #e6e0e9;
+@define-color view_bg_color #141218;
+@define-color view_fg_color #e6e0e9;
+@define-color headerbar_bg_color #211f24;
+@define-color headerbar_fg_color #e6e0e9;
+@define-color headerbar_backdrop_color #141218;
+@define-color sidebar_bg_color #211f24;
+@define-color sidebar_fg_color #e6e0e9;
+@define-color card_bg_color #211f24;
+@define-color card_fg_color #e6e0e9;
+@define-color popover_bg_color #211f24;
+@define-color popover_fg_color #e6e0e9;
+@define-color dialog_bg_color #211f24;
+@define-color dialog_fg_color #e6e0e9;
+
+/* Selection matches the terminals: lavender with dark purple text. */
+@define-color accent_color #d0bcff;
+@define-color accent_bg_color #d0bcff;
+@define-color accent_fg_color #381e72;
+
+@define-color destructive_color #f2b8b5;
+@define-color destructive_bg_color #8c1d18;
+@define-color destructive_fg_color #f2b8b5;
+@define-color error_color #f2b8b5;
