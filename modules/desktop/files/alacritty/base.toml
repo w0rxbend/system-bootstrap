@@ -145,5 +145,3 @@ y = 3
 
 live_config_reload = true
 working_directory  = "None"
-
-import = ["~/.config/alacritty/theme.toml"]

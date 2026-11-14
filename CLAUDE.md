@@ -32,10 +32,8 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
 - `modules/<m>/files/` — config sources linked by the module manifests. Links use `force: true` —
   applying overwrites matching local config paths. Neovim config (`modules/cli/files/nvim/`) is an
   AstroNvim setup with a pinned `lazy-lock.json`.
-- `.files/` — only relative compat symlinks at the old paths of moved sources, plus the old Sway
-  `alacritty.toml`. Hosts that have not re-run `just host` still link through them; remove them
-  once every host has. DankMaterialShell writes through its links; Qt's QSaveFile follows symlink
-  chains, so its saves land in `modules/niri-dms/files/`.
+- DankMaterialShell writes its settings through the niri-dms links, so its saves land in
+  `modules/niri-dms/files/`.
 - `docs/`, `assets/` — notes (keyrings, fonts, Sway) and wallpapers/icons.
 - `others/` — backups kept for manual restore (e.g. Vesktop/Vencord settings); nothing links or
   installs them.

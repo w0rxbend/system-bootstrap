@@ -2,8 +2,7 @@
 
 Niri with DankMaterialShell (DMS). `dotbot.yaml` links the Niri config and the
 DMS settings from `files/`. DMS writes its settings through these links, so
-changes land in the repo. Qt's QSaveFile follows symlink chains, so the compat
-links under `.files/.config/` work until arch-niri re-applies.
+changes land in the repo.
 
 `setup.sh` installs niri and DMS with the official installer
 (`https://install.duxlabs.dev`) in unattended mode: `--compositor niri --term

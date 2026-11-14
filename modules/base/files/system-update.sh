@@ -29,8 +29,8 @@ run_step() {
     return 0
 }
 
-# Old links (~/system-update.sh -> .files/<distro>/...) reach this file through
-# compat symlinks, so resolve the real path before asking git for the root.
+# ~/system-update.sh is a symlink into the repo, so resolve the real path
+# before asking git for the root.
 script_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 repo_root="$(git -C "${script_dir}" rev-parse --show-toplevel)"
 

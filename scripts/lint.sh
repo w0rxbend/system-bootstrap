@@ -397,13 +397,11 @@ if have git && git rev-parse --git-dir >/dev/null 2>&1; then
 
     info "Checking for hardcoded home paths"
     # Allowlisted until those files are reworked: danksearch and zellij
-    # (absolute paths in app config), the Sway alacritty.toml (imports the
-    # repo by clone path), btop (upstream comment).
+    # (absolute paths in app config), btop (upstream comment).
     grep_status=0
-    home_paths="$(git grep -nE '/home/[a-z]|\.system-bootstrap' -- .files modules \
+    home_paths="$(git grep -nE '/home/[a-z]|\.system-bootstrap' -- modules \
         ':(exclude)modules/niri-dms/files/danksearch/config.toml' \
         ':(exclude)modules/shell/files/zellij/layouts/default.kdl' \
-        ':(exclude).files/arch/sway/config/alacritty/alacritty.toml' \
         ':(exclude)modules/cli/files/btop/btop.conf')" || grep_status=$?
     case "${grep_status}" in
         0)

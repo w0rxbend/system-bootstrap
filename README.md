@@ -100,7 +100,6 @@ toolchains on every distro. The base module links it.
 │   ├── dotbot.yaml            #   links, applied with the repo root as base dir
 │   ├── setup.sh               #   idempotent, non-interactive bash
 │   └── files/                 #   config sources owned by the module
-├── .files/                    # Compat links to moved sources (remove once every host re-applied)
 ├── scripts/                   # host.sh runner, shared installers, lib/, format and lint
 ├── assets/                    # Wallpapers and icons
 ├── docs/                      # Notes for fonts, keyrings, and desktop quirks
