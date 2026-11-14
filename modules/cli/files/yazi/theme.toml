@@ -48,3 +48,13 @@ border = { fg = "#fab387" }
 
 [tasks]
 border = { fg = "#fab387" }
+
+# git.yazi status signs (init.lua), Catppuccin Mocha palette.
+[git]
+ignored   = { fg = "#6c7086" }
+untracked = { fg = "#cba6f7" }
+unstaged  = { fg = "#f9e2af" }
+updated   = { fg = "#f9e2af" }
+staged    = { fg = "#a6e3a1" }
+added     = { fg = "#a6e3a1" }
+deleted   = { fg = "#f38ba8", bold = true }

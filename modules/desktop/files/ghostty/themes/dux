@@ -1,0 +1,41 @@
+# Dux: the Material 3 dark-purple face DankMaterialShell uses. Same values as
+# modules/sway/files/alacritty/wm.toml. Background is the Dux surface,
+# lavender (#d0bcff) is the primary.
+
+background = #141218
+foreground = #e6e0e9
+
+cursor-color = #d0bcff
+cursor-text = #381e72
+
+selection-background = #d0bcff
+selection-foreground = #381e72
+
+# Search: candidates in secondary, the focused match in primary container.
+search-background = #ccc2dc
+search-foreground = #141218
+search-selected-background = #4f378b
+search-selected-foreground = #e6e0e9
+
+# Splits: outline-variant divider, unfocused panes dimmed toward the darkest surface.
+split-divider-color = #49454e
+unfocused-split-fill = #100e14
+
+# Normal
+palette = 0=#141218
+palette = 1=#f2b8b5
+palette = 2=#ccc2dc
+palette = 3=#cac4cf
+palette = 4=#d0bcff
+palette = 5=#4f378b
+palette = 6=#948f99
+palette = 7=#e6e0e9
+# Bright
+palette = 8=#49454e
+palette = 9=#f2b8b5
+palette = 10=#ccc2dc
+palette = 11=#cac4cf
+palette = 12=#d0bcff
+palette = 13=#ccc2dc
+palette = 14=#948f99
+palette = 15=#ffffff

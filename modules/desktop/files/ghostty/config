@@ -1,5 +1,85 @@
-theme = catppuccin-mocha.conf
-font-family = VictorMono Nerd Font
+# Ghostty 1.4 config (desktop module). Docs: `ghostty +show-config --default --docs`.
+# Check it: `ghostty +validate-config`. Reload a running instance: ctrl+shift+comma.
+
+# --- Colors -----------------------------------------------------------------
+# Dux everywhere. On a DankMaterialShell host, DMS writes its live matugen
+# colors to themes/dankcolors; an included file loads after this one, so those
+# colors win. The `?` makes a missing file (every non-DMS host) a no-op.
+theme = dux
+config-file = ?themes/dankcolors
+
+# --- Font -------------------------------------------------------------------
+font-family = MartianMono Nerd Font
 font-size = 14
 
+# --- Window -----------------------------------------------------------------
+# auto: sway and niri get server-side decorations (their own borders), GNOME
+# gets client-side. No GTK header bar: keybinds cover tabs and splits.
+window-decoration = auto
+gtk-titlebar = false
+# Tint the GTK chrome (tabs, menus) with the terminal colors.
+window-theme = ghostty
+gtk-wide-tabs = false
+window-padding-x = 10
+window-padding-y = 8
+window-padding-balance = true
+# Full-screen apps (nvim, htop) paint into the padding instead of leaving a frame.
+window-padding-color = extend
 background-opacity = 0.8
+# Compositor blur behind the transparent background (ext-background-effect-v1).
+# A no-op where the compositor lacks it.
+background-blur = true
+unfocused-split-opacity = 0.85
+
+# --- Cursor -----------------------------------------------------------------
+cursor-style = bar
+cursor-style-blink = true
+
+# --- Shell ------------------------------------------------------------------
+# Native splits and tabs replace tmux here; zshrc only autostarts tmux when
+# WITH_TMUX=true, and a value inherited from a tmux shell must not leak in.
+env = WITH_TMUX=false
+# ssh-env: TERM falls back to xterm-256color on hosts without Ghostty's terminfo.
+shell-integration-features = cursor,sudo,title,ssh-env
+# Desktop notification when a command of 10s+ ends in an unfocused terminal.
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 10s
+
+# --- Clipboard --------------------------------------------------------------
+# Selecting copies to the clipboard and to primary, as in Alacritty.
+copy-on-select = both
+# copy-on-select would toast on every selection.
+app-notifications = no-clipboard-copy
+# Programs may write the clipboard (OSC 52) but must ask to read it (defaults, pinned).
+clipboard-read = ask
+clipboard-write = allow
+# Scrollback stays at the default: 50 MB per surface, compressed while idle.
+
+# --- Quick terminal ---------------------------------------------------------
+# Drop-down layer-shell terminal (sway, niri; not GNOME). Toggle it from the
+# compositor with `ghostty +toggle-quick-terminal`; `global:` keybinds need a
+# shortcuts portal that sway does not have.
+quick-terminal-position = top
+quick-terminal-size = 45%
+quick-terminal-screen = mouse
+quick-terminal-autohide = true
+
+# --- Keybinds ---------------------------------------------------------------
+# Leader-free, on ctrl+shift so nothing reaches tmux/zellij/nvim by accident.
+# key_* are physical keys, so they work on any layout (e.g. Ukrainian).
+# tmux owns alt+arrows, alt+shift+h/l, shift+left/right; vim-tmux-navigator
+# owns ctrl+h/j/k/l. Defaults kept: ctrl+shift+t tab, ctrl+shift+o split right,
+# ctrl+shift+e split down, ctrl+shift+enter zoom, ctrl+shift+f search,
+# ctrl+(shift+)tab and alt+1..9 tabs, ctrl+=/-/0 font size.
+keybind = ctrl+shift+key_h=goto_split:left
+keybind = ctrl+shift+key_j=goto_split:down
+keybind = ctrl+shift+key_k=goto_split:up
+keybind = ctrl+shift+key_l=goto_split:right
+keybind = ctrl+shift+alt+key_h=resize_split:left,40
+keybind = ctrl+shift+alt+key_j=resize_split:down,40
+keybind = ctrl+shift+alt+key_k=resize_split:up,40
+keybind = ctrl+shift+alt+key_l=resize_split:right,40
+keybind = ctrl+shift+alt+equal=equalize_splits
+keybind = ctrl+shift+key_x=close_surface
+keybind = ctrl+shift+alt+key_t=prompt_tab_title

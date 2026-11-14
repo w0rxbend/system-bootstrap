@@ -1,34 +1,25 @@
 layout {
-  tab name="Main" split_direction="horizontal" cwd="~/" {
-    pane {
-      name "Files"
-      command "lsd"
-      args "-la"
+    default_tab_template {
+        children
+        pane size=1 borderless=true {
+            plugin location="zjstatus"
+        }
     }
-    pane split_direction="vertical" {
-      pane {
-				size "80%"
-				command "btop"
-				borderless true
-			}
-      pane {
-				size "20%"
-				name "fastfetch"
-				command "fastfetch"
-			}
+
+    tab name="Main" split_direction="horizontal" cwd="~/" {
+        pane name="Files" command="lsd" {
+            args "-la"
+        }
+        pane split_direction="vertical" {
+            pane command="btop" size="80%" borderless=true
+            pane name="fastfetch" command="fastfetch" size="20%"
+        }
     }
-  }
-  tab name="Worxpace" split_direction="horizontal" cwd="~/Workspace/" {
-    pane {
-			size "20%"
-			name "File Tree"
-			command "eza"
-			args "-la"
+
+    tab name="Worxpace" split_direction="horizontal" cwd="~/Workspace/" {
+        pane name="File Tree" command="eza" size="20%" {
+            args "-la"
+        }
+        pane name="File Viewer" command="xplr" size="80%"
     }
-		pane {
-			name "File Viewer"
-			size "80%"
-			command "xplr"
-		}
-  }
 }

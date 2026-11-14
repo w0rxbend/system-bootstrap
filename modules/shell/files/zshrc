@@ -151,6 +151,18 @@ bindkey '^[[B' history-substring-search-down
 [[ -n ${terminfo[kcuu1]} ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
 [[ -n ${terminfo[kcud1]} ]] && bindkey "${terminfo[kcud1]}" history-substring-search-down
 
+# The OMZ yarn plugin aliases `y` to `yarn` and `ya` to `yarn add`; give both names to yazi.
+unalias y ya 2>/dev/null
+
+# y: yazi that cds into its last directory on quit (q; Q quits without cd). From the yazi docs.
+function y() {
+  local tmp cwd; tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || builtin true
+  command rm -f -- "$tmp"
+}
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"

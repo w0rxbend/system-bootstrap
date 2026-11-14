@@ -1,3 +1,6 @@
 # fd-find installs the binary as fdfind; the cli module also installs fd via cargo-binstall.
 jq hyperfine asciinema net-tools stress ripgrep fd-find btop htop tig nmap httpie
 # unverified: xsensors gdu fastfetch mtr
+# yazi previews. 24.04 ships imagemagick 6 and chafa 1.14, older than yazi needs (7.1.1, 1.16).
+7zip poppler-utils
+# unverified: glow resvg

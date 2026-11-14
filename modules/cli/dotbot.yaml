@@ -15,4 +15,6 @@
     ~/.config/yazi/yazi.toml: modules/cli/files/yazi/yazi.toml
     ~/.config/yazi/theme.toml: modules/cli/files/yazi/theme.toml
     ~/.config/yazi/keymap.toml: modules/cli/files/yazi/keymap.toml
+    ~/.config/yazi/init.lua: modules/cli/files/yazi/init.lua
+    ~/.config/yazi/package.toml: modules/cli/files/yazi/package.toml
     ~/.config/binstaller/config.yaml: modules/cli/files/binstaller/config.yaml

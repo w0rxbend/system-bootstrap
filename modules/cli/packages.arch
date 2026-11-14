@@ -1,1 +1,4 @@
 hyperfine asciinema jq net-tools xsensors stress btop htop gdu fastfetch tig mtr nmap httpie
+# yazi previews: Markdown (glow), archives, PDF, SVG, fonts/HEIC/JXL, images in Alacritty (chafa).
+# ffmpeg is in desktop; fd, ripgrep in crates; fzf, zoxide in shell.
+glow 7zip poppler resvg imagemagick chafa

@@ -145,6 +145,14 @@ DMS writes its settings through these links, so changes land in the repo. Runtim
 themes, and plugin checkout directories stay local. See [modules/niri-dms/README.md](modules/niri-dms/README.md) for
 the plugin lock commands.
 
+### Yazi
+
+`modules/cli/files/yazi/` holds overrides on top of the Yazi preset, the Catppuccin Mocha flavor, and plugins pinned
+in `package.toml`: git signs, full border, smart enter (`l`), jump to char (`f`), smart filter (`F`), toggle pane
+(`T` max preview, `Ctrl-t` hide preview), chmod (`cm`), mount (`M`), diff (`Alt-d`) and piper (Markdown through
+glow). The cli module runs `ya pkg install` after binstaller; run it yourself after you edit `package.toml`. Start
+Yazi with `y` to land in its last directory on quit (`Q` quits without changing directory).
+
 ## 🧰 Binary Tools
 
 The cli module runs `scripts/binary-dist.sh`, which installs

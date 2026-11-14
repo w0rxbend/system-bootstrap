@@ -1,6 +1,8 @@
 # Applied with the repo root as base dir (scripts/host.sh).
 # Alacritty: alacritty.toml only imports base, theme, wm (owned by the WM
 # module, optional) and local (host-local, untracked, optional).
+# Ghostty: per-file links keep ~/.config/ghostty/themes a real directory, so
+# DankMaterialShell's generated themes/dankcolors stays out of the repo.
 - defaults:
     link:
       relink: true
@@ -13,7 +15,8 @@
     ~/.config/alacritty/theme.toml: modules/desktop/files/alacritty/theme.toml
     ~/.config/kitty/kitty.conf: modules/desktop/files/kitty/kitty.conf
     ~/.wezterm.lua: modules/desktop/files/wezterm.lua
-    ~/.config/ghostty: modules/desktop/files/ghostty
+    ~/.config/ghostty/config: modules/desktop/files/ghostty/config
+    ~/.config/ghostty/themes/dux: modules/desktop/files/ghostty/themes/dux
     ~/.config/zathura/zathurarc: modules/desktop/files/zathura/zathurarc
     ~/.hidden: modules/desktop/files/hidden
     ~/.config/nerd-fonts-installer/config.yaml: modules/desktop/files/nerd-fonts-installer/config.yaml

@@ -12,4 +12,3 @@
     ~/.config/zellij/config.kdl: modules/shell/files/zellij/config.kdl
     ~/.config/zellij/layouts/default.kdl: modules/shell/files/zellij/layouts/default.kdl
     ~/.config/zellij/layouts/editor.kdl: modules/shell/files/zellij/layouts/editor.kdl
-    ~/.config/zellij/layouts/media.kdl: modules/shell/files/zellij/layouts/media.kdl

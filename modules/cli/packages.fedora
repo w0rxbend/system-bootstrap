@@ -1,2 +1,5 @@
 btop curl fd git htop jq net-tools hyperfine asciinema gdu fastfetch
 stress xsensors fontconfig NetworkManager tig mtr nmap httpie ripgrep
+# yazi previews (names checked on Fedora 43-45 with mdapi). ffmpeg: desktop; fzf, zoxide: shell.
+glow 7zip poppler-utils ImageMagick chafa
+# unverified: resvg
