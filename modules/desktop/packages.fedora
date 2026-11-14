@@ -7,4 +7,4 @@ libva libva-utils mesa-va-drivers
 v4l2loopback
 # Fonts and documents
 fira-code-fonts
-zathura mupdf
+zathura zathura-pdf-mupdf mupdf

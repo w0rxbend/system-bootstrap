@@ -10,6 +10,27 @@
       "matchStrings": ["nvm-sh/nvm/(?<currentValue>v[\\d.]+)/install\\.sh"],
       "depNameTemplate": "nvm-sh/nvm",
       "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "description": [
+        "Pinned binstaller tools: a `# renovate: datasource=... depName=... [extractVersion=...]` comment sits above each version line.",
+        "Tools with a static checksum.value in config.yaml need that sha256 refreshed in the same PR; binstaller apply fails on a stale value.",
+        "dotbot has no comment on purpose: scripts/lib/dotbot.sh pins the same release with its SHA-256, so bump both by hand."
+      ],
+      "managerFilePatterns": ["/modules/cli/files/binstaller/config\\.yaml/", "/scripts/binary-dist\\.sh/"],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(?:\\s+extractVersion=(?<extractVersion>\\S+))?\\n\\s*[\\w-]+[:=]\\s*\"?(?<currentValue>[^\"\\s]+)\"?"
+      ]
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Remind the reviewer to refresh static binstaller checksums.",
+      "matchFileNames": ["modules/cli/files/binstaller/config.yaml"],
+      "prBodyNotes": [
+        "If this tool has a static `checksum.value` in `modules/cli/files/binstaller/config.yaml`, replace it with the sha256 of the new release asset before merging. Tools using `checksum.discover` need no change."
+      ]
     }
   ]
 }

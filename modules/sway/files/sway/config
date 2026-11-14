@@ -3,7 +3,7 @@
 # Palette from the Dux dark purple theme. Borders are 1px.
 # bg #141218, outline #948f99, text #e6e0e9, primary #d0bcff,
 # spawn edge #4f378b, error #f2b8b5.
-# Do not set output mode or position here. Kanshi owns that, and repeats this scale.
+# Do not set output mode, position or scale here. Kanshi owns them per host.
 
 set $mod Mod4
 set $left h
@@ -23,9 +23,8 @@ set $red #f2b8b5
 
 output * bg $bg solid_color
 
-# Modest scale for the 4K panel. Linear filtering keeps fractional scale from looking blocky.
-output "Dell Inc. DELL P3223QE 6BVG3P3" scale 1.25
-output "Dell Inc. DELL P3223QE 6BVG3P3" scale_filter linear
+# Linear filtering keeps a fractional Kanshi scale from looking blocky.
+output * scale_filter linear
 
 # Mice only. Touchpads are type:touchpad and stay on classic scrolling.
 input type:pointer {
@@ -33,9 +32,10 @@ input type:pointer {
 }
 
 # US, then Ukrainian. Super+Space is the XKB switch, so Sway does not bind it.
+# Right Alt is Compose and Caps Lock is Ctrl, as in niri and GNOME.
 input type:keyboard {
     xkb_layout us,ua
-    xkb_options grp:win_space_toggle
+    xkb_options grp:win_space_toggle,compose:ralt,ctrl:nocaps
 }
 
 font pango:RecMonoLinear Nerd Font Mono 16

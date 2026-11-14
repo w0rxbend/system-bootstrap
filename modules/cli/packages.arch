@@ -1,1 +1,1 @@
-hyperfine asciinema yq jq net-tools xsensors stress
+hyperfine asciinema jq net-tools xsensors stress btop htop gdu fastfetch tig mtr nmap httpie

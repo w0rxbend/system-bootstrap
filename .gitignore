@@ -5,7 +5,6 @@
 
 # Editor
 .idea/
-.vscode/
 
 # Build/Temp
 target/

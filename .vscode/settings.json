@@ -1,7 +1,7 @@
 {
-    "editor.fontFamily": "'Monoid Nerd Font','ComicShannsMono Nerd Font', 'FiraMono Nerd Font', monospace",
-    "editor.fontSize": 14,
-    "files.watcherExclude": {
-        "**/target": true
-    }
+  "editor.fontFamily": "'Monoid Nerd Font','ComicShannsMono Nerd Font', 'FiraMono Nerd Font', monospace",
+  "editor.fontSize": 14,
+  "files.watcherExclude": {
+    "**/target": true
+  }
 }

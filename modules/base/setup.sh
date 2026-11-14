@@ -53,8 +53,7 @@ add_vscode_repo() {
 
 case "${DISTRO}" in
     arch)
-        info "Upgrading the system"
-        sudo pacman -Syu --noconfirm
+        # No upgrade here: pkg_install already ran pacman -Syu for packages.arch.
         enable_network_manager
         ;;
     fedora)

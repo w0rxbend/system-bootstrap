@@ -360,9 +360,15 @@ for host_env in hosts/*/host.env; do
     for module in "${host_modules[@]}"; do
         if [ ! -d "modules/${module}" ]; then
             fail "${host_env}: module '${module}' has no directory modules/${module}"
-        elif [ -f "modules/${module}/dotbot.yaml" ]; then
-            set_members+=("modules/${module}/dotbot.yaml")
+            continue
         fi
+        # A module with any package list needs one for this host's distro; a
+        # distro that needs no packages gets a list holding only a comment.
+        if compgen -G "modules/${module}/packages.*" >/dev/null \
+            && [ ! -f "modules/${module}/packages.${host_distro}" ]; then
+            fail "${host_env}: module '${module}' has no packages.${host_distro}"
+        fi
+        [ ! -f "modules/${module}/dotbot.yaml" ] || set_members+=("modules/${module}/dotbot.yaml")
     done
     [ ! -f "${host_dir}/dotbot.yaml" ] || set_members+=("${host_dir}/dotbot.yaml")
     while IFS= read -r target; do
@@ -395,7 +401,7 @@ if have git && git rev-parse --git-dir >/dev/null 2>&1; then
     # repo by clone path), btop (upstream comment).
     grep_status=0
     home_paths="$(git grep -nE '/home/[a-z]|\.system-bootstrap' -- .files modules \
-        ':(exclude).files/.config/danksearch/config.toml' \
+        ':(exclude)modules/niri-dms/files/danksearch/config.toml' \
         ':(exclude)modules/shell/files/zellij/layouts/default.kdl' \
         ':(exclude).files/arch/sway/config/alacritty/alacritty.toml' \
         ':(exclude)modules/cli/files/btop/btop.conf')" || grep_status=$?
@@ -409,6 +415,22 @@ if have git && git rev-parse --git-dir >/dev/null 2>&1; then
     esac
 else
     skip "not a git checkout; script reference, symlink and home path checks skipped"
+fi
+
+info "Checking pinned dotbot-go versions"
+dotbot_lib_pin="$(sed -n 's/^DOTBOT_PINNED_VERSION="\(.*\)"$/v\1/p' scripts/lib/dotbot.sh)"
+dotbot_binstaller_pin="$(sed -n 's/^[[:space:]]*dotbot:[[:space:]]*"\{0,1\}\([^"[:space:]]*\)"\{0,1\}[[:space:]]*$/\1/p' modules/cli/files/binstaller/config.yaml)"
+if [ -z "${dotbot_lib_pin}" ] || [ -z "${dotbot_binstaller_pin}" ]; then
+    fail "dotbot pin not found in scripts/lib/dotbot.sh or modules/cli/files/binstaller/config.yaml"
+elif [ "${dotbot_lib_pin}" != "${dotbot_binstaller_pin}" ]; then
+    fail "dotbot pins differ: scripts/lib/dotbot.sh ${dotbot_lib_pin}, binstaller config ${dotbot_binstaller_pin}"
+fi
+
+if have sway; then
+    info "Validating the sway config"
+    run sway -C -c modules/sway/files/sway/config
+else
+    skip "sway not found; sway config check skipped"
 fi
 
 skip "SVG files are intentionally ignored"

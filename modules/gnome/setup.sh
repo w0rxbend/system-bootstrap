@@ -36,6 +36,11 @@ if have gsettings; then
     gset org.gnome.mutter dynamic-workspaces false
     gset org.gnome.desktop.wm.preferences num-workspaces 9
     gset org.gnome.shell.keybindings show-screenshot-ui "['<Super>Print', 'Print']"
+    # Same keyboard as niri and sway: US then Ukrainian, Super+Space switches.
+    gset org.gnome.desktop.input-sources sources "[('xkb', 'us'), ('xkb', 'ua')]"
+    gset org.gnome.desktop.wm.keybindings switch-input-source "['<Super>space']"
+    gset org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Shift><Super>space']"
+    gset org.gnome.desktop.input-sources xkb-options "['compose:ralt', 'ctrl:nocaps']"
 else
     skip "gsettings not found; GNOME keybindings not set"
 fi

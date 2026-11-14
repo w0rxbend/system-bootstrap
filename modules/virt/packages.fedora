@@ -1,1 +1,1 @@
-qemu-kvm libvirt virt-install bridge-utils
+qemu-kvm libvirt virt-install virt-manager bridge-utils

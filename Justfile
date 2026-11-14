@@ -19,7 +19,12 @@ check: lint
 
 # --- Hosts (hosts/<h>/host.env lists the modules) ---
 
+# List hosts and their modules
+hosts:
+    @grep -H '^MODULES=' hosts/*/host.env
+
 # Provision a host for real: packages, dotfiles and setup of each module
+[confirm]
 host h:
     ./scripts/host.sh {{ h }}
 
@@ -28,5 +33,6 @@ dry h:
     ./scripts/host.sh {{ h }} --dry
 
 # Run one module of a host for real
+[confirm]
 module h m:
     ./scripts/host.sh {{ h }} --only {{ m }}

@@ -1,3 +1,2 @@
-# nmcli: package name not verified on Fedora; `just dry fedora-gnome` on the Fedora host checks it.
-btop curl fd git htop yq jq net-tools hyperfine asciinema gdu fastfetch
-stress xsensors fontconfig nmcli tig mtr nmap httpie ripgrep
+btop curl fd git htop jq net-tools hyperfine asciinema gdu fastfetch
+stress xsensors fontconfig NetworkManager tig mtr nmap httpie ripgrep

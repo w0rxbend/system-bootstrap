@@ -1,5 +1,6 @@
 # Applied with the repo root as base dir (scripts/host.sh).
-# DMS writes through these links, so the sources stay at their .files paths.
+# DMS writes through these links (Qt QSaveFile follows symlink chains), so its
+# settings land in modules/niri-dms/files.
 - defaults:
     link:
       relink: true
@@ -7,13 +8,13 @@
       force: true
 
 - link:
-    ~/.config/niri/config.kdl: .files/.config/niri/config.kdl
-    ~/.config/niri/dms/binds.kdl: .files/.config/niri/dms/binds.kdl
-    ~/.config/niri/dms/windowrules.kdl: .files/.config/niri/dms/windowrules.kdl
-    ~/.config/dms/settings.json: .files/.config/dms/settings.json
-    ~/.config/dms/plugin_settings.json: .files/.config/dms/plugin_settings.json
-    ~/.config/dms/clsettings.json: .files/.config/dms/clsettings.json
-    ~/.config/danksearch/config.toml: .files/.config/danksearch/config.toml
-    ~/.config/environment.d/90-dms.conf: .files/.config/environment.d/90-dms.conf
-    ~/.config/mimeapps.list: .files/.config/mimeapps.list
-    ~/.config/xdg-terminals.list: .files/.config/xdg-terminals.list
+    ~/.config/niri/config.kdl: modules/niri-dms/files/niri/config.kdl
+    ~/.config/niri/dms/binds.kdl: modules/niri-dms/files/niri/dms/binds.kdl
+    ~/.config/niri/dms/windowrules.kdl: modules/niri-dms/files/niri/dms/windowrules.kdl
+    ~/.config/dms/settings.json: modules/niri-dms/files/dms/settings.json
+    ~/.config/dms/plugin_settings.json: modules/niri-dms/files/dms/plugin_settings.json
+    ~/.config/dms/clsettings.json: modules/niri-dms/files/dms/clsettings.json
+    ~/.config/danksearch/config.toml: modules/niri-dms/files/danksearch/config.toml
+    ~/.config/environment.d/90-dms.conf: modules/niri-dms/files/environment.d/90-dms.conf
+    ~/.config/mimeapps.list: modules/niri-dms/files/mimeapps.list
+    ~/.config/xdg-terminals.list: modules/niri-dms/files/xdg-terminals.list

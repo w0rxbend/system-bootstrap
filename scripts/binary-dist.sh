@@ -9,6 +9,8 @@ set -euo pipefail
 # installs into ${HOME}/.apps/<tool>/bin, and creates the (sudo) symlinks.
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# renovate: datasource=github-releases depName=worxbend/binstaller
+BINSTALLER_VERSION="v0.5.1"
 INSTALL_DIR="${BINSTALLER_INSTALL_DIR:-${HOME}/.local/bin}"
 BINSTALLER="${INSTALL_DIR}/binstaller"
 
@@ -24,11 +26,13 @@ if [ ! -f "${CONFIG_PATH}" ]; then
     exit 1
 fi
 
-# Install binstaller (latest release) if it is not already available.
+# Install the pinned binstaller release if it is not already available.
+# install.sh reads BINSTALLER_VERSION, so the variable must reach `sh`, not curl.
 if ! command -v binstaller >/dev/null 2>&1 && [ ! -x "${BINSTALLER}" ]; then
-    echo "Installing binstaller (latest release)..."
+    echo "Installing binstaller ${BINSTALLER_VERSION}..."
     curl --proto '=https' --tlsv1.2 -sSfL \
-        https://github.com/worxbend/binstaller/releases/latest/download/install.sh | sh
+        "https://github.com/worxbend/binstaller/releases/download/${BINSTALLER_VERSION}/install.sh" \
+        | BINSTALLER_VERSION="${BINSTALLER_VERSION}" sh
 fi
 
 # ~/.local/bin may not be on PATH in this shell yet; fall back to the absolute path.

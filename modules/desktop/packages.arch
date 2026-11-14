@@ -1,5 +1,5 @@
 # Terminals and audio
-alacritty kitty wl-clipboard easyeffects
+alacritty kitty ghostty wl-clipboard easyeffects
 # Media
 vlc ffmpeg ffmpegthumbs mpv
 gstreamer gst-plugins-base gst-plugins-good gst-plugin-pipewire

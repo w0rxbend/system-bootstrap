@@ -17,6 +17,8 @@ set -euo pipefail
 conda_bin="$(command -v conda || printf '%s' "${HOME}/.miniforge3/bin/conda")"
 if [ -x "${conda_bin}" ]; then
     "${conda_bin}" config --set changeps1 False
+    # No base env in every shell: it costs startup time and shadows pyenv's python.
+    "${conda_bin}" config --set auto_activate false
 else
-    skip "conda not found; changeps1 not set"
+    skip "conda not found; changeps1 and auto_activate not set"
 fi

@@ -46,6 +46,8 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 [ -n "${host}" ] || usage
+# A dry run writes nothing, so root is fine there (the CI container runs as root).
+[ "${dry}" -eq 1 ] || [ "$(id -u)" -ne 0 ] || die "run as your user, not root; the scripts call sudo themselves"
 
 HOST_DIR="${REPO_ROOT}/hosts/${host}"
 [ -f "${HOST_DIR}/host.env" ] || die "unknown host '${host}': ${HOST_DIR}/host.env not found"
@@ -81,12 +83,37 @@ read -r -a dotbot_args <<<"${DOTBOT_ARGS:-}"
 [ "${dry}" -eq 0 ] || dotbot_args+=(-n)
 
 WORKDIR="$(mktemp -d)"
-trap 'rm -rf -- "${WORKDIR}"' EXIT
+sudo_keepalive=""
+current=""
+
+# Stop the sudo keepalive, drop the work dir, and on a failed real run name
+# the step that stopped it.
+on_exit() {
+    local rc=$?
+
+    [ -z "${sudo_keepalive}" ] || kill "${sudo_keepalive}" 2>/dev/null || true
+    rm -rf -- "${WORKDIR}"
+    if [ "${rc}" -ne 0 ] && [ "${dry}" -eq 0 ] && [ -n "${current}" ]; then
+        printf 'error: stopped in %s; resume per module: just module %s <module>\n' "${current}" "${host}" >&2
+    fi
+}
+trap on_exit EXIT
+
+# A real run is unattended: cache sudo once and keep it fresh, so a late
+# module does not wait at a password prompt after long user-level steps.
+if [ "${dry}" -eq 0 ]; then
+    sudo -v
+    (while sleep 60; do sudo -n -v || exit; done) >/dev/null 2>&1 &
+    sudo_keepalive=$!
+fi
+
 dotbot_bin=""
 dry_failures=0
 
 # Real run: stop at the first failure. Dry run: report it and go on.
+# Usage: run_step <step function> <unit dir>
 run_step() {
+    current="${2#"${REPO_ROOT}/"} ($1)"
     if [ "${dry}" -eq 0 ]; then
         "$@"
     elif ! "$@"; then
@@ -121,7 +148,7 @@ run_setup() {
 
     [ -f "${script}" ] || return 0
     if [ "${dry}" -eq 1 ]; then
-        bash -n "${script}"
+        bash -n "${script}" || return 1
         printf 'would run: %s\n' "${script#"${REPO_ROOT}/"}"
     else
         bash "${script}"

@@ -69,3 +69,29 @@ jobs:
 
       - name: Lint repository
         run: just lint
+
+  # Resolves the ubuntu-vm package lists with apt-get -s and runs every one of
+  # its dotbot manifests through the pinned dotbot-go with -n.
+  dry-run-ubuntu-vm:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    container: ubuntu:24.04
+
+    steps:
+      - name: Install base tools
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git curl ca-certificates
+
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Install just
+        uses: taiki-e/install-action@v2
+        with:
+          tool: just
+
+      - name: Dry-run the ubuntu-vm host
+        run: just dry ubuntu-vm

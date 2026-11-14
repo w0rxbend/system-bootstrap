@@ -20,7 +20,9 @@ if have dms && have niri; then
 fi
 
 info "Installing niri and DankMaterialShell with the official installer"
-# Unattended mode needs cached sudo credentials.
-sudo -v
-curl --proto '=https' --tlsv1.2 -fsSL "${DMS_INSTALL_URL}" \
-    | bash -s -- --compositor niri --term alacritty --dux-search --yes
+# Download first, then run: a dropped connection must not run half a script.
+# scripts/host.sh keeps sudo credentials cached for the unattended mode.
+tmp="$(mktemp -d)"
+trap 'rm -rf -- "${tmp}"' EXIT
+curl --proto '=https' --tlsv1.2 -fsSL -o "${tmp}/dms-install.sh" "${DMS_INSTALL_URL}"
+bash "${tmp}/dms-install.sh" --compositor niri --term alacritty --dux-search --yes

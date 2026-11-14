@@ -59,7 +59,6 @@ APPS=(
     org.gnome.design.Emblem
     org.mozilla.vpn
     io.github.zingytomato.netpeek
-    com.oguzhaninan.Stacer
     # Productivity Tools
     com.pojtinger.felicitas.Sessions
     com.rafaelmardojai.Blanket

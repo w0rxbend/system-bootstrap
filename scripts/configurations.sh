@@ -9,9 +9,19 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # shellcheck source=scripts/lib/common.sh
 . "${REPO_ROOT}/scripts/lib/common.sh"
 
+# Set <key> to <given> when given, else to <default> only when <key> is unset,
+# so a re-run keeps an identity set by hand on this machine.
+set_git_identity() {
+    local key="$1" given="$2" default="$3"
+
+    if [ -n "${given}" ] || ! git config --global "${key}" >/dev/null; then
+        git config --global "${key}" "${given:-${default}}"
+    fi
+}
+
 info "Configuring git"
-git config --global user.email "${GIT_USER_EMAIL:-balyszyn@gmail.com}"
-git config --global user.name "${GIT_USER_NAME:-w0rxbend}"
+set_git_identity user.email "${GIT_USER_EMAIL:-}" balyszyn@gmail.com
+set_git_identity user.name "${GIT_USER_NAME:-}" w0rxbend
 git config --global pull.rebase true
 git config --global init.defaultBranch main
 git config --global core.autocrlf input

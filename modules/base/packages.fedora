@@ -1,4 +1,4 @@
 # From scripts/fedora/00-system-update.sh, and unzip from 01-packages.sh.
 ca-certificates curl wget gnupg2 util-linux-user fuse3 fedora-workstation-repositories
 pipewire pipewire-alsa pipewire-pulseaudio pipewire-jack-audio-connection-kit wireplumber
-unzip
+unzip flatpak

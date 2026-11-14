@@ -32,9 +32,6 @@ config.window_frame = {
     button_hover_bg = "#3b3052",
     font = require("wezterm").font("Roboto"),
     font_size = 14,
-}
-
-config.window_frame = {
     border_left_width = "0.10cell",
     border_right_width = "0.10cell",
     border_bottom_height = "0.05cell",

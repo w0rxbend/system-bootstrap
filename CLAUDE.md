@@ -11,10 +11,13 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
 
 ## Layout
 
-- `Justfile` — the entry point: `host <h>`, `dry <h>`, `module <h> <m>`, plus `format`/`lint`/`check`.
-- `bootstrap.sh` — POSIX first-run entry: installs git, curl, zsh and just, then `just host <h>`.
+- `Justfile` — the entry point: `hosts`, `host <h>`, `dry <h>`, `module <h> <m>`, plus
+  `format`/`lint`/`check`. `host` and `module` are `[confirm]` recipes; `just --yes` skips the prompt.
+- `bootstrap.sh` — POSIX first-run entry: checks the host's `DISTRO`, installs git, curl, zsh and
+  just, then `just --yes host <h>`.
 - `hosts/<host>/host.env` — one machine: `DISTRO` (`arch|fedora|ubuntu`) and the ordered `MODULES`
-  list; optional `GIT_USER_NAME`, `GIT_USER_EMAIL`, `OBS=1`.
+  list; optional `GIT_USER_NAME`, `GIT_USER_EMAIL`, `OBS=1`. Optional `hosts/<host>/dotbot.yaml` +
+  `files/` hold links for that machine only (e.g. the arch-sway Kanshi profile).
 - `modules/<module>/` — every file optional: `packages.<distro>` (names, `#` comments),
   `dotbot.yaml` (links only: `defaults|link|create|clean`, sources relative to the repo root),
   `setup.sh` (bash, idempotent, non-interactive; gets `HOST DISTRO REPO_ROOT`), `files/` (sources
@@ -29,10 +32,13 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
 - `modules/<m>/files/` — config sources linked by the module manifests. Links use `force: true` —
   applying overwrites matching local config paths. Neovim config (`modules/cli/files/nvim/`) is an
   AstroNvim setup with a pinned `lazy-lock.json`.
-- `.files/` — the `niri-dms` sources (DankMaterialShell writes through its links, so they stay
-  here), unlinked backups, and relative compat symlinks at the old paths of moved sources. Hosts
-  that have not re-run `just host` still link through them; remove them once every host has.
+- `.files/` — only relative compat symlinks at the old paths of moved sources, plus the old Sway
+  `alacritty.toml`. Hosts that have not re-run `just host` still link through them; remove them
+  once every host has. DankMaterialShell writes through its links; Qt's QSaveFile follows symlink
+  chains, so its saves land in `modules/niri-dms/files/`.
 - `docs/`, `assets/` — notes (keyrings, fonts, Sway) and wallpapers/icons.
+- `others/` — backups kept for manual restore (e.g. Vesktop/Vencord settings); nothing links or
+  installs them.
 
 ## Conventions
 
@@ -43,8 +49,14 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
 - New shell scripts: start with `set -euo pipefail` (bash) and quote variable expansions. Match
   `format.sh`/`lint.sh` for anything new or reworked.
 - Prefer `${HOME}` / `$XDG_*` over hardcoded `/home/<user>` paths.
-- Pin tool versions in `modules/cli/files/binstaller/config.yaml` (`spec.versions`); Go is pinned in
-  `scripts/install_golang.sh` (version and SHA-256 together).
+- Pin tool versions in `modules/cli/files/binstaller/config.yaml` (`spec.versions`, each with a
+  checksum and a `# renovate:` comment); binstaller itself is pinned in `scripts/binary-dist.sh`
+  (`BINSTALLER_VERSION`). helm, kustomize, yq and nerd-fonts-installer come from that
+  profile, not curl installers; starship uses its official script (`scripts/cli-tools.sh`). dotbot-go is pinned twice (`scripts/lib/dotbot.sh` and the profile);
+  `just lint` fails when they differ. Go is pinned in `scripts/install_golang.sh` (version and
+  SHA-256 together).
+- A module with any `packages.*` needs a `packages.<distro>` for every host distro that lists it
+  (a comment-only file when it needs nothing); `just lint` checks this.
 
 ## Quality gate
 
@@ -56,11 +68,12 @@ just check    # == lint
 
 CI (`.github/workflows/format-and-lint.yml`) runs `just format`, auto-commits any diff as
 `style: autoformat`, then `just lint`. Formatter/linter binaries are installed via
-`taiki-e/install-action` (just, taplo-cli, stylua, selene) plus apt and npm.
+`taiki-e/install-action` (just, taplo-cli, stylua, selene) plus apt and npm. A second job runs
+`just dry ubuntu-vm` in an `ubuntu:24.04` container. CI may push `style: autoformat` to main, so
+run `git pull --rebase` after pushing.
 
-The linters (`shellcheck`, `shfmt`, `stylua`, `selene`, `just`) are often **not installed locally**.
-When you can't run the gate, sanity-check edited shell scripts with `bash -n <file>` and keep changes
-conservative.
+Arch hosts install the gate tools (`modules/dev/packages.arch`). Elsewhere, when a tool is
+missing, `just lint` skips that check; sanity-check edited shell scripts with `bash -n <file>`.
 
 ## Safety
 

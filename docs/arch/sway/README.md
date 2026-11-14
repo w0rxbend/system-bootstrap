@@ -29,6 +29,8 @@ just host arch-sway               # every module of the host
 just module arch-sway sway        # only this module: packages.arch, links, setup.sh
 ```
 
+`just host` and `just module` ask for confirmation first; `just --yes host arch-sway` skips the prompt.
+
 Then log out of Sway and back in. Sway chooses `~/.config/sway/config` at startup. A reload of the current session keeps using `/etc/sway/config` if that is what it started with.
 
 The desktop module owns `~/.config/alacritty/alacritty.toml`, `base.toml` and `theme.toml`. This module adds `wm.toml` with the Dux colors and the RecMono font, which alacritty loads after the shared theme. The base module's `clean` step only removes dead links that point into this repo.
@@ -45,7 +47,6 @@ The desktop module owns `~/.config/alacritty/alacritty.toml`, `base.toml` and `t
 | `modules/sway/files/waybar/style.css`     | `~/.config/waybar/style.css`          |
 | `modules/sway/files/alacritty/wm.toml`    | `~/.config/alacritty/wm.toml`         |
 | `modules/sway/files/fuzzel/fuzzel.ini`    | `~/.config/fuzzel/fuzzel.ini`         |
-| `modules/sway/files/kanshi/config`        | `~/.config/kanshi/config`             |
 | `modules/sway/files/mako/config`          | `~/.config/mako/config`               |
 | `modules/sway/files/foot/foot.ini`        | `~/.config/foot/foot.ini`             |
 | `modules/sway/files/swaynag/config`       | `~/.config/swaynag/config`            |
@@ -53,11 +54,13 @@ The desktop module owns `~/.config/alacritty/alacritty.toml`, `base.toml` and `t
 | `modules/sway/files/wob/wob.ini`          | `~/.config/wob/wob.ini`               |
 | `modules/sway/files/systemd/skbd.service` | `~/.config/systemd/user/skbd.service` |
 
+The host adds one link of its own. `hosts/arch-sway/dotbot.yaml` links `hosts/arch-sway/files/kanshi/config` to `~/.config/kanshi/config`, because the monitor profile belongs to this machine, not to the module.
+
 Links are forced. A real file already at one of those paths is replaced by the symlink.
 
 ## Keys
 
-Same as the stock Sway config, with two launcher changes:
+Same as the stock Sway config, with two launcher changes. The keyboard uses `xkb_options grp:win_space_toggle,compose:ralt,ctrl:nocaps`: Caps Lock is Ctrl and Right Alt is Compose, as in niri and GNOME.
 
 | Key              | Action                                                            |
 | ---------------- | ----------------------------------------------------------------- |
@@ -96,14 +99,14 @@ cliphist stores text and image copies. Super+Shift+V pastes an older entry back 
 
 ## Monitor
 
-The Kanshi profile `dell-p3223qe` matches the connected panel:
+The Kanshi profile `dell-p3223qe` in `hosts/arch-sway/files/kanshi/config` matches the connected panel:
 
 - Output description: `Dell Inc. DELL P3223QE 6BVG3P3`
 - Mode: `3840x2160@59.997Hz`
 - Position: `0,0`
 - Scale: `1.25`
 
-Sway sets the same scale and `scale_filter linear` for that description. Kanshi still chooses the mode and the position. 1.25 turns 3840x2160 into a logical 3072x1728, a small step up on this 32-inch panel. Use 1.5 in both files if that is still too small.
+Only Kanshi sets the scale, the mode and the position. The Sway config sets no scale; it only sets `scale_filter linear` on every output, so a fractional scale does not look blocky. 1.25 turns 3840x2160 into a logical 3072x1728, a small step up on this 32-inch panel. Use 1.5 in the Kanshi profile if that is still too small.
 
 Kanshi only enables a profile when every currently connected output is listed in it. Another display needs a new profile that names both outputs. Names come from `swaymsg -t get_outputs`.
 

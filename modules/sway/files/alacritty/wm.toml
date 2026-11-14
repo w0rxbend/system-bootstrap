@@ -70,6 +70,15 @@ magenta = "#2b292f"
 cyan    = "#49454e"
 white   = "#948f99"
 
+# Imports append arrays, so override the shared theme's indexed 16 and 17.
+[[colors.indexed_colors]]
+index = 16
+color = "#f2b8b5"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#ccc2dc"
+
 [font]
 size = 14
 

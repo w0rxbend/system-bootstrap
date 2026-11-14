@@ -15,7 +15,6 @@
     ~/.config/waybar/style.css: modules/sway/files/waybar/style.css
     ~/.config/alacritty/wm.toml: modules/sway/files/alacritty/wm.toml
     ~/.config/fuzzel/fuzzel.ini: modules/sway/files/fuzzel/fuzzel.ini
-    ~/.config/kanshi/config: modules/sway/files/kanshi/config
     ~/.config/mako/config: modules/sway/files/mako/config
     ~/.config/foot/foot.ini: modules/sway/files/foot/foot.ini
     ~/.config/swaynag/config: modules/sway/files/swaynag/config

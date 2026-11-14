@@ -3,7 +3,7 @@
 .codex/
 assets/
 # DMS owns and rewrites these files whenever settings change in its UI.
-.files/.config/dms/*.json
+modules/niri-dms/files/dms/*.json
 *.png
 *.jpg
 *.jpeg

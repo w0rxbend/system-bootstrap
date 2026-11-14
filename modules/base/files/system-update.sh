@@ -9,27 +9,6 @@ set -euo pipefail
 
 failures=0
 
-CARGO_BINSTALL_PACKAGES=(
-    cargo-binstall
-    eza
-    lsd
-    fd-find
-    ripgrep
-    bingrep
-    hx
-    just
-    sd
-    procs
-    du-dust
-    gping
-    tree-sitter-cli
-    macchina
-    multibg-wayland
-    bottom
-    broot
-)
-readonly CARGO_BINSTALL_PACKAGES
-
 add_path() {
     local dir="$1"
     case ":${PATH}:" in
@@ -84,15 +63,15 @@ update_system_packages() {
                 shelly upgrade all --no-confirm
                 return
             fi
-            sudo pacman -Syu --noconfirm
+            sudo pacman -Syu --noconfirm || return
             ;;
         fedora)
-            sudo dnf upgrade -y
-            sudo dnf distro-sync -y
+            sudo dnf upgrade -y || return
+            sudo dnf distro-sync -y || return
             ;;
         ubuntu)
-            sudo apt-get update
-            sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+            sudo apt-get update || return
+            sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y || return
             ;;
         *)
             skip "unsupported distro; system packages not updated"
@@ -123,7 +102,9 @@ update_cargo_binstall_crates() {
 
     mapfile -t crates < <(installed_cargo_binstall_crates)
     if [[ ${#crates[@]} -eq 0 ]]; then
-        crates=("${CARGO_BINSTALL_PACKAGES[@]}")
+        # Nothing recorded yet: fall back to the shared list in modules/cli/crates.
+        mapfile -t crates < <(pkg_names "${repo_root}/modules/cli/crates")
+        crates=(cargo-binstall "${crates[@]}")
     fi
 
     cargo binstall --force --continue-on-failure "${crates[@]}"
@@ -139,9 +120,9 @@ update_nvm_and_node() {
     fi
 
     if [[ -d "${nvm_dir}/.git" ]]; then
-        git -C "${nvm_dir}" fetch --tags origin
-        latest_tag="$(git -C "${nvm_dir}" describe --abbrev=0 --tags --match 'v[0-9]*' "$(git -C "${nvm_dir}" rev-list --tags --max-count=1)")"
-        git -C "${nvm_dir}" checkout "${latest_tag}"
+        git -C "${nvm_dir}" fetch --tags origin || return
+        latest_tag="$(git -C "${nvm_dir}" describe --abbrev=0 --tags --match 'v[0-9]*' "$(git -C "${nvm_dir}" rev-list --tags --max-count=1)")" || return
+        git -C "${nvm_dir}" checkout "${latest_tag}" || return
     fi
 
     # nvm.sh is not safe under `set -u`; run it in a child shell so an
@@ -227,53 +208,8 @@ update_tmux_plugins() {
     fi
 }
 
-update_binstaller() {
-    local config="${BINSTALLER_CONFIG:-${HOME}/.config/binstaller/config.yaml}"
-    local binstaller_cmd="binstaller"
-
-    if [[ ! -f "${config}" ]]; then
-        config="${repo_root}/modules/cli/files/binstaller/config.yaml"
-    fi
-    if [[ ! -f "${config}" ]]; then
-        skip "binstaller config not found"
-        return 0
-    fi
-
-    curl --proto '=https' --tlsv1.2 -sSfL \
-        https://github.com/worxbend/binstaller/releases/latest/download/install.sh | sh
-
-    if ! have binstaller && [[ -x "${HOME}/.local/bin/binstaller" ]]; then
-        binstaller_cmd="${HOME}/.local/bin/binstaller"
-    fi
-    "${binstaller_cmd}" apply --config "${config}"
-}
-
-update_nerd_fonts() {
-    local config="${NERDFONT_CONFIG:-${HOME}/.config/nerd-fonts-installer/config.yaml}"
-    local installer="nerd-fonts-installer"
-
-    if [[ ! -f "${config}" ]]; then
-        config="${repo_root}/modules/desktop/files/nerd-fonts-installer/config.yaml"
-    fi
-    if [[ ! -f "${config}" ]]; then
-        skip "nerd-fonts-installer config not found"
-        return 0
-    fi
-    if ! have nerd-fonts-installer && [[ -x "${HOME}/.local/bin/nerd-fonts-installer" ]]; then
-        installer="${HOME}/.local/bin/nerd-fonts-installer"
-    elif ! have nerd-fonts-installer; then
-        skip "nerd-fonts-installer not installed"
-        return 0
-    fi
-    "${installer}" --config "${config}"
-}
-
 update_starship() {
     curl -sS https://starship.rs/install.sh | sh -s -- -y
-}
-
-update_helm() {
-    curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
 }
 
 update_dotenvx() {
@@ -332,20 +268,17 @@ else
     skip "starship not installed"
 fi
 
-if have helm; then
-    run_step "helm" update_helm
-else
-    skip "helm not installed"
-fi
-
 if have dotenvx; then
     run_step "dotenvx" update_dotenvx
 else
     skip "dotenvx not installed"
 fi
 
-run_step "binstaller binaries" update_binstaller
-run_step "Nerd Fonts" update_nerd_fonts
+# binary-dist.sh owns the binstaller pin, the config lookup and the apply.
+# helm, kustomize, yq and nerd-fonts-installer are pinned in that profile.
+run_step "binstaller binaries" "${repo_root}/scripts/binary-dist.sh"
+# nerd-fonts.p0.sh runs the pinned installer from ~/.apps and finds the config.
+run_step "Nerd Fonts" "${repo_root}/scripts/nerd-fonts.p0.sh"
 run_step "Oh My Zsh" update_oh_my_zsh
 run_step "tmux plugins" update_tmux_plugins
 
@@ -356,7 +289,6 @@ else
 fi
 
 # Go is pinned in scripts/install_golang.sh; bump it there.
-# kustomize is installed once by scripts/cli-tools.sh and not updated here.
 
 printf '\n'
 if [[ "${failures}" -ne 0 ]]; then

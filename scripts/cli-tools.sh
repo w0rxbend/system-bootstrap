@@ -4,7 +4,8 @@ set -euo pipefail
 # Install user-level language toolchains and CLI installers.
 # Run by modules/dev/setup.sh. Every installer runs non-interactively and is
 # skipped when its tool is already there; ~/system-update.sh updates them.
-# SDKMAN is installed by scripts/sdkman-packages.sh.
+# SDKMAN is installed by scripts/sdkman-packages.sh; helm and kustomize by the
+# binstaller profile (scripts/binary-dist.sh). starship uses its official script.
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
@@ -18,7 +19,7 @@ trap 'rm -rf -- "${WORKDIR}"' EXIT
 fetch() {
     local name="$1" url="$2"
 
-    curl --proto '=https' --tlsv1.2 -fsSL -o "${WORKDIR}/${name}" "${url}"
+    curl --proto '=https' --tlsv1.2 -fsSL -o "${WORKDIR}/${name}" "${url}" || die "download failed: ${url}"
     printf '%s\n' "${WORKDIR}/${name}"
 }
 
@@ -92,25 +93,9 @@ install_cargo_binstall() {
     bash "$(fetch cargo-binstall.sh https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh)"
 }
 
-# The upstream script writes ./kustomize, so run it in the work dir and keep
-# the binary in ~/.apps/kustomize/bin (on PATH in .zshrc).
-install_kustomize() {
-    local dest="${HOME}/.apps/kustomize/bin/kustomize" script
-
-    installed kustomize "${dest}" && return 0
-    script="$(fetch install_kustomize.sh https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh)"
-    (cd "${WORKDIR}" && bash "${script}")
-    install -Dm755 "${WORKDIR}/kustomize" "${dest}"
-}
-
-install_helm() {
-    installed helm /usr/local/bin/helm && return 0
-    bash "$(fetch get-helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4)"
-}
-
 have curl || die "curl is required"
 
-for tool in rustup nvm pyenv poetry starship pnpm juliaup dotenvx miniforge uv cargo_binstall kustomize helm; do
+for tool in rustup nvm pyenv poetry starship pnpm juliaup dotenvx miniforge uv cargo_binstall; do
     info "${tool}"
     "install_${tool}"
 done

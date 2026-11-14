@@ -1,0 +1,6 @@
+# Rust CLI tools installed as prebuilt binaries with cargo-binstall.
+# Read by scripts/cargo-packages.sh (install) and ~/system-update.sh (update).
+# Same format as packages.<distro>: names, # comments.
+eza lsd fd-find ripgrep bingrep hx just sd procs du-dust gping
+tree-sitter-cli
+macchina multibg-wayland bottom broot

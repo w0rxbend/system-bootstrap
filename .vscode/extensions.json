@@ -1,6 +1,3 @@
 {
-    "recommendations": [
-        "editorconfig.editorconfig",
-        "EditorConfig.EditorConfig"
-    ]
+  "recommendations": ["editorconfig.editorconfig", "EditorConfig.EditorConfig"]
 }

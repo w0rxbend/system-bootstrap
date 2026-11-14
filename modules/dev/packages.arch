@@ -6,3 +6,7 @@ gtk3 gtk4 gobject-introspection libxrandr libxi libxinerama libxcursor libxxf86v
 libx11 libxext libxft libxrender libxfixes mesa mesa-utils
 # LaTeX
 texlive-basic texlive-bin texlive-xetex
+# Debuggers, profilers and dev libraries
+gdb valgrind strace ltrace perf protobuf python-pipx libsecret
+# Repo quality gate (just format / just lint)
+shellcheck shfmt stylua selene taplo-cli prettier yamllint python-yaml markdownlint-cli2

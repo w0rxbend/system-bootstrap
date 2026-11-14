@@ -1,3 +1,3 @@
 # fd-find installs the binary as fdfind; the cli module also installs fd via cargo-binstall.
 jq hyperfine asciinema net-tools stress ripgrep fd-find btop htop tig nmap httpie
-# unverified: yq xsensors gdu fastfetch mtr
+# unverified: xsensors gdu fastfetch mtr

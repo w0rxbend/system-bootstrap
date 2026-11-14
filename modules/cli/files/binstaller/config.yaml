@@ -12,33 +12,47 @@ spec:
     continueOnError: true
     allowSudoSymlinks: true
 
-  # Pinned tools use static versions; the rest resolve dynamically at apply time.
+  # Every tool is pinned. Renovate bumps each version through its `# renovate:`
+  # comment (see renovate.json). A tool with a static `checksum.value` needs that
+  # value refreshed in the same PR; a stale value makes apply fail on mismatch.
   versions:
+    # renovate: datasource=github-releases depName=sxyazi/yazi
     yazi: v26.5.6
+    # renovate: datasource=github-tags depName=ziglang/zig
     zig: "0.15.2"
+    # renovate: datasource=github-releases depName=kubernetes-sigs/kind
     kind: v0.31.0
+    # renovate: datasource=github-releases depName=zellij-org/zellij
     zellij: v0.44.1
+    # renovate: datasource=github-releases depName=jj-vcs/jj
     jujutsu: v0.40.0
+    # No renovate comment: scripts/lib/dotbot.sh pins the same release with its
+    # SHA-256. Bump both by hand.
     dotbot: v0.4.2
+    # renovate: datasource=github-releases depName=jesseduffield/lazygit extractVersion=^v(?<version>.+)$
     lazygit: "0.61.0"
+    # renovate: datasource=github-releases depName=worxbend/swaylingo-c
     skbd: v0.4.1
+    # renovate: datasource=github-releases depName=worxbend/airgradient-cli
     airgradient-cli: v0.6.0
-    kubectl:
-      resolver:
-        type: http-text
-        url: https://dl.k8s.io/release/stable.txt
-    minikube:
-      dynamic:
-        type: latest-url
-    xplr:
-      dynamic:
-        type: latest-url
-    neovim:
-      dynamic:
-        type: latest-url
-    neovide:
-      dynamic:
-        type: latest-url
+    # renovate: datasource=github-releases depName=kubernetes/kubernetes
+    kubectl: v1.37.2
+    # renovate: datasource=github-releases depName=kubernetes/minikube
+    minikube: v1.39.0
+    # renovate: datasource=github-releases depName=sayanarijit/xplr
+    xplr: v1.2.2
+    # renovate: datasource=github-releases depName=neovim/neovim
+    neovim: v0.12.6
+    # renovate: datasource=github-releases depName=neovide/neovide
+    neovide: "0.17.2"
+    # renovate: datasource=github-releases depName=helm/helm
+    helm: v4.3.2
+    # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize extractVersion=^kustomize/v(?<version>.+)$
+    kustomize: "5.8.3"
+    # renovate: datasource=github-releases depName=mikefarah/yq
+    yq: v4.54.3
+    # renovate: datasource=github-releases depName=worxbend/nerd-fonts-installer
+    nerd-fonts-installer: v1.0.9
 
   plan:
     - name: yazi
@@ -50,6 +64,9 @@ spec:
         download:
           url: https://github.com/sxyazi/yazi/releases/download/${version}/yazi-x86_64-unknown-linux-gnu.zip
           filename: yazi.zip
+          checksum:
+            algorithm: sha256
+            value: 1c9096f0a83b8102c194385f644cdeff93cc8269426163c9d033041ebd537bd2
           archive:
             type: zip
             extract:
@@ -71,6 +88,9 @@ spec:
         download:
           url: https://ziglang.org/download/${version}/zig-x86_64-linux-${version}.tar.xz
           filename: zig.tar.xz
+          checksum:
+            algorithm: sha256
+            value: 02aa270f183da276e5b5920b1dac44a63f1a49e55050ebde3aecc9eb82f93239
           archive:
             type: tar.xz
             extract:
@@ -91,8 +111,11 @@ spec:
         versionRef: minikube
         installDir: ${appsDir}/minikube/bin
         download:
-          url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          url: https://github.com/kubernetes/minikube/releases/download/${version}/minikube-linux-amd64
           filename: minikube
+          checksum:
+            algorithm: sha256
+            value: b738496da01be06bbaf80c688f57ce25acd3849fbb518155f3a88e03ef555aa4
         executables:
           - path: minikube
             mode: "0755"
@@ -104,8 +127,14 @@ spec:
         versionRef: xplr
         installDir: ${appsDir}/xplr
         download:
-          url: https://github.com/sayanarijit/xplr/releases/latest/download/xplr-linux.tar.gz
+          url: https://github.com/sayanarijit/xplr/releases/download/${version}/xplr-linux.tar.gz
           filename: xplr.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/sayanarijit/xplr/releases/download/${version}/xplr-linux.sha256
+              file: xplr-linux.tar.gz
           archive:
             type: tar.gz
             extract:
@@ -125,6 +154,12 @@ spec:
         download:
           url: https://kind.sigs.k8s.io/dl/${version}/kind-linux-amd64
           filename: kind
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/kubernetes-sigs/kind/releases/download/${version}/kind-linux-amd64.sha256sum
+              file: kind-linux-amd64
         executables:
           - path: kind
             mode: "0755"
@@ -138,6 +173,10 @@ spec:
         download:
           url: https://github.com/zellij-org/zellij/releases/download/${version}/zellij-x86_64-unknown-linux-musl.tar.gz
           filename: zellij.tar.gz
+          # Static: upstream's .sha256sum hashes the extracted binary, not the tarball.
+          checksum:
+            algorithm: sha256
+            value: 669825021d529fca5d939888263c9d2a90762145191fa07581a15250e8af2b49
           archive:
             type: tar.gz
             extract:
@@ -157,6 +196,9 @@ spec:
         download:
           url: https://dl.k8s.io/release/${version}/bin/linux/amd64/kubectl
           filename: kubectl
+          checksum:
+            algorithm: sha256
+            value: c04487523e7aa7d1493f7808174c899db93d7a9cf57531420cd76b9bd415f8f4
         executables:
           - path: kubectl
             mode: "0755"
@@ -168,8 +210,11 @@ spec:
         versionRef: neovide
         installDir: ${appsDir}/neovide/bin
         download:
-          url: https://github.com/neovide/neovide/releases/latest/download/neovide.AppImage
+          url: https://github.com/neovide/neovide/releases/download/${version}/neovide.AppImage
           filename: neovide
+          checksum:
+            algorithm: sha256
+            value: 99f9b9ffd74d4d20bbb86ea1aaaf46eb2b6617a7193a0f719f046568034d9772
         executables:
           - path: neovide
             mode: "0755"
@@ -181,8 +226,11 @@ spec:
         versionRef: neovim
         installDir: ${appsDir}/neovim
         download:
-          url: https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+          url: https://github.com/neovim/neovim/releases/download/${version}/nvim-linux-x86_64.tar.gz
           filename: neovim.tar.gz
+          checksum:
+            algorithm: sha256
+            value: 474430d53e6264f6d6dd18db42d6dc9df3a1b56ca9e88a325bbf860e1a811d87
           archive:
             type: tar.gz
             extract:
@@ -214,8 +262,14 @@ spec:
         versionRef: lazygit
         installDir: ${appsDir}/lazygit
         download:
-          url: https://github.com/jesseduffield/lazygit/releases/download/v${version}/lazygit_${version}_Linux_x86_64.tar.gz
+          url: https://github.com/jesseduffield/lazygit/releases/download/v${version}/lazygit_${version}_linux_x86_64.tar.gz
           filename: lazygit.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/jesseduffield/lazygit/releases/download/v${version}/checksums.txt
+              file: lazygit_${version}_linux_x86_64.tar.gz
           archive:
             type: tar.gz
             extract:
@@ -238,6 +292,9 @@ spec:
         download:
           url: https://github.com/jj-vcs/jj/releases/download/${version}/jj-${version}-x86_64-unknown-linux-musl.tar.gz
           filename: jj.tar.gz
+          checksum:
+            algorithm: sha256
+            value: 5c8979f46873e052f59bdd9535636dca6e6f9f70571b73f6d63c3b92acfaa037
           archive:
             type: tar.gz
             extract:
@@ -262,6 +319,12 @@ spec:
         download:
           url: https://github.com/worxbend/dotbot-go/releases/download/${version}/dotbot-linux-amd64.tar.gz
           filename: dotbot.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/dotbot-go/releases/download/${version}/dotbot-linux-amd64.tar.gz.sha256
+              file: dist/dotbot-linux-amd64.tar.gz
           archive:
             type: tar.gz
             extract:
@@ -314,4 +377,96 @@ spec:
                   to: bin/airgradient-cli
         executables:
           - path: bin/airgradient-cli
+            mode: "0755"
+
+    - name: helm
+      kind: binary-tool
+      description: Kubernetes package manager
+      spec:
+        versionRef: helm
+        installDir: ${appsDir}/helm
+        download:
+          url: https://get.helm.sh/helm-${version}-linux-amd64.tar.gz
+          filename: helm.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://get.helm.sh/helm-${version}-linux-amd64.tar.gz.sha256sum
+              file: helm-${version}-linux-amd64.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: linux-amd64/helm
+                  to: bin/helm
+        executables:
+          - path: bin/helm
+            mode: "0755"
+
+    - name: kustomize
+      kind: binary-tool
+      description: Kubernetes manifest customization
+      spec:
+        versionRef: kustomize
+        installDir: ${appsDir}/kustomize
+        download:
+          url: https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${version}/kustomize_v${version}_linux_amd64.tar.gz
+          filename: kustomize.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${version}/checksums.txt
+              file: kustomize_v${version}_linux_amd64.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: kustomize
+                  to: bin/kustomize
+        executables:
+          - path: bin/kustomize
+            mode: "0755"
+
+    - name: yq
+      kind: binary-tool
+      description: YAML/JSON/TOML processor (mikefarah/yq)
+      spec:
+        versionRef: yq
+        installDir: ${appsDir}/yq/bin
+        download:
+          url: https://github.com/mikefarah/yq/releases/download/${version}/yq_linux_amd64
+          filename: yq
+          # Static: upstream's checksums file lists many hash types per line.
+          checksum:
+            algorithm: sha256
+            value: 129534601871538efe0ba4c5e62a34fb1d5f469bcb975c4fddeb467d82974973
+        executables:
+          - path: yq
+            mode: "0755"
+
+    - name: nerd-fonts-installer
+      kind: binary-tool
+      description: Nerd Fonts installer (worxbend/nerd-fonts-installer)
+      spec:
+        versionRef: nerd-fonts-installer
+        installDir: ${appsDir}/nerd-fonts-installer
+        download:
+          url: https://github.com/worxbend/nerd-fonts-installer/releases/download/${version}/nerd-fonts-installer_${version}_linux_amd64.tar.gz
+          filename: nerd-fonts-installer.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/nerd-fonts-installer/releases/download/${version}/checksums.txt
+              file: ./nerd-fonts-installer_${version}_linux_amd64.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: nerd-fonts-installer_${version}_linux_amd64/nerd-fonts-installer
+                  to: bin/nerd-fonts-installer
+        executables:
+          - path: bin/nerd-fonts-installer
             mode: "0755"

@@ -1,0 +1,10 @@
+# Applied last, with the repo root as base dir (scripts/host.sh).
+# Host-only files: this machine's monitor profile.
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- link:
+    ~/.config/kanshi/config: hosts/arch-sway/files/kanshi/config
