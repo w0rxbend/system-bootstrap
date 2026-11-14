@@ -40,6 +40,9 @@ suite, or runtime; "correctness" means the scripts run cleanly and pass the form
 
 ## Conventions
 
+- `DEVELOPMENT.md` is the step-by-step guide for hosts, modules, dotfiles, packages and binaries.
+  Keep it true when the runner, a module contract or `just lint` changes.
+
 - **Every script must be reachable** from a `Justfile` recipe, or from a module `setup.sh` run by
   `just host`; `bootstrap.sh` is the one entry outside the Justfile. Don't leave orphan scripts or
   recipes pointing at non-existent files; `just lint` checks both.

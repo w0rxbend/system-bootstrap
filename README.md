@@ -233,6 +233,7 @@ Then re-run the host (`just host <h>`) or `~/system-update.sh`, and open a new s
 
 ## 📚 Docs
 
+- [Development guide](DEVELOPMENT.md): add hosts, modules, dotfiles, packages and binaries
 - [Arch Sway host](docs/arch/sway/README.md)
 - [Font fallback and emoji rendering](docs/fonts.md)
 - [Fedora GNOME keyring notes](docs/fedora/gnome/ssh-keyring.md)
