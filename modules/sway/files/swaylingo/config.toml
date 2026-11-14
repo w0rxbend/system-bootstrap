@@ -1,0 +1,27 @@
+# skbd (worxbend/swaylingo-c): per-window keyboard layout for Sway.
+# Read from ~/.config/swaylingo/config.toml. Reload: systemctl --user kill -s HUP skbd.service
+# Tokens: a layout index, the exact layout name, or a short code (us, en, ua, uk, ...).
+# Layouts come from sway's xkb_layout (us,ua).
+
+# Layout for a new window and an empty desktop.
+fallback = "us"
+
+# Per-app layout. Key = Wayland app_id or X11 class (see `swaymsg -t get_tree`).
+# Quote keys that contain a dot.
+[apps]
+# Messengers (Flatpaks from scripts/flatpak.sh): Ukrainian.
+# Each app has its Wayland app_id and its X11 class (desktop file StartupWMClass).
+"org.telegram.desktop"   = "ua" # Telegram
+TelegramDesktop          = "ua"
+"com.discordapp.Discord" = "ua" # Discord
+discord                  = "ua"
+"dev.vencord.Vesktop"    = "ua" # Vesktop
+vesktop                  = "ua"
+"org.zulip.Zulip"        = "ua" # Zulip
+Zulip                    = "ua"
+
+# Editors: US.
+"com.vscodium.codium" = "us" # VSCodium
+VSCodium              = "us"
+"dev.zed.Zed"         = "us" # Zed
+neovide               = "us" # Neovide (binstaller)

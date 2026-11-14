@@ -235,14 +235,12 @@ Then re-run the host (`just host <h>`) or `~/system-update.sh`, and open a new s
 
 - [Development guide](DEVELOPMENT.md): add hosts, modules, dotfiles, packages and binaries
 - [Arch Sway host](docs/arch/sway/README.md)
-- [Font fallback and emoji rendering](docs/fonts.md)
 - [Fedora GNOME keyring notes](docs/fedora/gnome/ssh-keyring.md)
 
 Reference only, no host uses these setups:
 
 - [Fedora Sway keyring notes](docs/fedora/sway/ssh-keyring.md)
 - [Arch Hyprland keyring notes](docs/arch/hypr/ssh-keyring.md)
-- [macOS keyring notes](docs/macos/ssh-keyring.md)
 
 ## 📄 License
 

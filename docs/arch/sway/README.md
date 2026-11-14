@@ -37,22 +37,23 @@ The desktop module owns `~/.config/alacritty/alacritty.toml`, `base.toml` and `t
 
 ## What gets linked
 
-| Repo path                                 | Home path                             |
-| ----------------------------------------- | ------------------------------------- |
-| `modules/sway/files/sway/config`          | `~/.config/sway/config`               |
-| `modules/sway/files/sway/scripts/`        | `~/.config/sway/scripts`              |
-| `assets/wallpapers/`                      | `~/Pictures/walls`                    |
-| `modules/sway/files/wpaperd/config.toml`  | `~/.config/wpaperd/config.toml`       |
-| `modules/sway/files/waybar/config.jsonc`  | `~/.config/waybar/config.jsonc`       |
-| `modules/sway/files/waybar/style.css`     | `~/.config/waybar/style.css`          |
-| `modules/sway/files/alacritty/wm.toml`    | `~/.config/alacritty/wm.toml`         |
-| `modules/sway/files/fuzzel/fuzzel.ini`    | `~/.config/fuzzel/fuzzel.ini`         |
-| `modules/sway/files/mako/config`          | `~/.config/mako/config`               |
-| `modules/sway/files/foot/foot.ini`        | `~/.config/foot/foot.ini`             |
-| `modules/sway/files/swaynag/config`       | `~/.config/swaynag/config`            |
-| `modules/sway/files/wlsunset/config`      | `~/.config/wlsunset/config`           |
-| `modules/sway/files/wob/wob.ini`          | `~/.config/wob/wob.ini`               |
-| `modules/sway/files/systemd/skbd.service` | `~/.config/systemd/user/skbd.service` |
+| Repo path                                  | Home path                             |
+| ------------------------------------------ | ------------------------------------- |
+| `modules/sway/files/sway/config`           | `~/.config/sway/config`               |
+| `modules/sway/files/sway/scripts/`         | `~/.config/sway/scripts`              |
+| `assets/wallpapers/`                       | `~/Pictures/walls`                    |
+| `modules/sway/files/wpaperd/config.toml`   | `~/.config/wpaperd/config.toml`       |
+| `modules/sway/files/waybar/config.jsonc`   | `~/.config/waybar/config.jsonc`       |
+| `modules/sway/files/waybar/style.css`      | `~/.config/waybar/style.css`          |
+| `modules/sway/files/alacritty/wm.toml`     | `~/.config/alacritty/wm.toml`         |
+| `modules/sway/files/fuzzel/fuzzel.ini`     | `~/.config/fuzzel/fuzzel.ini`         |
+| `modules/sway/files/mako/config`           | `~/.config/mako/config`               |
+| `modules/sway/files/foot/foot.ini`         | `~/.config/foot/foot.ini`             |
+| `modules/sway/files/swaynag/config`        | `~/.config/swaynag/config`            |
+| `modules/sway/files/wlsunset/config`       | `~/.config/wlsunset/config`           |
+| `modules/sway/files/wob/wob.ini`           | `~/.config/wob/wob.ini`               |
+| `modules/sway/files/systemd/skbd.service`  | `~/.config/systemd/user/skbd.service` |
+| `modules/sway/files/swaylingo/config.toml` | `~/.config/swaylingo/config.toml`     |
 
 The host adds one link of its own. `hosts/arch-sway/dotbot.yaml` links `hosts/arch-sway/files/kanshi/config` to `~/.config/kanshi/config`, because the monitor profile belongs to this machine, not to the module.
 

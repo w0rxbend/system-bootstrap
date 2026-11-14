@@ -17,7 +17,7 @@ spec:
   # value refreshed in the same PR; a stale value makes apply fail on mismatch.
   versions:
     # renovate: datasource=github-releases depName=sxyazi/yazi
-    yazi: v26.5.6
+    yazi: v26.9.1
     # renovate: datasource=github-tags depName=ziglang/zig
     zig: "0.15.2"
     # renovate: datasource=github-releases depName=kubernetes-sigs/kind
@@ -30,7 +30,7 @@ spec:
     # SHA-256. Bump both by hand.
     dotbot: v0.4.2
     # renovate: datasource=github-releases depName=jesseduffield/lazygit extractVersion=^v(?<version>.+)$
-    lazygit: "0.61.0"
+    lazygit: "0.66.3"
     # renovate: datasource=github-releases depName=worxbend/swaylingo-c
     skbd: v0.4.1
     # renovate: datasource=github-releases depName=worxbend/airgradient-cli
@@ -54,6 +54,20 @@ spec:
     # renovate: datasource=github-releases depName=worxbend/nerd-fonts-installer
     nerd-fonts-installer: v1.0.9
 
+    # Own tools (github.com/worxbend) with GitHub releases.
+    # renovate: datasource=github-releases depName=worxbend/obsctl
+    obsctl: v1.0.2
+    # renovate: datasource=github-releases depName=worxbend/obsctl-rs
+    obsctl-rs: v0.9.1
+    # renovate: datasource=github-releases depName=worxbend/obs-stats
+    obs-stats: v0.6.0
+    # renovate: datasource=github-releases depName=worxbend/twi
+    twi: v0.19.0
+    # renovate: datasource=github-releases depName=worxbend/airgradient-tui-scala extractVersion=^v(?<version>.+)$
+    airgradient-tui: "0.2.2"
+    # renovate: datasource=github-releases depName=worxbend/swaylingo
+    skbd-rs: v0.4.0
+
   plan:
     - name: yazi
       kind: binary-tool
@@ -66,7 +80,7 @@ spec:
           filename: yazi.zip
           checksum:
             algorithm: sha256
-            value: 1c9096f0a83b8102c194385f644cdeff93cc8269426163c9d033041ebd537bd2
+            value: a02fe91d3304294048c681f010f1100856872a4e98ecf6927328e888d40a6ad2
           archive:
             type: zip
             extract:
@@ -469,4 +483,143 @@ spec:
                   to: bin/nerd-fonts-installer
         executables:
           - path: bin/nerd-fonts-installer
+            mode: "0755"
+
+    # Own tools (github.com/worxbend) with GitHub releases.
+    - name: obsctl
+      kind: binary-tool
+      description: OBS Studio CLI/TUI over obs-websocket 5 (Crystal)
+      spec:
+        versionRef: obsctl
+        installDir: ${appsDir}/obsctl
+        download:
+          url: https://github.com/worxbend/obsctl/releases/download/${version}/obsctl-${version}-linux-amd64.tar.gz
+          filename: obsctl.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/obsctl/releases/download/${version}/SHA256SUMS.txt
+              file: obsctl-${version}-linux-amd64.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: obsctl
+                  to: bin/obsctl
+        executables:
+          - path: bin/obsctl
+            mode: "0755"
+
+    - name: obsctl-rs
+      kind: binary-tool
+      description: OBS Studio controller TUI (Rust); renamed to avoid the obsctl clash
+      spec:
+        versionRef: obsctl-rs
+        installDir: ${appsDir}/obsctl-rs
+        download:
+          url: https://github.com/worxbend/obsctl-rs/releases/download/${version}/obsctl-${version}-linux-amd64.tar.gz
+          filename: obsctl-rs.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/obsctl-rs/releases/download/${version}/obsctl-${version}-linux-amd64.tar.gz.sha256
+              file: obsctl-${version}-linux-amd64.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: obsctl
+                  to: bin/obsctl-rs
+        executables:
+          - path: bin/obsctl-rs
+            mode: "0755"
+
+    - name: obs-stats
+      kind: binary-tool
+      description: btop-style OBS Studio dashboard
+      spec:
+        versionRef: obs-stats
+        installDir: ${appsDir}/obs-stats
+        download:
+          url: https://github.com/worxbend/obs-stats/releases/download/${version}/obs-stats-${version}-x86_64-unknown-linux-musl.tar.gz
+          filename: obs-stats.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/obs-stats/releases/download/${version}/SHA256SUMS
+              file: obs-stats-${version}-x86_64-unknown-linux-musl.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: obs-stats-${version}-x86_64-unknown-linux-musl/obs-stats
+                  to: bin/obs-stats
+        executables:
+          - path: bin/obs-stats
+            mode: "0755"
+
+    - name: twi
+      kind: binary-tool
+      description: Twitch chat client for the terminal
+      spec:
+        versionRef: twi
+        installDir: ${appsDir}/twi/bin
+        download:
+          url: https://github.com/worxbend/twi/releases/download/${version}/twi_linux_amd64
+          filename: twi
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/twi/releases/download/${version}/SHA256SUMS
+              file: twi_linux_amd64
+        executables:
+          - path: twi
+            mode: "0755"
+
+    - name: airgradient-tui
+      kind: binary-tool
+      description: AirGradient LAN dashboard TUI (Scala native)
+      spec:
+        versionRef: airgradient-tui
+        installDir: ${appsDir}/airgradient-tui
+        download:
+          url: https://github.com/worxbend/airgradient-tui-scala/releases/download/v${version}/airgradient-tui-scala-${version}-linux-amd64.tar.gz
+          filename: airgradient-tui.tar.gz
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/airgradient-tui-scala/releases/download/v${version}/SHA256SUMS
+              file: airgradient-tui-scala-${version}-linux-amd64.tar.gz
+          archive:
+            type: tar.gz
+            extract:
+              files:
+                - from: airgradient-tui
+                  to: bin/airgradient-tui
+        executables:
+          - path: bin/airgradient-tui
+            mode: "0755"
+
+    - name: skbd-rs
+      kind: binary-tool
+      description: Per-window Sway keyboard layout (Rust); renamed to avoid the skbd (C) clash
+      spec:
+        versionRef: skbd-rs
+        installDir: ${appsDir}/skbd-rs/bin
+        download:
+          url: https://github.com/worxbend/swaylingo/releases/download/${version}/skbd-linux-amd64
+          filename: skbd-rs
+          checksum:
+            algorithm: sha256
+            discover:
+              type: sha256sum
+              url: https://github.com/worxbend/swaylingo/releases/download/${version}/SHA256SUMS
+              file: skbd-linux-amd64
+        executables:
+          - path: skbd-rs
             mode: "0755"
