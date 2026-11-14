@@ -23,7 +23,7 @@ spec:
     # renovate: datasource=github-releases depName=kubernetes-sigs/kind
     kind: v0.31.0
     # renovate: datasource=github-releases depName=zellij-org/zellij
-    zellij: v0.44.1
+    zellij: v0.45.1
     # renovate: datasource=github-releases depName=jj-vcs/jj
     jujutsu: v0.40.0
     # No renovate comment: scripts/lib/dotbot.sh pins the same release with its
@@ -190,7 +190,7 @@ spec:
           # Static: upstream's .sha256sum hashes the extracted binary, not the tarball.
           checksum:
             algorithm: sha256
-            value: 669825021d529fca5d939888263c9d2a90762145191fa07581a15250e8af2b49
+            value: 40bcc2e03f5d5ae8e054e39f676081fe12ab70871506996ba595834c3718eefc
           archive:
             type: tar.gz
             extract:

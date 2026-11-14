@@ -257,7 +257,7 @@ plugins {
     // Status bar for every layout. Pinned: zjstatus v0.23.0 is built on
     // zellij-tile 0.44.1. Zellij 0.45+ needs zjstatus v0.25.0 or newer.
     // First start: focus the bar and press y to grant its permissions.
-    zjstatus location="https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjstatus.wasm" {
+    zjstatus location="https://github.com/dj95/zjstatus/releases/download/v0.25.0/zjstatus.wasm" {
         color_bg "#141218"
         color_surface "#2b292f"
         color_outline "#49454e"
@@ -437,6 +437,8 @@ ui {
 // zjstatus toggles frames itself (hide_frame_for_single_pane); its docs ask
 // for frames off here so the two do not fight.
 pane_frames false
+// 0.45 draws title-only frames by default; keep full rounded frames when zjstatus turns them on.
+pane_frame_style "full"
 auto_layout true
 default_shell "zsh"
 on_force_close "quit"
