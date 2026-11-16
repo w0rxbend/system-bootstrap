@@ -10,7 +10,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # renovate: datasource=github-releases depName=worxbend/binstaller
-BINSTALLER_VERSION="v0.5.1"
+BINSTALLER_VERSION="v0.6.0"
 INSTALL_DIR="${BINSTALLER_INSTALL_DIR:-${HOME}/.local/bin}"
 BINSTALLER="${INSTALL_DIR}/binstaller"
 
