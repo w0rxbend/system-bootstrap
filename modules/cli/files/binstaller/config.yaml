@@ -23,7 +23,7 @@ spec:
     # renovate: datasource=github-releases depName=kubernetes-sigs/kind
     kind: v0.31.0
     # renovate: datasource=github-releases depName=zellij-org/zellij
-    zellij: v0.45.1
+    zellij: v0.46.0
     # renovate: datasource=github-releases depName=jj-vcs/jj
     jujutsu: v0.40.0
     # No renovate comment: scripts/lib/dotbot.sh pins the same release with its
