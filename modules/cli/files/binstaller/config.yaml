@@ -44,7 +44,7 @@ spec:
     # renovate: datasource=github-releases depName=neovim/neovim
     neovim: v0.12.6
     # renovate: datasource=github-releases depName=neovide/neovide
-    neovide: "0.17.2"
+    neovide: "0.17.4"
     # renovate: datasource=github-releases depName=helm/helm
     helm: v4.3.2
     # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize extractVersion=^kustomize/v(?<version>.+)$
