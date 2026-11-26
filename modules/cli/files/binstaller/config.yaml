@@ -25,7 +25,7 @@ spec:
     # renovate: datasource=github-releases depName=zellij-org/zellij
     zellij: v0.45.1
     # renovate: datasource=github-releases depName=jj-vcs/jj
-    jujutsu: v0.40.0
+    jujutsu: v0.47.1
     # No renovate comment: scripts/lib/dotbot.sh pins the same release with its
     # SHA-256. Bump both by hand.
     dotbot: v0.4.2
