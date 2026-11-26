@@ -21,7 +21,7 @@ spec:
     # renovate: datasource=github-tags depName=ziglang/zig
     zig: "0.15.2"
     # renovate: datasource=github-releases depName=kubernetes-sigs/kind
-    kind: v0.31.0
+    kind: v0.33.0
     # renovate: datasource=github-releases depName=zellij-org/zellij
     zellij: v0.45.1
     # renovate: datasource=github-releases depName=jj-vcs/jj
